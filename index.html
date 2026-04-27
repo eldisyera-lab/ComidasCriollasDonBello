@@ -4,8 +4,117 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Comidas Criollas Habana</title>
-    <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ========== CSS COMPLETO ========== */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; background-color: #f8f9fa; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+        /* WhatsApp flotante */
+        .whatsapp-float { position: fixed; bottom: 30px; right: 30px; background-color: #25d366; color: white; padding: 15px 25px; border-radius: 50px; text-decoration: none; font-weight: bold; display: flex; align-items: center; gap: 10px; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4); z-index: 1000; transition: all 0.3s ease; animation: pulse 2s infinite; }
+        .whatsapp-float:hover { transform: scale(1.05); box-shadow: 0 6px 20px rgba(37, 211, 102, 0.6); }
+        .whatsapp-float i { font-size: 24px; }
+        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); } 70% { box-shadow: 0 0 0 20px rgba(37, 211, 102, 0); } 100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); } }
+
+        /* Header */
+        header { background: linear-gradient(135deg, #d4a574 0%, #c4956a 100%); color: white; padding: 60px 0; text-align: center; }
+        header h1 { font-size: 3rem; margin-bottom: 10px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
+        header p { font-size: 1.2rem; opacity: 0.9; }
+
+        /* Secciones */
+        .section { padding: 60px 0; }
+        .section h2 { font-size: 2.5rem; margin-bottom: 30px; color: #8b4513; text-align: center; }
+
+        /* Cenas */
+        .cenas-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin-top: 40px; }
+        .cena-card { background: white; padding: 30px; border-radius: 15px; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.1); transition: transform 0.3s ease; }
+        .cena-card:hover { transform: translateY(-5px); }
+        .cena-card h3 { color: #8b4513; font-size: 1.5rem; margin-bottom: 15px; }
+
+        /* Buffet */
+        .buffet-section { background-color: #fff5eb; }
+        .buffet-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 40px; }
+        .buffet-card { background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 5px 20px rgba(0,0,0,0.1); transition: transform 0.3s ease; }
+        .buffet-card:hover { transform: translateY(-5px); }
+        .buffet-header { background: linear-gradient(135deg, #d4a574 0%, #c4956a 100%); color: white; padding: 25px; display: flex; justify-content: space-between; align-items: center; }
+        .buffet-header h3 { font-size: 1.5rem; margin: 0; }
+        .buffet-price { font-size: 1.8rem; font-weight: bold; background: rgba(255,255,255,0.2); padding: 5px 15px; border-radius: 25px; }
+        .buffet-content { padding: 25px; }
+        .buffet-subtitle { color: #666; font-style: italic; margin-bottom: 15px; }
+        .buffet-description { color: #555; line-height: 1.8; }
+        .buffet-content ul { list-style: none; padding: 0; }
+        .buffet-content li { padding: 10px 0; border-bottom: 1px solid #eee; display: flex; align-items: center; }
+        .buffet-content li:before { content: "✓"; color: #28a745; font-weight: bold; margin-right: 10px; font-size: 1.2rem; }
+        .buffet-content li:last-child { border-bottom: none; }
+        .premium-item { color: #8b4513; font-weight: bold; }
+        .premium .buffet-header { background: linear-gradient(135deg, #c4956a 0%, #a67c52 100%); }
+        .cubeta .buffet-header { background: linear-gradient(135deg, #28a745 0%, #20c997 100%); }
+
+        /* Ofertas */
+        .ofertas-section { background-color: #f0f8ff; }
+        .ofertas-nota { text-align: center; color: #666; margin-bottom: 30px; font-style: italic; }
+        .tabs { margin-top: 30px; }
+        .tab-buttons { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 30px; justify-content: center; }
+        .tab-btn { padding: 15px 25px; border: none; background: white; color: #8b4513; font-size: 1rem; cursor: pointer; border-radius: 30px; transition: all 0.3s ease; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .tab-btn:hover { background: #d4a574; color: white; }
+        .tab-btn.active { background: #8b4513; color: white; }
+        .tab-content { display: none; animation: fadeIn 0.5s ease; }
+        .tab-content.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .oferta-card { background: white; padding: 40px; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); text-align: center; }
+        .oferta-card h3 { color: #8b4513; font-size: 1.8rem; margin-bottom: 20px; }
+        .oferta-texto { font-size: 1.2rem; color: #666; margin-bottom: 15px; }
+        .oferta-llamada { font-size: 1.3rem; color: #dc3545; font-weight: bold; margin-bottom: 25px; }
+
+        /* Botón parpadeo verde */
+        .btn-reservar { display: inline-block; padding: 15px 40px; background: #28a745; color: white; text-decoration: none; border-radius: 50px; font-size: 1.2rem; font-weight: bold; transition: all 0.3s ease; border: none; cursor: pointer; }
+        .btn-reservar:hover { background: #218838; transform: scale(1.05); }
+        .parpadeo-verde { animation: parpadeoVerde 1.5s ease-in-out infinite; }
+        @keyframes parpadeoVerde { 0%, 100% { background-color: #28a745; box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.7); } 50% { background-color: #34ce57; box-shadow: 0 0 20px 10px rgba(40, 167, 69, 0.3); } }
+        .madres { border: 3px solid #e83e8c; background: linear-gradient(135deg, #fff0f5 0%, #ffe4ec 100%); }
+
+        /* Formulario */
+        .reserva-form { max-width: 600px; margin: 40px auto; background: white; padding: 40px; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; margin-bottom: 8px; color: #555; font-weight: 600; }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 12px 15px; border: 2px solid #ddd; border-radius: 8px; font-size: 1rem; transition: border-color 0.3s ease; }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: #d4a574; }
+        .btn-submit { width: 100%; padding: 15px; background: #8b4513; color: white; border: none; border-radius: 8px; font-size: 1.1rem; font-weight: bold; cursor: pointer; transition: background 0.3s ease; }
+        .btn-submit:hover { background: #6b3410; }
+        .vale-preview { text-align: center; margin-top: 30px; padding: 20px; background: #f8f9fa; border-radius: 10px; }
+
+        /* FAQ */
+        .faq-section { background-color: #f8f9fa; }
+        .faq-item { margin-bottom: 15px; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        .faq-question { width: 100%; padding: 20px 25px; background: white; border: none; text-align: left; font-size: 1.1rem; font-weight: 600; color: #333; cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: background 0.3s ease; }
+        .faq-question:hover { background: #fff5eb; }
+        .faq-question i { transition: transform 0.3s ease; color: #8b4513; }
+        .faq-question.active i { transform: rotate(180deg); }
+        .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.3s ease, padding 0.3s ease; background: white; }
+        .faq-answer.active { max-height: 500px; padding: 20px 25px; }
+        .faq-answer p { color: #555; line-height: 1.8; }
+
+        /* Contacto */
+        .contacto-section { text-align: center; background: linear-gradient(135deg, #d4a574 0%, #c4956a 100%); color: white; }
+        .contacto-section h2 { color: white; }
+        .btn-whatsapp { display: inline-block; margin-top: 20px; padding: 15px 40px; background: #25d366; color: white; text-decoration: none; border-radius: 50px; font-size: 1.2rem; font-weight: bold; transition: all 0.3s ease; }
+        .btn-whatsapp:hover { background: #128c7e; transform: scale(1.05); }
+
+        /* Footer */
+        footer { background: #333; color: white; text-align: center; padding: 30px 0; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header h1 { font-size: 2rem; }
+            .section h2 { font-size: 1.8rem; }
+            .tab-buttons { flex-direction: column; }
+            .tab-btn { width: 100%; text-align: center; }
+            .buffet-grid { grid-template-columns: 1fr; }
+            .whatsapp-float { bottom: 20px; right: 20px; padding: 12px 20px; font-size: 0.9rem; }
+            .whatsapp-float span { display: none; }
+        }
+    </style>
 </head>
 <body>
     <!-- Botón flotante de WhatsApp -->
@@ -302,6 +411,84 @@
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script>
+        // ========== JAVASCRIPT COMPLETO ==========
+        
+        // Tabs de Ofertas Especiales
+        function openTab(evt, tabName) {
+            const tabContents = document.getElementsByClassName("tab-content");
+            for (let i = 0; i < tabContents.length; i++) {
+                tabContents[i].classList.remove("active");
+            }
+            
+            const tabButtons = document.getElementsByClassName("tab-btn");
+            for (let i = 0; i < tabButtons.length; i++) {
+                tabButtons[i].classList.remove("active");
+            }
+            
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+
+        // FAQ Acordeón
+        function toggleFaq(button) {
+            const answer = button.nextElementSibling;
+            const isActive = answer.classList.contains("active");
+            
+            const allAnswers = document.querySelectorAll(".faq-answer");
+            const allButtons = document.querySelectorAll(".faq-question");
+            
+            allAnswers.forEach(ans => ans.classList.remove("active"));
+            allButtons.forEach(btn => btn.classList.remove("active"));
+            
+            if (!isActive) {
+                answer.classList.add("active");
+                button.classList.add("active");
+            }
+        }
+
+        // Formulario de reserva
+        document.getElementById("reservaForm").addEventListener("submit", function(e) {
+            e.preventDefault();
+            
+            const nombre = document.getElementById("nombre").value;
+            const telefono = document.getElementById("telefono").value;
+            const fecha = document.getElementById("fecha").value;
+            const direccion = document.getElementById("direccion").value;
+            const cantidad = document.getElementById("cantidad").value;
+            const notas = document.getElementById("notas").value;
+            
+            const productoSelect = document.getElementById("producto");
+            const productoNombre = productoSelect.options[productoSelect.selectedIndex].text;
+            
+            let mensaje = `*NUEVO PEDIDO - Comidas Criollas Habana*%0A%0A`;
+            mensaje += `*Nombre:* ${nombre}%0A`;
+            mensaje += `*Teléfono:* ${telefono}%0A`;
+            mensaje += `*Fecha de entrega:* ${fecha}%0A`;
+            mensaje += `*Dirección:* ${direccion}%0A`;
+            mensaje += `*Producto:* ${productoNombre}%0A`;
+            mensaje += `*Cantidad:* ${cantidad}%0A`;
+            
+            if (notas) {
+                mensaje += `*Notas adicionales:* ${notas}%0A`;
+            }
+            
+            mensaje += `%0APor favor confirmar disponibilidad. ¡Gracias!`;
+            
+            window.open(`https://wa.link/at3sj1?text=${mensaje}`, "_blank");
+        });
+
+        // Fechas del formulario
+        document.addEventListener("DOMContentLoaded", function() {
+            const fechaInput = document.getElementById("fecha");
+            const hoy = new Date();
+            hoy.setDate(hoy.getDate() + 1);
+            fechaInput.setAttribute("min", hoy.toISOString().split("T")[0]);
+            
+            const maxFecha = new Date();
+            maxFecha.setDate(maxFecha.getDate() + 7);
+            fechaInput.setAttribute("max", maxFecha.toISOString().split("T")[0]);
+        });
+    </script>
 </body>
 </html>
