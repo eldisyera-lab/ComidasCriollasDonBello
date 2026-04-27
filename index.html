@@ -99,25 +99,6 @@
             border-radius: 2px;
         }
 
-        .announcement-banner {
-            background: linear-gradient(90deg, var(--color-offer), #FF4500);
-            color: white;
-            text-align: center;
-            padding: 12px 20px;
-            font-weight: bold;
-            font-size: 1.1rem;
-            position: relative;
-            overflow: hidden;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.85; }
-        }
-
-        .announcement-banner i { margin-right: 8px; }
-
         .menu-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -752,11 +733,6 @@
         <a href="#contacto"><i class="fas fa-phone"></i> Contacto</a>
     </nav>
 
-    <div class="announcement-banner" id="announcementBanner">
-        <i class="fas fa-bullhorn"></i>
-        <span id="announcementText">🎉 Oferta Especial: Envío GRATIS en pedidos superiores a 80,000 CUP</span>
-    </div>
-
     <section class="section" id="cenas">
         <h2 class="section-title"><i class="fas fa-drumstick-bite"></i> Cenas Criollas</h2>
         <p style="text-align:center; color:#ccc; margin-bottom:25px;">
@@ -988,26 +964,26 @@
 
     <script>
         const porciones = [
-            { id: 'p1', name: 'Cena Criolla Básica', price: 50000, comensales: '20-22 comensales' },
-            { id: 'p2', name: 'Cena Criolla Especial', price: 50000, comensales: '20-22 comensales' },
-            { id: 'p3', name: 'Cena Criolla Familiar', price: 60000, comensales: '25-30 comensales' },
-            { id: 'p4', name: 'Cena Criolla Grande', price: 60000, comensales: '25-30 comensales' },
-            { id: 'p5', name: 'Cena Criolla Premium', price: 60000, comensales: '25-30 comensales' },
-            { id: 'p6', name: 'Cena Criolla Deluxe', price: 60000, comensales: '25-30 comensales' },
+            { id: 'p1', name: 'Lomo para 20-22 comensales', price: 50000, comensales: '20-22 comensales' },
+            { id: 'p2', name: 'Pierna para 20-22 comensales', price: 50000, comensales: '20-22 comensales' },
+            { id: 'p3', name: 'Masas para 25-30 comensales', price: 60000, comensales: '25-30 comensales' },
+            { id: 'p4', name: 'Lomo para 25-30 comensales', price: 60000, comensales: '25-30 comensales' },
+            { id: 'p5', name: 'Pierna para 25-30 comensales', price: 60000, comensales: '25-30 comensales' },
+            { id: 'p6', name: 'Masas fritas encebolladas para 25-30 comensales', price: 60000, comensales: '25-30 comensales' },
         ];
 
         const cerdos = [
-            { id: 'c1', name: 'Cerdo Entero (15-17 kg)', price: 67000, comensales: '~30-35 comensales' },
-            { id: 'c2', name: 'Cerdo Entero (17-19 kg)', price: 69000, comensales: '~35-40 comensales' },
-            { id: 'c3', name: 'Cerdo Entero (19-21 kg)', price: 73000, comensales: '~40-45 comensales' },
-            { id: 'c4', name: 'Cerdo Entero (21-23 kg)', price: 81000, comensales: '~45-50 comensales' },
-            { id: 'c5', name: 'Cerdo Entero (23-25 kg)', price: 84000, comensales: '~50-55 comensales' },
-            { id: 'c6', name: 'Cerdo Entero (25-27 kg)', price: 95000, comensales: '~55-60 comensales' },
-            { id: 'c7', name: 'Cerdo Entero (27-29 kg)', price: 113000, comensales: '~60-65 comensales' },
-            { id: 'c8', name: 'Cerdo Entero (29-31 kg)', price: 120000, comensales: '~65-70 comensales' },
-            { id: 'c9', name: 'Cerdo Entero (31-33 kg)', price: 127000, comensales: '~70-75 comensales' },
-            { id: 'c10', name: 'Cerdo Entero (33-35 kg)', price: 135000, comensales: '~75-80 comensales' },
-            { id: 'c11', name: 'Cerdo Entero (35+ kg)', price: 150000, comensales: '~80+ comensales' },
+            { id: 'c1', name: 'Cerdo para 20 comensales', price: 67000, comensales: '~20 comensales' },
+            { id: 'c2', name: 'Cerdo para 30 comensales', price: 69000, comensales: '~30 comensales' },
+            { id: 'c3', name: 'Cerdo para 40 comensales', price: 73000, comensales: '~40 comensales' },
+            { id: 'c4', name: 'Cerdo para 50 comensales', price: 81000, comensales: '~50 comensales' },
+            { id: 'c5', name: 'Cerdo para 60 comensales', price: 84000, comensales: '~60 comensales' },
+            { id: 'c6', name: 'Cerdo para 70 comensales', price: 95000, comensales: '~70 comensales' },
+            { id: 'c7', name: 'Cerdo para 80 comensales', price: 113000, comensales: '~80 comensales' },
+            { id: 'c8', name: 'Cerdo para 90 comensales', price: 120000, comensales: '~90 comensales' },
+            { id: 'c9', name: 'Cerdo para 100 comensales', price: 127000, comensales: '~100 comensales' },
+            { id: 'c10', name: 'Cerdo para 110 comensales', price: 135000, comensales: '~110 comensales' },
+            { id: 'c11', name: 'Cerdo para 120 comensales', price: 150000, comensales: '~120 comensales' },
         ];
 
         const buffetItems = [
