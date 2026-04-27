@@ -4,717 +4,304 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Comidas Criollas Habana</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #1a1a2e;
-            color: #eee;
-            line-height: 1.6;
-        }
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        header {
-            text-align: center;
-            padding: 40px 20px;
-            background: linear-gradient(135deg, #16213e 0%, #0f3460 100%);
-            border-radius: 15px;
-            margin-bottom: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        }
-        header h1 {
-            font-size: 2.5em;
-            color: #e94560;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-        }
-        header p {
-            font-size: 1.2em;
-            color: #a0a0a0;
-        }
-        section {
-            background: #16213e;
-            padding: 30px;
-            margin-bottom: 25px;
-            border-radius: 15px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
-        }
-        section h2 {
-            color: #e94560;
-            font-size: 1.8em;
-            margin-bottom: 20px;
-            border-bottom: 2px solid #e94560;
-            padding-bottom: 10px;
-        }
-        section h3 {
-            color: #f39c12;
-            font-size: 1.3em;
-            margin: 20px 0 10px 0;
-        }
-        .menu-item {
-            background: #0f3460;
-            padding: 15px 20px;
-            margin: 10px 0;
-            border-radius: 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: transform 0.3s;
-        }
-        .menu-item:hover {
-            transform: translateX(5px);
-            background: #1a4a7a;
-        }
-        .menu-item-name {
-            font-weight: bold;
-            font-size: 1.1em;
-        }
-        .menu-item-desc {
-            font-size: 0.9em;
-            color: #ccc;
-            margin-top: 5px;
-        }
-        .menu-item-price {
-            color: #f39c12;
-            font-size: 1.3em;
-            font-weight: bold;
-        }
-        .buffet-details {
-            background: #1a4a7a;
-            padding: 15px;
-            border-radius: 8px;
-            margin-top: 10px;
-            font-size: 0.95em;
-        }
-        .buffet-details ul {
-            list-style: none;
-            padding-left: 0;
-        }
-        .buffet-details ul li {
-            padding: 3px 0;
-            padding-left: 20px;
-            position: relative;
-        }
-        .buffet-details ul li::before {
-            content: "✓";
-            position: absolute;
-            left: 0;
-            color: #2ecc71;
-        }
-        .form-group {
-            margin-bottom: 15px;
-        }
-        label {
-            display: block;
-            margin-bottom: 5px;
-            color: #f39c12;
-            font-weight: bold;
-        }
-        input, select, textarea {
-            width: 100%;
-            padding: 12px;
-            border: none;
-            border-radius: 8px;
-            background: #0f3460;
-            color: #fff;
-            font-size: 1em;
-        }
-        input:focus, select:focus, textarea:focus {
-            outline: 2px solid #e94560;
-        }
-        textarea {
-            min-height: 80px;
-            resize: vertical;
-        }
-        .checkbox-group {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin: 10px 0;
-        }
-        .checkbox-group input[type="checkbox"] {
-            width: auto;
-        }
-        .btn {
-            display: inline-block;
-            padding: 15px 30px;
-            background: #e94560;
-            color: white;
-            text-decoration: none;
-            border-radius: 30px;
-            font-weight: bold;
-            font-size: 1.1em;
-            border: none;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-align: center;
-        }
-        .btn:hover {
-            background: #ff6b6b;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(233, 69, 96, 0.4);
-        }
-        .btn-green {
-            background: #2ecc71;
-        }
-        .btn-green:hover {
-            background: #27ae60;
-            box-shadow: 0 5px 15px rgba(46, 204, 113, 0.4);
-        }
-        .btn-blink {
-            animation: blink-green 1.5s infinite;
-        }
-        @keyframes blink-green {
-            0%, 100% { background: #2ecc71; box-shadow: 0 0 10px #2ecc71; }
-            50% { background: #27ae60; box-shadow: 0 0 25px #2ecc71; }
-        }
-        .faq-item {
-            margin-bottom: 20px;
-            border-left: 3px solid #e94560;
-            padding-left: 15px;
-        }
-        .faq-question {
-            font-weight: bold;
-            color: #f39c12;
-            font-size: 1.1em;
-            margin-bottom: 8px;
-        }
-        .faq-answer {
-            color: #ccc;
-            line-height: 1.6;
-        }
-        .whatsapp-float {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            z-index: 1000;
-        }
-        .whatsapp-float a {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            background: #25d366;
-            color: white;
-            padding: 15px 25px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: bold;
-            box-shadow: 0 5px 20px rgba(37, 211, 102, 0.4);
-            transition: all 0.3s;
-        }
-        .whatsapp-float a:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.6);
-        }
-        .whatsapp-icon {
-            font-size: 1.5em;
-        }
-        .special-offers {
-            margin-top: 20px;
-        }
-        .tabs {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-        .tab-btn {
-            padding: 10px 20px;
-            background: #0f3460;
-            color: #fff;
-            border: 2px solid #e94560;
-            border-radius: 25px;
-            cursor: pointer;
-            font-size: 1em;
-            transition: all 0.3s;
-        }
-        .tab-btn:hover, .tab-btn.active {
-            background: #e94560;
-            color: white;
-        }
-        .tab-content {
-            display: none;
-            background: #0f3460;
-            padding: 20px;
-            border-radius: 10px;
-            animation: fadeIn 0.3s;
-        }
-        .tab-content.active {
-            display: block;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .offer-card {
-            background: #16213e;
-            padding: 20px;
-            border-radius: 10px;
-            margin: 10px 0;
-            border: 1px solid #e94560;
-        }
-        .offer-title {
-            color: #e94560;
-            font-size: 1.3em;
-            margin-bottom: 10px;
-        }
-        .offer-desc {
-            color: #ccc;
-        }
-        .note {
-            background: #f39c1220;
-            border-left: 3px solid #f39c12;
-            padding: 15px;
-            margin: 20px 0;
-            border-radius: 0 8px 8px 0;
-            color: #f39c12;
-        }
-        .summary-box {
-            background: #0f3460;
-            padding: 20px;
-            border-radius: 10px;
-            margin-top: 20px;
-        }
-        .summary-box h4 {
-            color: #f39c12;
-            margin-bottom: 10px;
-        }
-        .summary-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 8px 0;
-            border-bottom: 1px solid #1a4a7a;
-        }
-        .total {
-            font-size: 1.3em;
-            color: #e94560;
-            font-weight: bold;
-            margin-top: 10px;
-            padding-top: 10px;
-            border-top: 2px solid #e94560;
-        }
-        @media (max-width: 600px) {
-            header h1 {
-                font-size: 1.8em;
-            }
-            .menu-item {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            .tabs {
-                flex-direction: column;
-            }
-            .whatsapp-float {
-                bottom: 15px;
-                right: 15px;
-            }
-            .whatsapp-float a {
-                padding: 12px 18px;
-                font-size: 0.9em;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>🍖 Comidas Criollas Habana</h1>
-            <p>Deliciosas cenas de cerdo asado para tus celebraciones</p>
-        </header>
+    <!-- Botón flotante de WhatsApp -->
+    <a href="https://wa.link/at3sj1" class="whatsapp-float" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+        <span>INFORMACIÓN</span>
+    </a>
 
-        <!-- CENAS CRIOLLAS -->
-        <section id="cenas">
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <h1>Comidas Criollas Habana</h1>
+            <p>Deliciosas cenas de cerdo asado para tus celebraciones</p>
+        </div>
+    </header>
+
+    <!-- Cenas Criollas -->
+    <section id="cenas" class="section">
+        <div class="container">
             <h2>🍽️ Cenas Criollas</h2>
             <p><strong>Todas las cenas incluyen:</strong> Congrí, ensalada de estación, yuca con mojo y un pomo de aliño.</p>
-            <p style="margin-top:10px; color:#ccc;">La cena puede venir con un cerdo entero o puede traer un cerdo menor con alguna pieza para completar la cantidad de comensales. El pesaje de los cerdos es en pie.</p>
+            <p>La cena puede venir con un cerdo entero o puede traer un cerdo menor con alguna pieza para completar la cantidad de comensales. El pesaje de los cerdos es en pie.</p>
             
-            <h3>Porciones</h3>
-            <div class="menu-item">
-                <div>
-                    <div class="menu-item-name">Porción Individual</div>
+            <div class="cenas-grid">
+                <div class="cena-card">
+                    <h3>Porciones</h3>
+                    <p>Consulte disponibilidad y precios</p>
                 </div>
-                <div class="menu-item-price">Consultar</div>
-            </div>
-            
-            <h3>Cerdo Entero</h3>
-            <div class="menu-item">
-                <div>
-                    <div class="menu-item-name">Cerdo Entero (pesaje en pie)</div>
+                <div class="cena-card">
+                    <h3>Cerdo Entero</h3>
+                    <p>Consulte disponibilidad y precios</p>
                 </div>
-                <div class="menu-item-price">Consultar</div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- MENÚ BUFFET -->
-        <section id="buffet">
+    <!-- Menú Buffet -->
+    <section id="buffet" class="section buffet-section">
+        <div class="container">
             <h2>🎂 Menú Buffet</h2>
             <p>Dulces, pasteles y bocaditos para tus eventos.</p>
-            <p style="margin-top:10px; color:#f39c12;"><strong>Puedes añadir productos del buffet a tu pedido de cena en el formulario de reserva.</strong></p>
+            <p><strong>Puedes añadir productos del buffet a tu pedido de cena en el formulario de reserva.</strong></p>
             
-            <div class="menu-item">
-                <div>
-                    <div class="menu-item-name">Kake de Merengue Redondo</div>
+            <div class="buffet-grid">
+                <!-- Buffet 350 -->
+                <div class="buffet-card">
+                    <div class="buffet-header">
+                        <h3>Buffet 350</h3>
+                        <span class="buffet-price">350 CUP</span>
+                    </div>
+                    <div class="buffet-content">
+                        <p class="buffet-subtitle">En termo retractilado</p>
+                        <ul>
+                            <li>Una panetela</li>
+                            <li>Una minidona</li>
+                            <li>Un minieclair</li>
+                            <li>Una croqueta</li>
+                            <li>Un bocadito</li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="menu-item-price">3,000 CUP</div>
-            </div>
-            <div class="menu-item">
-                <div>
-                    <div class="menu-item-name">Kake de Nata Redondo</div>
-                </div>
-                <div class="menu-item-price">4,000 CUP</div>
-            </div>
-            <div class="menu-item">
-                <div>
-                    <div class="menu-item-name">Kake Ganache Redondo</div>
-                </div>
-                <div class="menu-item-price">5,000 CUP</div>
-            </div>
-            <div class="menu-item">
-                <div>
-                    <div class="menu-item-name">Kake Tamaño Bandeja</div>
-                </div>
-                <div class="menu-item-price">8,000 CUP</div>
-            </div>
-            <div class="menu-item">
-                <div>
-                    <div class="menu-item-name">Dulces Variados (c/u)</div>
-                </div>
-                <div class="menu-item-price">80 CUP</div>
-            </div>
-            <div class="menu-item">
-                <div>
-                    <div class="menu-item-name">Pizzas Familiares</div>
-                </div>
-                <div class="menu-item-price">2,000 CUP</div>
-            </div>
-            
-            <!-- BUFFET 350 -->
-            <div class="menu-item">
-                <div>
-                    <div class="menu-item-name">Buffet 350 CUP</div>
-                    <div class="menu-item-desc">En termo retractilado</div>
-                </div>
-                <div class="menu-item-price">350 CUP</div>
-            </div>
-            <div class="buffet-details">
-                <strong>Contiene:</strong>
-                <ul>
-                    <li>Una panetela</li>
-                    <li>Una minidona</li>
-                    <li>Un minieclair</li>
-                    <li>Una croqueta</li>
-                    <li>Un bocadito</li>
-                </ul>
-            </div>
-            
-            <!-- BUFFET PREMIUM 400 -->
-            <div class="menu-item">
-                <div>
-                    <div class="menu-item-name">Buffet Premium 400 CUP</div>
-                    <div class="menu-item-desc">En termo retractilado</div>
-                </div>
-                <div class="menu-item-price">400 CUP</div>
-            </div>
-            <div class="buffet-details">
-                <strong>Contiene:</strong>
-                <ul>
-                    <li>Una panetela</li>
-                    <li>Una minidona</li>
-                    <li>Un minieclair</li>
-                    <li>Una croqueta</li>
-                    <li>Un bocadito</li>
-                    <li>Un capacillo con ensalada fría</li>
-                </ul>
-            </div>
-            
-            <!-- CUBETA DE ENSALADA FRÍA -->
-            <div class="menu-item">
-                <div>
-                    <div class="menu-item-name">Cubeta de Ensalada Fría 4L</div>
-                </div>
-                <div class="menu-item-price">4,000 CUP</div>
-            </div>
-        </section>
 
-        <!-- OFERTAS ESPECIALES -->
-        <section id="ofertas-especiales">
-            <h2>🎉 Ofertas Especiales</h2>
-            <div class="note">
-                ⚠️ Estas ofertas se programan según las disponibilidades de esos días.
-            </div>
-            
-            <div class="tabs">
-                <button class="tab-btn active" onclick="openTab(event, 'ofertas-casa')">Ofertas por la Casa</button>
-                <button class="tab-btn" onclick="openTab(event, 'dia-madres')">Día de las Madres</button>
-                <button class="tab-btn" onclick="openTab(event, 'dia-padres')">Día de los Padres</button>
-                <button class="tab-btn" onclick="openTab(event, 'nochebuena')">Nochebuena</button>
-            </div>
-            
-            <div id="ofertas-casa" class="tab-content active">
-                <div class="offer-card">
-                    <div class="offer-title">🏠 Ofertas Especiales por la Casa</div>
-                    <div class="offer-desc">Próximamente estaremos publicando nuestras ofertas especiales. ¡Mantente atento!</div>
+                <!-- Buffet Premium 400 -->
+                <div class="buffet-card premium">
+                    <div class="buffet-header">
+                        <h3>Buffet Premium</h3>
+                        <span class="buffet-price">400 CUP</span>
+                    </div>
+                    <div class="buffet-content">
+                        <p class="buffet-subtitle">En termo retractilado</p>
+                        <ul>
+                            <li>Una panetela</li>
+                            <li>Una minidona</li>
+                            <li>Un minieclair</li>
+                            <li>Una croqueta</li>
+                            <li>Un bocadito</li>
+                            <li class="premium-item">Un capacillo con ensalada fría</li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
-            
-            <div id="dia-madres" class="tab-content">
-                <div class="offer-card">
-                    <div class="offer-title">💐 Día de las Madres</div>
-                    <div class="offer-desc">
-                        <p><strong>* Tenemos todas las ofertas del Menú Buffet no disponibles - cupos limitados</strong></p>
-                        <p style="margin-top:10px; color:#e94560; font-size:1.2em;">¿Qué esperas para reservar? ¡APÚRATE!</p>
-                        <br>
-                        <a href="https://wa.link/at3sj1" target="_blank" class="btn btn-green btn-blink">📱 Reservar Ahora</a>
+
+                <!-- Cubeta de ensalada fría -->
+                <div class="buffet-card cubeta">
+                    <div class="buffet-header">
+                        <h3>Cubeta de Ensalada Fría</h3>
+                        <span class="buffet-price">4000 CUP</span>
+                    </div>
+                    <div class="buffet-content">
+                        <p class="buffet-description">Deliciosa ensalada fría en cubeta, perfecta para acompañar tus eventos.</p>
                     </div>
                 </div>
             </div>
-            
-            <div id="dia-padres" class="tab-content">
-                <div class="offer-card">
-                    <div class="offer-title">👔 Día de los Padres</div>
-                    <div class="offer-desc">Próximamente estaremos publicando nuestras ofertas especiales para el Día de los Padres. ¡Mantente atento!</div>
-                </div>
-            </div>
-            
-            <div id="nochebuena" class="tab-content">
-                <div class="offer-card">
-                    <div class="offer-title">🎄 Nochebuena</div>
-                    <div class="offer-desc">Próximamente estaremos publicando nuestras ofertas especiales para Nochebuena. ¡Mantente atento!</div>
-                </div>
-            </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- RESERVAR PEDIDO -->
-        <section id="reservar">
+    <!-- Ofertas Especiales -->
+    <section id="ofertas" class="section ofertas-section">
+        <div class="container">
+            <h2>🎉 Ofertas Especiales</h2>
+            <p class="ofertas-nota">⚠️ Estas ofertas se programan según las disponibilidades de esos días.</p>
+            
+            <div class="tabs">
+                <div class="tab-buttons">
+                    <button class="tab-btn active" onclick="openTab(event, 'ofertas-casa')">🏠 Ofertas Especiales por la Casa</button>
+                    <button class="tab-btn" onclick="openTab(event, 'dia-madres')">💐 Día de las Madres</button>
+                    <button class="tab-btn" onclick="openTab(event, 'dia-padres')">👔 Día de los Padres</button>
+                    <button class="tab-btn" onclick="openTab(event, 'nochebuena')">🎄 Nochebuena</button>
+                </div>
+
+                <div id="ofertas-casa" class="tab-content active">
+                    <div class="oferta-card">
+                        <h3>🏠 Ofertas Especiales por la Casa</h3>
+                        <p>Próximamente estaremos publicando nuestras ofertas especiales. ¡Mantente atento!</p>
+                    </div>
+                </div>
+
+                <div id="dia-madres" class="tab-content">
+                    <div class="oferta-card madres">
+                        <h3>💐 Día de las Madres</h3>
+                        <p class="oferta-texto">* Tenemos todas las ofertas del Menú Buffet no disponibles - cupos limitados</p>
+                        <p class="oferta-llamada">¿Qué esperas para reservar? ¡APÚRATE!</p>
+                        <a href="https://wa.link/at3sj1" class="btn-reservar parpadeo-verde" target="_blank">📱 Reservar Ahora</a>
+                    </div>
+                </div>
+
+                <div id="dia-padres" class="tab-content">
+                    <div class="oferta-card">
+                        <h3>👔 Día de los Padres</h3>
+                        <p>Próximamente estaremos publicando nuestras ofertas especiales para el Día de los Padres. ¡Mantente atento!</p>
+                    </div>
+                </div>
+
+                <div id="nochebuena" class="tab-content">
+                    <div class="oferta-card">
+                        <h3>🎄 Nochebuena</h3>
+                        <p>Próximamente estaremos publicando nuestras ofertas especiales para Nochebuena. ¡Mantente atento!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Formulario de Reserva -->
+    <section id="reservar" class="section">
+        <div class="container">
             <h2>📝 Reservar Pedido</h2>
             <p>Completa el formulario y te enviaremos el vale de venta por WhatsApp</p>
-            <p style="margin-top:10px; color:#f39c12;"><strong>Horarios de entrega:</strong> De 12:00 del mediodía a 4:00 pm</p>
+            <p><strong>Horarios de entrega:</strong> De 12:00 del mediodía a 4:00 pm</p>
             
-            <form id="pedidoForm">
+            <form id="reservaForm" class="reserva-form">
                 <div class="form-group">
-                    <label for="nombre">Nombre y Apellidos *</label>
+                    <label for="nombre">Nombre completo:</label>
                     <input type="text" id="nombre" name="nombre" required>
                 </div>
                 
                 <div class="form-group">
-                    <label for="telefono">Teléfono *</label>
+                    <label for="telefono">Teléfono:</label>
                     <input type="tel" id="telefono" name="telefono" required>
                 </div>
                 
                 <div class="form-group">
-                    <label for="direccion">Dirección completa (incluyendo municipio) *</label>
-                    <input type="text" id="direccion" name="direccion" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="telefono-alt">Teléfono alternativo</label>
-                    <input type="tel" id="telefono-alt" name="telefono-alt">
-                </div>
-                
-                <div class="form-group">
-                    <label for="fecha">Fecha de entrega *</label>
+                    <label for="fecha">Fecha de entrega:</label>
                     <input type="date" id="fecha" name="fecha" required>
                 </div>
                 
                 <div class="form-group">
-                    <label for="hora">Hora de entrega *</label>
-                    <input type="time" id="hora" name="hora" required>
+                    <label for="direccion">Dirección de entrega:</label>
+                    <textarea id="direccion" name="direccion" rows="3" required></textarea>
                 </div>
                 
                 <div class="form-group">
-                    <label for="oferta">Oferta solicitada *</label>
-                    <select id="oferta" name="oferta" required>
-                        <option value="">Seleccione una oferta...</option>
-                        <option value="porcion">Porción Individual</option>
-                        <option value="cerdo-entero">Cerdo Entero</option>
-                        <option value="buffet-350">Buffet 350 CUP</option>
-                        <option value="buffet-premium">Buffet Premium 400 CUP</option>
-                        <option value="kake-merengue">Kake de Merengue Redondo</option>
-                        <option value="kake-nata">Kake de Nata Redondo</option>
-                        <option value="kake-ganache">Kake Ganache Redondo</option>
-                        <option value="kake-bandej">Kake Tamaño Bandeja</option>
-                        <option value="dulces">Dulces Variados</option>
-                        <option value="pizza">Pizzas Familiares</option>
-                        <option value="ensalada">Cubeta de Ensalada Fría 4L</option>
+                    <label for="producto">Producto:</label>
+                    <select id="producto" name="producto" required>
+                        <option value="">Seleccione...</option>
+                        <option value="cena">Cena Criolla</option>
+                        <option value="buffet350">Buffet 350 CUP</option>
+                        <option value="buffet400">Buffet Premium 400 CUP</option>
+                        <option value="cubeta">Cubeta de Ensalada Fría 4000 CUP</option>
                     </select>
                 </div>
                 
-                <div class="checkbox-group">
-                    <input type="checkbox" id="mensajeria" name="mensajeria">
-                    <label for="mensajeria" style="margin-bottom:0;">¿Necesita mensajería? (5,000 CUP)</label>
-                </div>
-                <p style="font-size:0.9em; color:#ccc; margin-bottom:20px;">Se añadirá 5,000 CUP por servicio de mensajería/delivery al importe total.</p>
-                
-                <h3 style="margin-top:25px;">Añadir Productos del Buffet (Opcional)</h3>
-                <p style="margin-bottom:15px; color:#ccc;">Seleccione la cantidad deseada de cada producto. Se sumarán al importe total de su pedido.</p>
-                
                 <div class="form-group">
-                    <label for="cant-merengue">Kake de Merengue Redondo (3,000 CUP)</label>
-                    <input type="number" id="cant-merengue" name="cant-merengue" min="0" value="0">
-                </div>
-                <div class="form-group">
-                    <label for="cant-nata">Kake de Nata Redondo (4,000 CUP)</label>
-                    <input type="number" id="cant-nata" name="cant-nata" min="0" value="0">
-                </div>
-                <div class="form-group">
-                    <label for="cant-ganache">Kake Ganache Redondo (5,000 CUP)</label>
-                    <input type="number" id="cant-ganache" name="cant-ganache" min="0" value="0">
-                </div>
-                <div class="form-group">
-                    <label for="cant-bandej">Kake Tamaño Bandeja (8,000 CUP)</label>
-                    <input type="number" id="cant-bandej" name="cant-bandej" min="0" value="0">
-                </div>
-                <div class="form-group">
-                    <label for="cant-dulces">Dulces Variados - cantidad (80 CUP c/u)</label>
-                    <input type="number" id="cant-dulces" name="cant-dulces" min="0" value="0">
-                </div>
-                <div class="form-group">
-                    <label for="cant-pizza">Pizzas Familiares (2,000 CUP)</label>
-                    <input type="number" id="cant-pizza" name="cant-pizza" min="0" value="0">
-                </div>
-                <div class="form-group">
-                    <label for="cant-buffet350">Buffet 350 CUP</label>
-                    <input type="number" id="cant-buffet350" name="cant-buffet350" min="0" value="0">
-                </div>
-                <div class="form-group">
-                    <label for="cant-buffet400">Buffet Premium 400 CUP</label>
-                    <input type="number" id="cant-buffet400" name="cant-buffet400" min="0" value="0">
-                </div>
-                <div class="form-group">
-                    <label for="cant-ensalada">Cubeta de Ensalada Fría 4L (4,000 CUP)</label>
-                    <input type="number" id="cant-ensalada" name="cant-ensalada" min="0" value="0">
+                    <label for="cantidad">Cantidad:</label>
+                    <input type="number" id="cantidad" name="cantidad" min="1" value="1" required>
                 </div>
                 
                 <div class="form-group">
-                    <label for="notas">Notas adicionales</label>
-                    <textarea id="notas" name="notas" placeholder="Indique aquí cualquier detalle adicional..."></textarea>
+                    <label for="notas">Notas adicionales:</label>
+                    <textarea id="notas" name="notas" rows="3"></textarea>
                 </div>
                 
-                <div class="summary-box">
-                    <h4>📋 Resumen del Pedido</h4>
-                    <p style="color:#ccc;">Seleccione una oferta para ver el resumen...</p>
-                </div>
-                
-                <button type="submit" class="btn" style="margin-top:20px; width:100%;">📩 Enviar Pedido por WhatsApp</button>
+                <button type="submit" class="btn-submit">Enviar Pedido</button>
             </form>
-            
-            <div class="summary-box" style="margin-top:30px;">
-                <h4>🧾 Vale de Venta - Vista Previa</h4>
-                <p style="color:#ccc;">El vale de venta se generará automáticamente al enviar el formulario.</p>
-            </div>
-        </section>
 
-        <!-- PREGUNTAS FRECUENTES -->
-        <section id="faq">
+            <div class="vale-preview">
+                <h4>🧾 Vale de Venta - Vista Previa</h4>
+                <p>El vale de venta se generará automáticamente al enviar el formulario.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Preguntas Frecuentes -->
+    <section id="faq" class="section faq-section">
+        <div class="container">
             <h2>❓ Preguntas Frecuentes</h2>
             
             <div class="faq-item">
-                <div class="faq-question">¿De dónde son?</div>
-                <div class="faq-answer">Somos de Jaruco, Mayabeque.</div>
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    ¿De dónde son?
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="faq-answer">
+                    <p>Somos de Jaruco, Mayabeque.</p>
+                </div>
             </div>
             
             <div class="faq-item">
-                <div class="faq-question">¿Hasta dónde llegan sus servicios?</div>
-                <div class="faq-answer">Hasta casi todo Mayabeque, La Habana y todos sus municipios.</div>
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    ¿Hasta dónde llegan sus servicios?
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="faq-answer">
+                    <p>Hasta casi todo Mayabeque, La Habana y todos sus municipios.</p>
+                </div>
             </div>
             
             <div class="faq-item">
-                <div class="faq-question">¿Con cuánta anticipación debo reservar?</div>
-                <div class="faq-answer">Mínimo un día antes, siempre antes de las 5:00 pm. Máximo a 7 días antes del día que necesita el servicio es suficiente tiempo para gestionar.</div>
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    ¿Con cuánta anticipación debo reservar?
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="faq-answer">
+                    <p>Mínimo un día antes, siempre antes de las 5:00 pm. Máximo a 7 días antes del día que necesita el servicio es suficiente tiempo para gestionar.</p>
+                </div>
             </div>
             
             <div class="faq-item">
-                <div class="faq-question">¿Qué métodos de pago aceptan?</div>
-                <div class="faq-answer">Aceptamos pago por Zelle desde EUA, en dólares y euros en efectivo con la tasa que fija el negocio (siempre debe preguntar). También se acepta efectivo y transferencia en la moneda nacional a los precios fijados en el Menú.</div>
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    ¿Qué métodos de pago aceptan?
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="faq-answer">
+                    <p>Aceptamos pago por Zelle desde EUA, en dólares y euros en efectivo con la tasa que fija el negocio (siempre debe preguntar). También se acepta efectivo y transferencia en la moneda nacional a los precios fijados en el Menú.</p>
+                </div>
             </div>
             
             <div class="faq-item">
-                <div class="faq-question">¿El servicio de mensajería cubre toda La Habana?</div>
-                <div class="faq-answer">Sí, realizamos entregas en todos los municipios de La Habana. El costo de mensajería es de 5,000 CUP por pedido.</div>
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    ¿El servicio de mensajería cubre toda La Habana?
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="faq-answer">
+                    <p>Sí, realizamos entregas en todos los municipios de La Habana. El costo de mensajería es de 5,000 CUP por pedido.</p>
+                </div>
             </div>
             
             <div class="faq-item">
-                <div class="faq-question">¿Puedo personalizar el menú?</div>
-                <div class="faq-answer">Las cenas incluyen los acompañamientos estándar (congrí, ensalada, yuca con mojo y aliño). Puede añadir productos del buffet a su pedido. Para modificaciones especiales, indíquelas en las notas adicionales.</div>
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    ¿Puedo personalizar el menú?
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="faq-answer">
+                    <p>Las cenas incluyen los acompañamientos estándar (congrí, ensalada, yuca con mojo y aliño). Puede añadir productos del buffet a su pedido. Para modificaciones especiales, indíquelas en las notas adicionales.</p>
+                </div>
             </div>
             
             <div class="faq-item">
-                <div class="faq-question">¿El buffet está incluido en la cena?</div>
-                <div class="faq-answer">No, el buffet es opcional y se cotiza por separado. Puede añadir productos del buffet a su pedido de cena en el formulario de reserva. Se sumarán al importe total.</div>
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    ¿El buffet está incluido en la cena?
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="faq-answer">
+                    <p>No, el buffet es opcional y se cotiza por separado. Puede añadir productos del buffet a su pedido de cena en el formulario de reserva. Se sumarán al importe total.</p>
+                </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- CONTACTO -->
-        <section id="contacto">
+    <!-- Contacto -->
+    <section id="contacto" class="section contacto-section">
+        <div class="container">
             <h2>📞 Contacto</h2>
-            <p style="text-align:center; margin-bottom:20px;">¿Tienes dudas? ¡Escríbenos por WhatsApp!</p>
-            <div style="text-align:center;">
-                <a href="https://wa.link/at3sj1" target="_blank" class="btn btn-green" style="font-size:1.2em;">
-                    💬 Chatear por WhatsApp
-                </a>
-            </div>
-        </section>
-    </div>
+            <p>¿Tienes dudas? ¡Escríbenos por WhatsApp!</p>
+            <a href="https://wa.link/at3sj1" class="btn-whatsapp" target="_blank">
+                <i class="fab fa-whatsapp"></i> Escríbenos por WhatsApp
+            </a>
+        </div>
+    </section>
 
-    <!-- BOTÓN FLOTANTE WHATSAPP -->
-    <div class="whatsapp-float">
-        <a href="https://wa.link/at3sj1" target="_blank">
-            <span class="whatsapp-icon">💬</span>
-            <span>INFORMACIÓN</span>
-        </a>
-    </div>
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>© Comidas Criollas Habana. Todos los derechos reservados.</p>
+        </div>
+    </footer>
 
-    <script>
-        function openTab(evt, tabName) {
-            var i, tabcontent, tabbuttons;
-            
-            tabcontent = document.getElementsByClassName("tab-content");
-            for (i = 0; i < tabcontent.length; i++) {
-                tabcontent[i].classList.remove("active");
-            }
-            
-            tabbuttons = document.getElementsByClassName("tab-btn");
-            for (i = 0; i < tabbuttons.length; i++) {
-                tabbuttons[i].classList.remove("active");
-            }
-            
-            document.getElementById(tabName).classList.add("active");
-            evt.currentTarget.classList.add("active");
-        }
-        
-        document.getElementById('pedidoForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            var nombre = document.getElementById('nombre').value;
-            var telefono = document.getElementById('telefono').value;
-            var direccion = document.getElementById('direccion').value;
-            var telefonoAlt = document.getElementById('telefono-alt').value;
-            var fecha = document.getElementById('fecha').value;
-            var hora = document.getElementById('hora').value;
-            var oferta = document.getElementById('oferta').value;
-            var mensajeria = document.getElementById('mensajeria').checked;
-            var notas = document.getElementById('notas').value;
-            
-            var mensaje = "*NUEVO PEDIDO - Comidas Criollas Habana*%0A%0A";
-            mensaje += "*Nombre:* " + nombre + "%0A";
-            mensaje += "*Teléfono:* " + telefono + "%0A";
-            mensaje += "*Dirección:* " + direccion + "%0A";
-            if (telefonoAlt) mensaje += "*Tel. Alternativo:* " + telefonoAlt + "%0A";
-            mensaje += "*Fecha:* " + fecha + "%0A";
-            mensaje += "*Hora:* " + hora + "%0A";
-            mensaje += "*Oferta:* " + oferta + "%0A";
-            mensaje += "*Mensajería:* " + (mensajeria ? "Sí (+5,000 CUP)" : "No") + "%0A";
-            if (notas) mensaje += "*Notas:* " + notas + "%0A";
-            
-            window.open("https://wa.link/at3sj1?text=" + mensaje, "_blank");
-        });
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
