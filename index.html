@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>COMIDAS CRIOLLAS HABANA DON BELLO</title>
+    <title>Don Bello - Comidas Criollas Cuba</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
         :root {
@@ -99,24 +99,99 @@
             border-radius: 2px;
         }
 
-        .announcement-banner {
-            background: linear-gradient(90deg, var(--color-offer), #FF4500);
-            color: white;
+        .special-offers-section {
+            background: linear-gradient(145deg, #4A2510, #2D1405);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 30px auto;
+            max-width: 1200px;
+            border: 2px solid var(--color-gold);
+        }
+
+        .special-offers-section h2 {
+            color: var(--color-gold);
             text-align: center;
-            padding: 12px 20px;
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+        }
+
+        .offer-accordion {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .offer-btn {
+            width: 100%;
+            padding: 18px 25px;
+            background: linear-gradient(135deg, var(--color-primary), #5D2E0C);
+            color: white;
+            border: 2px solid var(--color-gold);
+            border-radius: 15px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            text-align: left;
+        }
+
+        .offer-btn:hover {
+            background: linear-gradient(135deg, #5D2E0C, var(--color-primary));
+            transform: translateX(5px);
+        }
+
+        .offer-btn.active {
+            background: linear-gradient(135deg, var(--color-green), var(--color-green-dark));
+            border-color: var(--color-green);
+            animation: heartbeat 1.5s infinite;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.4); }
+            14% { transform: scale(1.03); box-shadow: 0 0 0 10px rgba(37, 211, 102, 0); }
+            28% { transform: scale(1); }
+            42% { transform: scale(1.03); box-shadow: 0 0 0 10px rgba(37, 211, 102, 0); }
+            70% { transform: scale(1); }
+        }
+
+        .offer-btn i {
+            font-size: 1.3rem;
+            transition: transform 0.3s ease;
+        }
+
+        .offer-btn.active i {
+            transform: rotate(180deg);
+        }
+
+        .offer-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.4s ease;
+            background: rgba(0,0,0,0.3);
+            border-radius: 0 0 15px 15px;
+            margin-top: -10px;
+            margin-bottom: 10px;
+        }
+
+        .offer-content.open {
+            max-height: 500px;
+            padding: 20px 25px;
+        }
+
+        .offer-content p {
+            color: #ddd;
+            line-height: 1.8;
+            margin-bottom: 10px;
+        }
+
+        .offer-content .not-available {
+            color: var(--color-red);
             font-weight: bold;
             font-size: 1.1rem;
-            position: relative;
-            overflow: hidden;
-            animation: pulse 2s infinite;
         }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.85; }
-        }
-
-        .announcement-banner i { margin-right: 8px; }
 
         .menu-grid {
             display: grid;
@@ -175,6 +250,36 @@
         .menu-card .includes ul li::before {
             content: "✓ ";
             color: var(--color-green);
+            font-weight: bold;
+        }
+
+        .menu-card .buffet-includes {
+            background: rgba(0,0,0,0.3);
+            padding: 12px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .menu-card .buffet-includes h4 {
+            color: var(--color-light);
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+        }
+
+        .menu-card .buffet-includes ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .menu-card .buffet-includes ul li {
+            padding: 3px 0;
+            font-size: 0.9rem;
+            color: #ddd;
+        }
+
+        .menu-card .buffet-includes ul li::before {
+            content: "• ";
+            color: var(--color-gold);
             font-weight: bold;
         }
 
@@ -338,18 +443,34 @@
             padding: 15px;
             background: rgba(0,0,0,0.2);
             border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .checkbox-group:hover {
+            background: rgba(255,255,255,0.05);
+        }
+
+        .checkbox-group.error {
+            border-color: var(--color-red);
+            background: rgba(220, 53, 69, 0.15);
         }
 
         .checkbox-group input[type="checkbox"] {
             width: 22px;
             height: 22px;
             accent-color: var(--color-green);
+            cursor: pointer;
+            flex-shrink: 0;
         }
 
         .checkbox-group label {
             color: var(--color-light);
             font-size: 1rem;
             margin: 0;
+            cursor: pointer;
+            flex: 1;
         }
 
         .delivery-info {
@@ -367,6 +488,29 @@
             color: var(--color-green);
             font-size: 0.9rem;
             margin: 0;
+        }
+
+        .mensajeria-error {
+            color: var(--color-red);
+            font-size: 0.9rem;
+            margin-top: 8px;
+            display: none;
+            font-weight: 600;
+            padding: 8px 12px;
+            background: rgba(220, 53, 69, 0.15);
+            border-radius: 8px;
+            border-left: 3px solid var(--color-red);
+        }
+
+        .mensajeria-error.visible {
+            display: block;
+            animation: shake 0.5s ease;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
         }
 
         .selected-summary {
@@ -732,6 +876,7 @@
             .menu-grid { grid-template-columns: 1fr; }
             .buffet-grid { grid-template-columns: 1fr; }
             .social-link { min-width: 100%; }
+            .offer-btn { font-size: 1rem; padding: 15px 20px; }
         }
     </style>
 </head>
@@ -740,11 +885,12 @@
     <div id="toast" class="toast"></div>
 
     <header class="header">
-        <h1><i class="fas fa-utensils"></i> COMIDAS CRIOLLAS HABANA DON BELLO</h1>
+        <h1><i class="fas fa-utensils"></i> Don Bello</h1>
         <p>Comidas Criollas Cuba - Sabor y Tradición</p>
     </header>
 
     <nav class="nav-menu">
+        <a href="#ofertas-especiales"><i class="fas fa-star"></i> Ofertas Especiales</a>
         <a href="#cenas"><i class="fas fa-drumstick-bite"></i> Cenas Criollas</a>
         <a href="#buffet"><i class="fas fa-birthday-cake"></i> Buffet</a>
         <a href="#reservar"><i class="fas fa-calendar-check"></i> Reservar</a>
@@ -752,10 +898,44 @@
         <a href="#contacto"><i class="fas fa-phone"></i> Contacto</a>
     </nav>
 
-    <div class="announcement-banner" id="announcementBanner">
-        <i class="fas fa-bullhorn"></i>
-        <span id="announcementText">🎉 Oferta Especial: Envío GRATIS en pedidos superiores a 80,000 CUP</span>
-    </div>
+    <!-- SECCIÓN OFERTAS ESPECIALES PLEGABLE -->
+    <section class="special-offers-section" id="ofertas-especiales">
+        <h2><i class="fas fa-gift"></i> Ofertas Especiales</h2>
+        <div class="offer-accordion">
+            <button class="offer-btn" onclick="toggleOffer(this, 'oferta-casa')">
+                <span><i class="fas fa-home"></i> Ofertas de la Casa</span>
+                <i class="fas fa-chevron-down"></i>
+            </button>
+            <div class="offer-content" id="oferta-casa">
+                <p>Próximamente estaremos publicando nuestras ofertas especiales de la casa. ¡Mantente atento a nuestras novedades!</p>
+            </div>
+
+            <button class="offer-btn active" onclick="toggleOffer(this, 'oferta-madres')">
+                <span><i class="fas fa-heart"></i> Oferta Día de las Madres</span>
+                <i class="fas fa-chevron-down"></i>
+            </button>
+            <div class="offer-content open" id="oferta-madres">
+                <p>Tenemos todas las ofertas del menú de comidas criolla puede solicitar ya sin costo adicional por reservar y aclarar en la pestaña: <strong>Notas adicionales</strong> que es para ese día especial y pone la fecha también.</p>
+                <p class="not-available"><i class="fas fa-times-circle"></i> Buffet no disponible</p>
+            </div>
+
+            <button class="offer-btn" onclick="toggleOffer(this, 'oferta-padres')">
+                <span><i class="fas fa-male"></i> Oferta Día de los Padres</span>
+                <i class="fas fa-chevron-down"></i>
+            </button>
+            <div class="offer-content" id="oferta-padres">
+                <p>Próximamente estaremos publicando nuestra oferta especial para el Día de los Padres. ¡Mantente atento!</p>
+            </div>
+
+            <button class="offer-btn" onclick="toggleOffer(this, 'oferta-nochebuena')">
+                <span><i class="fas fa-tree"></i> Ofertas Nochebuena</span>
+                <i class="fas fa-chevron-down"></i>
+            </button>
+            <div class="offer-content" id="oferta-nochebuena">
+                <p>Próximamente estaremos publicando nuestras ofertas especiales para Nochebuena. ¡Mantente atento!</p>
+            </div>
+        </div>
+    </section>
 
     <section class="section" id="cenas">
         <h2 class="section-title"><i class="fas fa-drumstick-bite"></i> Cenas Criollas</h2>
@@ -766,23 +946,15 @@
         <p style="text-align:center; color:#aaa; margin-bottom:25px; font-size:0.9rem;">
             <i class="fas fa-info-circle"></i> La cena puede venir con un cerdo entero o puede traer un cerdo menor con alguna pieza para completar la cantidad de comensales. El pesaje de los cerdos es en pie.
         </p>
+        <p style="text-align:center; color:#ff6b6b; margin-bottom:25px; font-size:0.9rem; font-weight:bold;">
+            <i class="fas fa-exclamation-triangle"></i> RECORDARLES QUE EL PESAJE DE LOS CERDOS ES EN PIE, NUNCA VA A LLEGAR LA CANTIDAD DE CARNE ASADA QUE DICE EL CERDO DE LA OFERTA, POR ESO LAS CENAS ESTÁN DISEÑADAS PARA ESA CANTIDAD DE COMENSALES. (NO DAMOS PESAJE EN KG — PREPARAMOS LA OFERTA POR CANTIDAD DE COMENSALES)
+        </p>
 
         <h3 style="color:var(--color-gold); margin-bottom:20px; text-align:center;"><i class="fas fa-piggy-bank"></i> Porciones</h3>
         <div class="menu-grid" id="porcionesGrid"></div>
 
         <h3 style="color:var(--color-gold); margin:40px 0 20px; text-align:center;"><i class="fas fa-piggy-bank"></i> Cerdo Entero</h3>
         <div class="menu-grid" id="cerdoGrid"></div>
-        
-        <div style="background: rgba(255,0,0,0.15); border: 2px solid #c62828; border-radius: 12px; padding: 20px; margin: 30px auto; max-width: 900px; text-align: center;">
-            <p style="color: #ff6b6b; font-weight: bold; font-size: 1.05rem; margin: 0;">
-                <i class="fas fa-exclamation-triangle"></i> IMPORTANTE: LA CENA PUEDE VENIR CON UN CERDO ENTERO O PUEDE TRAER UN CERDO MENOR CON ALGUNA PIEZA PARA COMPLETAR LA CANTIDAD DE COMENSALES.
-            </p>
-        </div>
-        <div style="background: rgba(255,165,0,0.1); border: 1px solid var(--color-gold); border-radius: 12px; padding: 20px; margin: 20px auto; max-width: 900px; text-align: center;">
-            <p style="color: var(--color-light); font-size: 0.95rem; margin: 0;">
-                <i class="fas fa-info-circle"></i> RECORDARLES QUE EL PESAJE DE LOS CERDOS ES EN PIE, NUNCA VA A LLEGAR LA CANTIDAD DE CARNE ASADA QUE DICE EL CERDO DE LA OFERTA, POR ESO LAS CENAS ESTÁN DISEÑADAS PARA ESA CANTIDAD DE COMENSALES. <strong style="color: var(--color-gold);">NO DAMOS PESAJE EN KG — PREPARAMOS LA OFERTA POR CANTIDAD DE COMENSALES.</strong>
-            </p>
-        </div>
     </section>
 
     <section class="section" id="buffet">
@@ -843,9 +1015,12 @@
                     </div>
                 </div>
 
-                <div class="checkbox-group">
+                <div class="checkbox-group" id="mensajeriaGroup">
                     <input type="checkbox" id="mensajeria" name="mensajeria">
                     <label for="mensajeria"><i class="fas fa-motorcycle"></i> ¿Necesita mensajería? (5,000 CUP)</label>
+                </div>
+                <div class="mensajeria-error" id="mensajeriaError">
+                    <i class="fas fa-exclamation-circle"></i> Debe marcar si necesita o no mensajería para continuar
                 </div>
                 <div class="delivery-info" id="deliveryInfo">
                     <p><i class="fas fa-info-circle"></i> Se añadirá 5,000 CUP por servicio de mensajería/delivery al importe total.</p>
@@ -894,6 +1069,15 @@
     <section class="section" id="faq">
         <h2 class="section-title"><i class="fas fa-question-circle"></i> Preguntas Frecuentes</h2>
         <div class="faq-container">
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span><i class="fas fa-map-marker-alt"></i> ¿De dónde somos?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Somos Don Bello, una empresa dedicada a las comidas criollas en Cuba. Realizamos entregas en La Habana y todos sus municipios, llevando el auténtico sabor de la cocina criolla cubana hasta la puerta de su casa.</p>
+                </div>
+            </div>
             <div class="faq-item">
                 <div class="faq-question" onclick="toggleFaq(this)">
                     <span><i class="fas fa-clock"></i> ¿Con cuánta anticipación debo reservar?</span>
@@ -957,7 +1141,6 @@
                 </div>
             </div>
 
-            <!-- REDES SOCIALES -->
             <div class="social-section">
                 <h3><i class="fas fa-share-alt"></i> Síguenos en Facebook</h3>
                 <div class="social-links">
@@ -972,7 +1155,6 @@
                 </div>
             </div>
 
-            <!-- VALORACIÓN POR ESTRELLAS -->
             <div class="rating-section">
                 <h3><i class="fas fa-star"></i> Valora Nuestro Servicio</h3>
                 <p>Tu opinión nos ayuda a mejorar. Selecciona una calificación y déjanos tu comentario.</p>
@@ -1002,7 +1184,7 @@
     </a>
 
     <script>
-        const porciones = [
+           const porciones = [
             { id: 'p1', name: 'Lomo para 20-22 comensales', price: 50000, comensales: '20-22 comensales' },
             { id: 'p2', name: 'Pierna para 20-22 comensales', price: 50000, comensales: '20-22 comensales' },
             { id: 'p3', name: 'Masas para 25-30 comensales', price: 60000, comensales: '25-30 comensales' },
@@ -1012,17 +1194,17 @@
         ];
 
         const cerdos = [
-            { id: 'c1', name: 'Cerdo para 20 comensales', price: 67000, comensales: '20 comensales' },
-            { id: 'c2', name: 'Cerdo para 30 comensales', price: 69000, comensales: '30 comensales' },
-            { id: 'c3', name: 'Cerdo para 40 comensales', price: 73000, comensales: '40 comensales' },
-            { id: 'c4', name: 'Cerdo para 50 comensales', price: 81000, comensales: '50 comensales' },
-            { id: 'c5', name: 'Cerdo para 60 comensales', price: 84000, comensales: '60 comensales' },
-            { id: 'c6', name: 'Cerdo para 70 comensales', price: 95000, comensales: '70 comensales' },
-            { id: 'c7', name: 'Cerdo para 80 comensales', price: 113000, comensales: '80 comensales' },
-            { id: 'c8', name: 'Cerdo para 90 comensales', price: 120000, comensales: '90 comensales' },
-            { id: 'c9', name: 'Cerdo para 100 comensales', price: 127000, comensales: '100 comensales' },
-            { id: 'c10', name: 'Cerdo para 110 comensales', price: 135000, comensales: '110 comensales' },
-            { id: 'c11', name: 'Cerdo para 120 comensales', price: 150000, comensales: '120 comensales' },
+            { id: 'c1', name: 'Cerdo para 20 comensales', price: 67000, comensales: '~20 comensales' },
+            { id: 'c2', name: 'Cerdo para 30 comensales', price: 69000, comensales: '~30 comensales' },
+            { id: 'c3', name: 'Cerdo para 40 comensales', price: 73000, comensales: '~40 comensales' },
+            { id: 'c4', name: 'Cerdo para 50 comensales', price: 81000, comensales: '~50 comensales' },
+            { id: 'c5', name: 'Cerdo para 60 comensales', price: 84000, comensales: '~60 comensales' },
+            { id: 'c6', name: 'Cerdo para 70 comensales', price: 95000, comensales: '~70 comensales' },
+            { id: 'c7', name: 'Cerdo para 80 comensales', price: 113000, comensales: '~80 comensales' },
+            { id: 'c8', name: 'Cerdo para 90 comensales', price: 120000, comensales: '~90 comensales' },
+            { id: 'c9', name: 'Cerdo para 100 comensales', price: 127000, comensales: '~100 comensales' },
+            { id: 'c10', name: 'Cerdo para 110 comensales', price: 135000, comensales: '~110 comensales' },
+            { id: 'c11', name: 'Cerdo para 120 comensales', price: 150000, comensales: '~120 comensales' },
         ];
 
         const buffetItems = [
@@ -1032,9 +1214,9 @@
             { id: 'b4', name: 'Kake Tamaño Bandeja', price: 8000 },
             { id: 'b5', name: 'Dulces Variados (c/u)', price: 80 },
             { id: 'b6', name: 'Pizzas Familiares', price: 2000 },
-            { id: 'b7', name: 'Combo Bocaditos Básico', price: 350 },
-            { id: 'b8', name: 'Combo Bocaditos Premium', price: 400 },
-            { id: 'b9', name: 'Cubeta de Refresco 4L', price: 4000 },
+            { id: 'b7', name: 'Bufet', price: 350, includes: ['Una panetela', 'Una minidona', 'Un minieclair', 'Una croqueta', 'Un bocadito', 'En termo retractilado'] },
+            { id: 'b8', name: 'Buffet premium', price: 400, includes: ['Una panetela', 'Una minidona', 'Un minieclair', 'Una croqueta', 'Un bocadito', '+ Capacillo de ensalada fria', 'En termo retractilado'] },
+            { id: 'b9', name: 'Cubeta de ensalada fria 4L', price: 4000 },
         ];
 
         const includes = ['Congrí', 'Ensalada de estación', 'Yuca con mojo', 'Pomo de aliño'];
@@ -1053,6 +1235,7 @@
             setupEventListeners();
             setupStarRating();
             setMinDate();
+            setupMensajeriaValidation();
         });
 
         function setMinDate() {
@@ -1095,15 +1278,29 @@
 
         function renderBuffetMenu() {
             const grid = document.getElementById('buffetMenuGrid');
-            grid.innerHTML = buffetItems.map(b => `
-                <div class="menu-card">
-                    <h3><i class="fas fa-cookie-bite"></i> ${b.name}</h3>
-                    <div class="price">${b.price.toLocaleString()} CUP</div>
-                    <p style="text-align:center; color:#aaa; font-size:0.9rem; margin-top:10px;">
-                        <i class="fas fa-info-circle"></i> Disponible como adicional en su pedido
-                    </p>
-                </div>
-            `).join('');
+            grid.innerHTML = buffetItems.map(b => {
+                let includesHtml = '';
+                if (b.includes) {
+                    includesHtml = `
+                        <div class="buffet-includes">
+                            <h4><i class="fas fa-list"></i> Contiene:</h4>
+                            <ul>
+                                ${b.includes.map(i => `<li>${i}</li>`).join('')}
+                            </ul>
+                        </div>
+                    `;
+                }
+                return `
+                    <div class="menu-card">
+                        <h3><i class="fas fa-cookie-bite"></i> ${b.name}</h3>
+                        ${includesHtml}
+                        <div class="price">${b.price.toLocaleString()} CUP</div>
+                        <p style="text-align:center; color:#aaa; font-size:0.9rem; margin-top:10px;">
+                            <i class="fas fa-info-circle"></i> Disponible como adicional en su pedido
+                        </p>
+                    </div>
+                `;
+            }).join('');
         }
 
         function renderBuffetOrder() {
@@ -1128,7 +1325,7 @@
             allItems.forEach(item => {
                 const option = document.createElement('option');
                 option.value = item.id;
-                option.textContent = `${item.name} — ${item.price.toLocaleString()} CUP`;
+                option.textContent = `${item.name} - ${item.price.toLocaleString()} CUP`;
                 option.dataset.type = item.type;
                 select.appendChild(option);
             });
@@ -1178,11 +1375,29 @@
             selectOffer(id, type);
         });
 
-        document.getElementById('mensajeria').addEventListener('change', function() {
-            deliveryCost = this.checked ? 5000 : 0;
-            document.getElementById('deliveryInfo').classList.toggle('visible', this.checked);
-            updateSummary();
-        });
+        function setupMensajeriaValidation() {
+            const checkbox = document.getElementById('mensajeria');
+            const group = document.getElementById('mensajeriaGroup');
+            const error = document.getElementById('mensajeriaError');
+            const deliveryInfo = document.getElementById('deliveryInfo');
+
+            checkbox.addEventListener('change', function() {
+                deliveryCost = this.checked ? 5000 : 0;
+                deliveryInfo.classList.toggle('visible', this.checked);
+                
+                group.classList.remove('error');
+                error.classList.remove('visible');
+                
+                updateSummary();
+            });
+
+            group.addEventListener('click', function(e) {
+                if (e.target !== checkbox && e.target.tagName !== 'LABEL') {
+                    checkbox.checked = !checkbox.checked;
+                    checkbox.dispatchEvent(new Event('change'));
+                }
+            });
+        }
 
         function updateSummary() {
             const container = document.getElementById('summaryContent');
@@ -1250,6 +1465,18 @@
                 return;
             }
 
+            const mensajeriaCheckbox = document.getElementById('mensajeria');
+            const mensajeriaGroup = document.getElementById('mensajeriaGroup');
+            const mensajeriaError = document.getElementById('mensajeriaError');
+            
+            if (!mensajeriaCheckbox.hasAttribute('data-touched')) {
+                mensajeriaGroup.classList.add('error');
+                mensajeriaError.classList.add('visible');
+                showToast('❌ Debe indicar si necesita mensajería', 'error');
+                mensajeriaGroup.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                return;
+            }
+
             const formData = new FormData(this);
             const data = Object.fromEntries(formData);
 
@@ -1265,6 +1492,10 @@
             document.getElementById('voucherPreview').scrollIntoView({ behavior: 'smooth' });
 
             showToast('✅ Vale generado. Presione "Enviar por WhatsApp" para completar el pedido.');
+        });
+
+        document.getElementById('mensajeria').addEventListener('change', function() {
+            this.setAttribute('data-touched', 'true');
         });
 
         function buildVoucherText(data) {
@@ -1318,6 +1549,19 @@
             text += `🌐 Comidas Criollas Cuba`;
 
             return text;
+        }
+
+        function toggleOffer(btn, contentId) {
+            const content = document.getElementById(contentId);
+            const isOpen = content.classList.contains('open');
+            
+            document.querySelectorAll('.offer-content').forEach(c => c.classList.remove('open'));
+            document.querySelectorAll('.offer-btn').forEach(b => b.classList.remove('active'));
+            
+            if (!isOpen) {
+                content.classList.add('open');
+                btn.classList.add('active');
+            }
         }
 
         function toggleFaq(element) {
