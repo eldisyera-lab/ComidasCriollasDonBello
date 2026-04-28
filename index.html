@@ -99,25 +99,6 @@
             border-radius: 2px;
         }
 
-        .announcement-banner {
-            background: linear-gradient(90deg, var(--color-offer), #FF4500);
-            color: white;
-            text-align: center;
-            padding: 12px 20px;
-            font-weight: bold;
-            font-size: 1.1rem;
-            position: relative;
-            overflow: hidden;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.85; }
-        }
-
-        .announcement-banner i { margin-right: 8px; }
-
         .menu-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -865,11 +846,6 @@
         <a href="#contacto"><i class="fas fa-phone"></i> Contacto</a>
     </nav>
 
-    <div class="announcement-banner" id="announcementBanner">
-        <i class="fas fa-bullhorn"></i>
-        <span id="announcementText">🎉 Oferta Especial: Envío GRATIS en pedidos superiores a 80,000 CUP</span>
-    </div>
-
     <section class="section" id="cenas">
         <h2 class="section-title"><i class="fas fa-drumstick-bite"></i> Cenas Criollas</h2>
         <p style="text-align:center; color:#ccc; margin-bottom:25px;">
@@ -919,7 +895,7 @@
             <div id="dia-madres" class="tab-content">
                 <div class="oferta-card madres">
                     <h3>💐 Día de las Madres</h3>
-                    <p class="oferta-texto">* Tenemos todas las ofertas del Menú Buffet no disponibles - cupos limitados</p>
+                    <p class="oferta-texto">* Tenemos todas las ofertas del Menú<br>* Buffet no disponibles (AGOTADOS)</p>
                     <p class="oferta-llamada">¿Qué esperas para reservar? ¡APÚRATE!</p>
                     <a href="https://wa.link/at3sj1" class="btn-select parpadeo-verde" target="_blank" style="max-width:300px; margin:0 auto;">
                         <i class="fab fa-whatsapp"></i> Reservar Ahora
@@ -994,7 +970,7 @@
 
                 <div class="checkbox-group">
                     <input type="checkbox" id="mensajeria" name="mensajeria">
-                    <label for="mensajeria"><i class="fas fa-motorcycle"></i> ¿Necesita mensajería? (5,000 CUP)</label>
+                    <label for="mensajeria"><i class="fas fa-motorcycle"></i> ¿Necesita mensajería? (5,000 CUP) *</label>
                 </div>
                 <div class="delivery-info" id="deliveryInfo">
                     <p><i class="fas fa-info-circle"></i> Se añadirá 5,000 CUP por servicio de mensajería/delivery al importe total.</p>
@@ -1414,6 +1390,13 @@
             if (!selectedOffer) {
                 showToast('❌ Por favor seleccione una oferta primero', 'error');
                 document.getElementById('cenas').scrollIntoView({ behavior: 'smooth' });
+                return;
+            }
+
+            // VALIDACIÓN: Mensajería obligatoria
+            if (!document.getElementById('mensajeria').checked) {
+                showToast('❌ Debe marcar la opción de mensajería para crear el vale de despacho', 'error');
+                document.getElementById('mensajeria').focus();
                 return;
             }
 
