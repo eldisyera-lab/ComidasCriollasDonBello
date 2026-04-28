@@ -4,388 +4,1104 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Comidas Criollas Habana</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
-        /* ========== CSS COMPLETO ========== */
+        :root {
+            --color-primary: #8B4513;
+            --color-secondary: #3E1F0A;
+            --color-accent: #D2691E;
+            --color-gold: #DAA520;
+            --color-light: #FFF8DC;
+            --color-white: #FFFFFF;
+            --color-green: #25D366;
+            --color-green-dark: #128C7E;
+            --color-red: #DC3545;
+            --color-offer: #FF6B35;
+        }
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; background-color: #f8f9fa; }
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
 
-        /* WhatsApp flotante */
-        .whatsapp-float { position: fixed; bottom: 30px; right: 30px; background-color: #25d366; color: white; padding: 15px 25px; border-radius: 50px; text-decoration: none; font-weight: bold; display: flex; align-items: center; gap: 10px; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4); z-index: 1000; transition: all 0.3s ease; animation: pulse 2s infinite; }
-        .whatsapp-float:hover { transform: scale(1.05); box-shadow: 0 6px 20px rgba(37, 211, 102, 0.6); }
-        .whatsapp-float i { font-size: 24px; }
-        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); } 70% { box-shadow: 0 0 0 20px rgba(37, 211, 102, 0); } 100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); } }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--color-secondary);
+            color: var(--color-white);
+            line-height: 1.6;
+        }
 
-        /* Header */
-        header { background: linear-gradient(135deg, #d4a574 0%, #c4956a 100%); color: white; padding: 60px 0; text-align: center; }
-        header h1 { font-size: 3rem; margin-bottom: 10px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
-        header p { font-size: 1.2rem; opacity: 0.9; }
+        .header {
+            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+            padding: 20px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
 
-        /* Secciones */
-        .section { padding: 60px 0; }
-        .section h2 { font-size: 2.5rem; margin-bottom: 30px; color: #8b4513; text-align: center; }
+        .header h1 {
+            font-size: 2.2rem;
+            color: var(--color-gold);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            margin-bottom: 5px;
+        }
 
-        /* Cenas */
-        .cenas-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin-top: 40px; }
-        .cena-card { background: white; padding: 30px; border-radius: 15px; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.1); transition: transform 0.3s ease; }
-        .cena-card:hover { transform: translateY(-5px); }
-        .cena-card h3 { color: #8b4513; font-size: 1.5rem; margin-bottom: 15px; }
+        .header p { color: var(--color-light); font-size: 1rem; }
 
-        /* Buffet */
-        .buffet-section { background-color: #fff5eb; }
-        .buffet-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 40px; }
-        .buffet-card { background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 5px 20px rgba(0,0,0,0.1); transition: transform 0.3s ease; }
-        .buffet-card:hover { transform: translateY(-5px); }
-        .buffet-header { background: linear-gradient(135deg, #d4a574 0%, #c4956a 100%); color: white; padding: 25px; display: flex; justify-content: space-between; align-items: center; }
-        .buffet-header h3 { font-size: 1.5rem; margin: 0; }
-        .buffet-price { font-size: 1.8rem; font-weight: bold; background: rgba(255,255,255,0.2); padding: 5px 15px; border-radius: 25px; }
-        .buffet-content { padding: 25px; }
-        .buffet-subtitle { color: #666; font-style: italic; margin-bottom: 15px; }
-        .buffet-description { color: #555; line-height: 1.8; }
-        .buffet-content ul { list-style: none; padding: 0; }
-        .buffet-content li { padding: 10px 0; border-bottom: 1px solid #eee; display: flex; align-items: center; }
-        .buffet-content li:before { content: "✓"; color: #28a745; font-weight: bold; margin-right: 10px; font-size: 1.2rem; }
-        .buffet-content li:last-child { border-bottom: none; }
-        .premium-item { color: #8b4513; font-weight: bold; }
-        .premium .buffet-header { background: linear-gradient(135deg, #c4956a 0%, #a67c52 100%); }
-        .cubeta .buffet-header { background: linear-gradient(135deg, #28a745 0%, #20c997 100%); }
+        .nav-menu {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding: 15px;
+            background: rgba(0,0,0,0.3);
+        }
 
-        /* Ofertas */
-        .ofertas-section { background-color: #f0f8ff; }
-        .ofertas-nota { text-align: center; color: #666; margin-bottom: 30px; font-style: italic; }
-        .tabs { margin-top: 30px; }
-        .tab-buttons { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 30px; justify-content: center; }
-        .tab-btn { padding: 15px 25px; border: none; background: white; color: #8b4513; font-size: 1rem; cursor: pointer; border-radius: 30px; transition: all 0.3s ease; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-        .tab-btn:hover { background: #d4a574; color: white; }
-        .tab-btn.active { background: #8b4513; color: white; }
-        .tab-content { display: none; animation: fadeIn 0.5s ease; }
-        .tab-content.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        .oferta-card { background: white; padding: 40px; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); text-align: center; }
-        .oferta-card h3 { color: #8b4513; font-size: 1.8rem; margin-bottom: 20px; }
-        .oferta-texto { font-size: 1.2rem; color: #666; margin-bottom: 15px; }
-        .oferta-llamada { font-size: 1.3rem; color: #dc3545; font-weight: bold; margin-bottom: 25px; }
+        .nav-menu a {
+            color: var(--color-white);
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            background: var(--color-primary);
+            transition: all 0.3s ease;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-menu a:hover {
+            background: var(--color-gold);
+            color: var(--color-secondary);
+            transform: translateY(-2px);
+        }
+
+        .section {
+            padding: 40px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            color: var(--color-gold);
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 3px;
+            background: var(--color-gold);
+            margin: 10px auto;
+            border-radius: 2px;
+        }
+
+        .announcement-banner {
+            background: linear-gradient(90deg, var(--color-offer), #FF4500);
+            color: white;
+            text-align: center;
+            padding: 12px 20px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            position: relative;
+            overflow: hidden;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.85; }
+        }
+
+        .announcement-banner i { margin-right: 8px; }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .menu-card {
+            background: linear-gradient(145deg, var(--color-primary), #5D2E0C);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+            transition: transform 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .menu-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--color-gold);
+        }
+
+        .menu-card h3 {
+            color: var(--color-gold);
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .menu-card .includes {
+            background: rgba(0,0,0,0.3);
+            padding: 12px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .menu-card .includes h4 {
+            color: var(--color-light);
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+        }
+
+        .menu-card .includes ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .menu-card .includes ul li {
+            padding: 3px 0;
+            font-size: 0.9rem;
+            color: #ddd;
+        }
+
+        .menu-card .includes ul li::before {
+            content: "✓ ";
+            color: var(--color-green);
+            font-weight: bold;
+        }
+
+        .menu-card .price {
+            font-size: 1.8rem;
+            color: var(--color-gold);
+            font-weight: bold;
+            text-align: center;
+            margin: 15px 0;
+        }
+
+        .menu-card .comensales {
+            text-align: center;
+            color: #ccc;
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+        }
+
+        .btn-select {
+            width: 100%;
+            padding: 12px;
+            background: var(--color-green);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-select:hover {
+            background: var(--color-green-dark);
+            transform: scale(1.02);
+        }
+
+        .btn-select.selected { background: var(--color-red); }
+
+        .buffet-section {
+            background: linear-gradient(145deg, #4A2510, #2D1405);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 30px 0;
+            border: 2px dashed var(--color-gold);
+        }
+
+        .buffet-section h3 {
+            color: var(--color-gold);
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+
+        .buffet-section p.note {
+            text-align: center;
+            color: #ccc;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+        }
+
+        .buffet-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+        }
+
+        .buffet-item {
+            background: rgba(0,0,0,0.3);
+            padding: 15px;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .buffet-item label {
+            font-weight: 600;
+            text-align: center;
+            font-size: 0.95rem;
+        }
+
+        .buffet-item .buffet-price {
+            color: var(--color-gold);
+            font-weight: bold;
+        }
+
+        .buffet-item input[type="number"] {
+            width: 80px;
+            padding: 8px;
+            border-radius: 8px;
+            border: 1px solid var(--color-gold);
+            background: rgba(255,255,255,0.1);
+            color: white;
+            text-align: center;
+            font-size: 1rem;
+        }
+
+        .buffet-item input[type="number"]:focus {
+            outline: none;
+            border-color: var(--color-green);
+        }
+
+        .order-form {
+            background: linear-gradient(145deg, var(--color-primary), #5D2E0C);
+            border-radius: 20px;
+            padding: 35px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .form-group { margin-bottom: 20px; }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--color-gold);
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border-radius: 10px;
+            border: 2px solid rgba(255,255,255,0.2);
+            background: rgba(0,0,0,0.3);
+            color: white;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--color-gold);
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder { color: #aaa; }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        @media (max-width: 600px) {
+            .form-row { grid-template-columns: 1fr; }
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px;
+            background: rgba(0,0,0,0.2);
+            border-radius: 10px;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: 22px;
+            height: 22px;
+            accent-color: var(--color-green);
+        }
+
+        .checkbox-group label {
+            color: var(--color-light);
+            font-size: 1rem;
+            margin: 0;
+        }
+
+        .delivery-info {
+            background: rgba(37, 211, 102, 0.15);
+            border: 1px solid var(--color-green);
+            border-radius: 10px;
+            padding: 12px;
+            margin-top: 10px;
+            display: none;
+        }
+
+        .delivery-info.visible { display: block; }
+
+        .delivery-info p {
+            color: var(--color-green);
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        .selected-summary {
+            background: rgba(0,0,0,0.3);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 25px 0;
+            border: 2px solid var(--color-gold);
+        }
+
+        .selected-summary h4 {
+            color: var(--color-gold);
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .summary-item:last-child { border-bottom: none; }
+
+        .summary-total {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 0;
+            margin-top: 10px;
+            border-top: 2px solid var(--color-gold);
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: var(--color-gold);
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, var(--color-green), var(--color-green-dark));
+            color: white;
+            border: none;
+            border-radius: 15px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4);
+        }
+
+        .voucher-preview {
+            background: white;
+            color: #333;
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 25px;
+            display: none;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+        }
+
+        .voucher-preview.visible { display: block; }
+
+        .voucher-preview h3 {
+            color: var(--color-primary);
+            text-align: center;
+            margin-bottom: 15px;
+            border-bottom: 2px solid var(--color-gold);
+            padding-bottom: 10px;
+        }
+
+        .voucher-content {
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.8;
+            white-space: pre-wrap;
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px dashed #ccc;
+        }
+
+        .voucher-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .voucher-actions a,
+        .voucher-actions button {
+            flex: 1;
+            min-width: 200px;
+            padding: 12px;
+            border-radius: 10px;
+            text-align: center;
+            text-decoration: none;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-whatsapp {
+            background: var(--color-green);
+            color: white;
+        }
+
+        .btn-whatsapp:hover { background: var(--color-green-dark); }
+
+        .btn-print {
+            background: #6c757d;
+            color: white;
+        }
+
+        .faq-item {
+            background: rgba(0,0,0,0.2);
+            border-radius: 12px;
+            margin-bottom: 15px;
+            overflow: hidden;
+        }
+
+        .faq-question {
+            padding: 18px 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            transition: background 0.3s ease;
+        }
+
+        .faq-question:hover { background: rgba(255,255,255,0.05); }
+
+        .faq-answer {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+
+        .faq-answer.open {
+            padding: 0 20px 18px;
+            max-height: 500px;
+        }
+
+        .faq-answer p {
+            color: #ccc;
+            line-height: 1.7;
+        }
+
+        .contact-info {
+            text-align: center;
+            padding: 30px;
+        }
+
+        .contact-info .company-name {
+            font-size: 1.8rem;
+            color: var(--color-gold);
+            margin-bottom: 20px;
+        }
+
+        .contact-details {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.1rem;
+        }
+
+        .contact-item i {
+            color: var(--color-gold);
+            font-size: 1.3rem;
+        }
+
+        .social-section {
+            background: linear-gradient(145deg, #1a0a00, #2D1405);
+            border-radius: 20px;
+            padding: 30px;
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .social-section h3 {
+            color: var(--color-gold);
+            margin-bottom: 20px;
+            font-size: 1.4rem;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .social-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px 25px;
+            background: #1877F2;
+            color: white;
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            min-width: 280px;
+            justify-content: center;
+        }
+
+        .social-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(24, 119, 242, 0.4);
+        }
+
+        .social-link i { font-size: 1.5rem; }
+
+        .rating-section {
+            background: linear-gradient(145deg, #2D1405, #1a0a00);
+            border-radius: 20px;
+            padding: 30px;
+            margin-top: 30px;
+            text-align: center;
+            border: 2px solid rgba(218, 165, 32, 0.3);
+        }
+
+        .rating-section h3 {
+            color: var(--color-gold);
+            margin-bottom: 15px;
+        }
+
+        .rating-section p {
+            color: #ccc;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+        }
+
+        .stars {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .star {
+            font-size: 2.5rem;
+            color: #555;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .star:hover,
+        .star.active {
+            color: var(--color-gold);
+            transform: scale(1.2);
+        }
+
+        .rating-textarea {
+            width: 100%;
+            max-width: 500px;
+            padding: 12px;
+            border-radius: 10px;
+            border: 1px solid var(--color-gold);
+            background: rgba(0,0,0,0.3);
+            color: white;
+            resize: vertical;
+            min-height: 80px;
+            margin-bottom: 15px;
+        }
+
+        .btn-rating {
+            padding: 12px 30px;
+            background: var(--color-gold);
+            color: var(--color-secondary);
+            border: none;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-rating:hover { transform: scale(1.05); }
+
+        .footer {
+            background: #1a0a00;
+            text-align: center;
+            padding: 25px;
+            margin-top: 40px;
+            border-top: 2px solid var(--color-primary);
+        }
+
+        .footer p {
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        .whatsapp-float {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            width: 60px;
+            height: 60px;
+            background: var(--color-green);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.8rem;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 999;
+            text-decoration: none;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.7);
+        }
+
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--color-green);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            transform: translateX(400px);
+            transition: transform 0.4s ease;
+            z-index: 10000;
+            font-weight: 600;
+        }
+
+        .toast.show { transform: translateX(0); }
+
+        /* ===== TABS DE OFERTAS ESPECIALES ===== */
+        .tabs {
+            margin-top: 30px;
+        }
+
+        .tab-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 30px;
+            justify-content: center;
+        }
+
+        .tab-btn {
+            padding: 15px 25px;
+            border: none;
+            background: var(--color-primary);
+            color: var(--color-white);
+            font-size: 1rem;
+            cursor: pointer;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            font-weight: 600;
+        }
+
+        .tab-btn:hover {
+            background: var(--color-gold);
+            color: var(--color-secondary);
+        }
+
+        .tab-btn.active {
+            background: var(--color-gold);
+            color: var(--color-secondary);
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .oferta-card {
+            background: linear-gradient(145deg, var(--color-primary), #5D2E0C);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+            text-align: center;
+            border: 2px solid transparent;
+        }
+
+        .oferta-card:hover {
+            border-color: var(--color-gold);
+        }
+
+        .oferta-card h3 {
+            color: var(--color-gold);
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+        }
+
+        .oferta-texto {
+            font-size: 1.2rem;
+            color: #ddd;
+            margin-bottom: 15px;
+        }
+
+        .oferta-llamada {
+            font-size: 1.3rem;
+            color: var(--color-offer);
+            font-weight: bold;
+            margin-bottom: 25px;
+        }
 
         /* Botón parpadeo verde */
-        .btn-reservar { display: inline-block; padding: 15px 40px; background: #28a745; color: white; text-decoration: none; border-radius: 50px; font-size: 1.2rem; font-weight: bold; transition: all 0.3s ease; border: none; cursor: pointer; }
-        .btn-reservar:hover { background: #218838; transform: scale(1.05); }
-        .parpadeo-verde { animation: parpadeoVerde 1.5s ease-in-out infinite; }
-        @keyframes parpadeoVerde { 0%, 100% { background-color: #28a745; box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.7); } 50% { background-color: #34ce57; box-shadow: 0 0 20px 10px rgba(40, 167, 69, 0.3); } }
-        .madres { border: 3px solid #e83e8c; background: linear-gradient(135deg, #fff0f5 0%, #ffe4ec 100%); }
+        .parpadeo-verde {
+            animation: parpadeoVerde 1.5s ease-in-out infinite;
+        }
 
-        /* Formulario */
-        .reserva-form { max-width: 600px; margin: 40px auto; background: white; padding: 40px; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); }
-        .form-group { margin-bottom: 20px; }
-        .form-group label { display: block; margin-bottom: 8px; color: #555; font-weight: 600; }
-        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 12px 15px; border: 2px solid #ddd; border-radius: 8px; font-size: 1rem; transition: border-color 0.3s ease; }
-        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: #d4a574; }
-        .btn-submit { width: 100%; padding: 15px; background: #8b4513; color: white; border: none; border-radius: 8px; font-size: 1.1rem; font-weight: bold; cursor: pointer; transition: background 0.3s ease; }
-        .btn-submit:hover { background: #6b3410; }
-        .vale-preview { text-align: center; margin-top: 30px; padding: 20px; background: #f8f9fa; border-radius: 10px; }
+        @keyframes parpadeoVerde {
+            0%, 100% { 
+                background-color: var(--color-green); 
+                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7);
+            }
+            50% { 
+                background-color: #34ce57; 
+                box-shadow: 0 0 20px 10px rgba(37, 211, 102, 0.3);
+            }
+        }
 
-        /* FAQ */
-        .faq-section { background-color: #f8f9fa; }
-        .faq-item { margin-bottom: 15px; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
-        .faq-question { width: 100%; padding: 20px 25px; background: white; border: none; text-align: left; font-size: 1.1rem; font-weight: 600; color: #333; cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: background 0.3s ease; }
-        .faq-question:hover { background: #fff5eb; }
-        .faq-question i { transition: transform 0.3s ease; color: #8b4513; }
-        .faq-question.active i { transform: rotate(180deg); }
-        .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.3s ease, padding 0.3s ease; background: white; }
-        .faq-answer.active { max-height: 500px; padding: 20px 25px; }
-        .faq-answer p { color: #555; line-height: 1.8; }
+        .madres {
+            border: 3px solid #e83e8c;
+            background: linear-gradient(145deg, #4A2510, #2D1405);
+        }
 
-        /* Contacto */
-        .contacto-section { text-align: center; background: linear-gradient(135deg, #d4a574 0%, #c4956a 100%); color: white; }
-        .contacto-section h2 { color: white; }
-        .btn-whatsapp { display: inline-block; margin-top: 20px; padding: 15px 40px; background: #25d366; color: white; text-decoration: none; border-radius: 50px; font-size: 1.2rem; font-weight: bold; transition: all 0.3s ease; }
-        .btn-whatsapp:hover { background: #128c7e; transform: scale(1.05); }
+        .ofertas-nota {
+            text-align: center;
+            color: #ccc;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
 
-        /* Footer */
-        footer { background: #333; color: white; text-align: center; padding: 30px 0; }
-
-        /* Responsive */
         @media (max-width: 768px) {
-            header h1 { font-size: 2rem; }
-            .section h2 { font-size: 1.8rem; }
+            .header h1 { font-size: 1.6rem; }
+            .nav-menu { gap: 8px; }
+            .nav-menu a { padding: 8px 15px; font-size: 0.9rem; }
+            .section { padding: 25px 15px; }
+            .menu-grid { grid-template-columns: 1fr; }
+            .buffet-grid { grid-template-columns: 1fr; }
+            .social-link { min-width: 100%; }
             .tab-buttons { flex-direction: column; }
             .tab-btn { width: 100%; text-align: center; }
-            .buffet-grid { grid-template-columns: 1fr; }
-            .whatsapp-float { bottom: 20px; right: 20px; padding: 12px 20px; font-size: 0.9rem; }
-            .whatsapp-float span { display: none; }
         }
     </style>
 </head>
 <body>
-    <!-- Botón flotante de WhatsApp -->
-    <a href="https://wa.link/at3sj1" class="whatsapp-float" target="_blank">
-        <i class="fab fa-whatsapp"></i>
-        <span>INFORMACIÓN</span>
-    </a>
 
-    <!-- Header -->
-    <header>
-        <div class="container">
-            <h1>Comidas Criollas Habana</h1>
-            <p>Deliciosas cenas de cerdo asado para tus celebraciones</p>
-        </div>
+    <div id="toast" class="toast"></div>
+
+    <header class="header">
+        <h1><i class="fas fa-utensils"></i> Comidas Criollas Habana</h1>
+        <p>Comidas Criollas Cuba - Sabor y Tradición</p>
     </header>
 
-    <!-- Cenas Criollas -->
-    <section id="cenas" class="section">
-        <div class="container">
-            <h2>🍽️ Cenas Criollas</h2>
-            <p><strong>Todas las cenas incluyen:</strong> Congrí, ensalada de estación, yuca con mojo y un pomo de aliño.</p>
-            <p>La cena puede venir con un cerdo entero o puede traer un cerdo menor con alguna pieza para completar la cantidad de comensales. El pesaje de los cerdos es en pie.</p>
-            
-            <div class="cenas-grid">
-                <div class="cena-card">
-                    <h3>Porciones</h3>
-                    <p>Consulte disponibilidad y precios</p>
+    <nav class="nav-menu">
+        <a href="#cenas"><i class="fas fa-drumstick-bite"></i> Cenas Criollas</a>
+        <a href="#buffet"><i class="fas fa-birthday-cake"></i> Buffet</a>
+        <a href="#ofertas"><i class="fas fa-gift"></i> Ofertas Especiales</a>
+        <a href="#reservar"><i class="fas fa-calendar-check"></i> Reservar</a>
+        <a href="#faq"><i class="fas fa-question-circle"></i> FAQ</a>
+        <a href="#contacto"><i class="fas fa-phone"></i> Contacto</a>
+    </nav>
+
+    <div class="announcement-banner" id="announcementBanner">
+        <i class="fas fa-bullhorn"></i>
+        <span id="announcementText">🎉 Oferta Especial: Envío GRATIS en pedidos superiores a 80,000 CUP</span>
+    </div>
+
+    <section class="section" id="cenas">
+        <h2 class="section-title"><i class="fas fa-drumstick-bite"></i> Cenas Criollas</h2>
+        <p style="text-align:center; color:#ccc; margin-bottom:25px;">
+            Deliciosas cenas de cerdo asado para tus celebraciones. <br>
+            <strong style="color:var(--color-gold);">Todas las cenas incluyen:</strong> Congrí, ensalada de estación, yuca con mojo y un pomo de aliño.
+        </p>
+        <p style="text-align:center; color:#aaa; margin-bottom:25px; font-size:0.9rem;">
+            <i class="fas fa-info-circle"></i> La cena puede venir con un cerdo entero o puede traer un cerdo menor con alguna pieza para completar la cantidad de comensales. El pesaje de los cerdos es en pie.
+        </p>
+
+        <h3 style="color:var(--color-gold); margin-bottom:20px; text-align:center;"><i class="fas fa-piggy-bank"></i> Porciones</h3>
+        <div class="menu-grid" id="porcionesGrid"></div>
+
+        <h3 style="color:var(--color-gold); margin:40px 0 20px; text-align:center;"><i class="fas fa-piggy-bank"></i> Cerdo Entero</h3>
+        <div class="menu-grid" id="cerdoGrid"></div>
+    </section>
+
+    <section class="section" id="buffet">
+        <h2 class="section-title"><i class="fas fa-birthday-cake"></i> Menú Buffet</h2>
+        <p style="text-align:center; color:#ccc; margin-bottom:25px;">
+            Dulces, pasteles y bocaditos para tus eventos. <br>
+            <strong style="color:var(--color-gold);">Puedes añadir productos del buffet a tu pedido de cena en el formulario de reserva.</strong>
+        </p>
+        <div class="menu-grid" id="buffetMenuGrid"></div>
+    </section>
+
+    <!-- ===== OFERTAS ESPECIALES ===== -->
+    <section class="section" id="ofertas">
+        <h2 class="section-title"><i class="fas fa-gift"></i> Ofertas Especiales</h2>
+        <p class="ofertas-nota">⚠️ Estas ofertas se programan según las disponibilidades de esos días.</p>
+        
+        <div class="tabs">
+            <div class="tab-buttons">
+                <button class="tab-btn active" onclick="openTab(event, 'ofertas-casa')">🏠 Ofertas por la Casa</button>
+                <button class="tab-btn" onclick="openTab(event, 'dia-madres')">💐 Día de las Madres</button>
+                <button class="tab-btn" onclick="openTab(event, 'dia-padres')">👔 Día de los Padres</button>
+                <button class="tab-btn" onclick="openTab(event, 'nochebuena')">🎄 Nochebuena</button>
+            </div>
+
+            <div id="ofertas-casa" class="tab-content active">
+                <div class="oferta-card">
+                    <h3>🏠 Ofertas Especiales por la Casa</h3>
+                    <p style="color:#ccc;">Próximamente estaremos publicando nuestras ofertas especiales. ¡Mantente atento!</p>
                 </div>
-                <div class="cena-card">
-                    <h3>Cerdo Entero</h3>
-                    <p>Consulte disponibilidad y precios</p>
+            </div>
+
+            <div id="dia-madres" class="tab-content">
+                <div class="oferta-card madres">
+                    <h3>💐 Día de las Madres</h3>
+                    <p class="oferta-texto">* Tenemos todas las ofertas del Menú Buffet no disponibles - cupos limitados</p>
+                    <p class="oferta-llamada">¿Qué esperas para reservar? ¡APÚRATE!</p>
+                    <a href="https://wa.link/at3sj1" class="btn-select parpadeo-verde" target="_blank" style="max-width:300px; margin:0 auto;">
+                        <i class="fab fa-whatsapp"></i> Reservar Ahora
+                    </a>
+                </div>
+            </div>
+
+            <div id="dia-padres" class="tab-content">
+                <div class="oferta-card">
+                    <h3>👔 Día de los Padres</h3>
+                    <p style="color:#ccc;">Próximamente estaremos publicando nuestras ofertas especiales para el Día de los Padres. ¡Mantente atento!</p>
+                </div>
+            </div>
+
+            <div id="nochebuena" class="tab-content">
+                <div class="oferta-card">
+                    <h3>🎄 Nochebuena</h3>
+                    <p style="color:#ccc;">Próximamente estaremos publicando nuestras ofertas especiales para Nochebuena. ¡Mantente atento!</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Menú Buffet -->
-    <section id="buffet" class="section buffet-section">
-        <div class="container">
-            <h2>🎂 Menú Buffet</h2>
-            <p>Dulces, pasteles y bocaditos para tus eventos.</p>
-            <p><strong>Puedes añadir productos del buffet a tu pedido de cena en el formulario de reserva.</strong></p>
-            
-            <div class="buffet-grid">
-                <!-- Buffet 350 -->
-                <div class="buffet-card">
-                    <div class="buffet-header">
-                        <h3>Buffet 350</h3>
-                        <span class="buffet-price">350 CUP</span>
+    <section class="section" id="reservar">
+        <h2 class="section-title"><i class="fas fa-calendar-check"></i> Reservar Pedido</h2>
+        <p style="text-align:center; color:#ccc; margin-bottom:25px;">
+            Completa el formulario y te enviaremos el vale de venta por WhatsApp<br>
+            <strong style="color:var(--color-gold);"><i class="fas fa-clock"></i> Horarios de entrega:</strong> De 12:00 del mediodía a 4:00 pm
+        </p>
+
+        <div class="order-form">
+            <form id="orderForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="nombre"><i class="fas fa-user"></i> Nombre y Apellidos *</label>
+                        <input type="text" id="nombre" name="nombre" required placeholder="Ej: Juan Pérez García">
                     </div>
-                    <div class="buffet-content">
-                        <p class="buffet-subtitle">En termo retractilado</p>
-                        <ul>
-                            <li>Una panetela</li>
-                            <li>Una minidona</li>
-                            <li>Un minieclair</li>
-                            <li>Una croqueta</li>
-                            <li>Un bocadito</li>
-                        </ul>
+                    <div class="form-group">
+                        <label for="telefono"><i class="fas fa-phone"></i> Teléfono *</label>
+                        <input type="tel" id="telefono" name="telefono" required placeholder="Ej: +53 51234567">
                     </div>
                 </div>
 
-                <!-- Buffet Premium 400 -->
-                <div class="buffet-card premium">
-                    <div class="buffet-header">
-                        <h3>Buffet Premium</h3>
-                        <span class="buffet-price">400 CUP</span>
-                    </div>
-                    <div class="buffet-content">
-                        <p class="buffet-subtitle">En termo retractilado</p>
-                        <ul>
-                            <li>Una panetela</li>
-                            <li>Una minidona</li>
-                            <li>Un minieclair</li>
-                            <li>Una croqueta</li>
-                            <li>Un bocadito</li>
-                            <li class="premium-item">Un capacillo con ensalada fría</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Cubeta de ensalada fría -->
-                <div class="buffet-card cubeta">
-                    <div class="buffet-header">
-                        <h3>Cubeta de Ensalada Fría</h3>
-                        <span class="buffet-price">4000 CUP</span>
-                    </div>
-                    <div class="buffet-content">
-                        <p class="buffet-description">Deliciosa ensalada fría en cubeta, perfecta para acompañar tus eventos.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Ofertas Especiales -->
-    <section id="ofertas" class="section ofertas-section">
-        <div class="container">
-            <h2>🎉 Ofertas Especiales</h2>
-            <p class="ofertas-nota">⚠️ Estas ofertas se programan según las disponibilidades de esos días.</p>
-            
-            <div class="tabs">
-                <div class="tab-buttons">
-                    <button class="tab-btn active" onclick="openTab(event, 'ofertas-casa')">🏠 Ofertas Especiales por la Casa</button>
-                    <button class="tab-btn" onclick="openTab(event, 'dia-madres')">💐 Día de las Madres</button>
-                    <button class="tab-btn" onclick="openTab(event, 'dia-padres')">👔 Día de los Padres</button>
-                    <button class="tab-btn" onclick="openTab(event, 'nochebuena')">🎄 Nochebuena</button>
-                </div>
-
-                <div id="ofertas-casa" class="tab-content active">
-                    <div class="oferta-card">
-                        <h3>🏠 Ofertas Especiales por la Casa</h3>
-                        <p>Próximamente estaremos publicando nuestras ofertas especiales. ¡Mantente atento!</p>
-                    </div>
-                </div>
-
-                <div id="dia-madres" class="tab-content">
-                    <div class="oferta-card madres">
-                        <h3>💐 Día de las Madres</h3>
-                        <p class="oferta-texto">* Tenemos todas las ofertas del Menú Buffet no disponibles - cupos limitados</p>
-                        <p class="oferta-llamada">¿Qué esperas para reservar? ¡APÚRATE!</p>
-                        <a href="https://wa.link/at3sj1" class="btn-reservar parpadeo-verde" target="_blank">📱 Reservar Ahora</a>
-                    </div>
-                </div>
-
-                <div id="dia-padres" class="tab-content">
-                    <div class="oferta-card">
-                        <h3>👔 Día de los Padres</h3>
-                        <p>Próximamente estaremos publicando nuestras ofertas especiales para el Día de los Padres. ¡Mantente atento!</p>
-                    </div>
-                </div>
-
-                <div id="nochebuena" class="tab-content">
-                    <div class="oferta-card">
-                        <h3>🎄 Nochebuena</h3>
-                        <p>Próximamente estaremos publicando nuestras ofertas especiales para Nochebuena. ¡Mantente atento!</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Formulario de Reserva -->
-    <section id="reservar" class="section">
-        <div class="container">
-            <h2>📝 Reservar Pedido</h2>
-            <p>Completa el formulario y te enviaremos el vale de venta por WhatsApp</p>
-            <p><strong>Horarios de entrega:</strong> De 12:00 del mediodía a 4:00 pm</p>
-            
-            <form id="reservaForm" class="reserva-form">
                 <div class="form-group">
-                    <label for="nombre">Nombre completo:</label>
-                    <input type="text" id="nombre" name="nombre" required>
+                    <label for="direccion"><i class="fas fa-map-marker-alt"></i> Dirección completa (incluyendo municipio) *</label>
+                    <input type="text" id="direccion" name="direccion" required placeholder="Ej: Calle 23 #456 e/ A y B, Plaza">
                 </div>
-                
-                <div class="form-group">
-                    <label for="telefono">Teléfono:</label>
-                    <input type="tel" id="telefono" name="telefono" required>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="telefonoAlt"><i class="fas fa-phone-alt"></i> Teléfono alternativo</label>
+                        <input type="tel" id="telefonoAlt" name="telefonoAlt" placeholder="Opcional">
+                    </div>
+                    <div class="form-group">
+                        <label for="fecha"><i class="fas fa-calendar"></i> Fecha de entrega *</label>
+                        <input type="date" id="fecha" name="fecha" required>
+                    </div>
                 </div>
-                
-                <div class="form-group">
-                    <label for="fecha">Fecha de entrega:</label>
-                    <input type="date" id="fecha" name="fecha" required>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="hora"><i class="fas fa-clock"></i> Hora de entrega *</label>
+                        <input type="time" id="hora" name="hora" required min="12:00" max="16:00">
+                    </div>
+                    <div class="form-group">
+                        <label for="oferta"><i class="fas fa-tag"></i> Oferta solicitada *</label>
+                        <select id="oferta" name="oferta" required>
+                            <option value="">Seleccione una oferta...</option>
+                        </select>
+                    </div>
                 </div>
-                
-                <div class="form-group">
-                    <label for="direccion">Dirección de entrega:</label>
-                    <textarea id="direccion" name="direccion" rows="3" required></textarea>
+
+                <div class="checkbox-group">
+                    <input type="checkbox" id="mensajeria" name="mensajeria">
+                    <label for="mensajeria"><i class="fas fa-motorcycle"></i> ¿Necesita mensajería? (5,000 CUP)</label>
                 </div>
-                
-                <div class="form-group">
-                    <label for="producto">Producto:</label>
-                    <select id="producto" name="producto" required>
-                        <option value="">Seleccione...</option>
-                        <option value="cena">Cena Criolla</option>
-                        <option value="buffet350">Buffet 350 CUP</option>
-                        <option value="buffet400">Buffet Premium 400 CUP</option>
-                        <option value="cubeta">Cubeta de Ensalada Fría 4000 CUP</option>
-                    </select>
+                <div class="delivery-info" id="deliveryInfo">
+                    <p><i class="fas fa-info-circle"></i> Se añadirá 5,000 CUP por servicio de mensajería/delivery al importe total.</p>
                 </div>
-                
-                <div class="form-group">
-                    <label for="cantidad">Cantidad:</label>
-                    <input type="number" id="cantidad" name="cantidad" min="1" value="1" required>
+
+                <div class="form-group" style="margin-top:20px;">
+                    <label for="notas"><i class="fas fa-sticky-note"></i> Notas adicionales</label>
+                    <textarea id="notas" name="notas" rows="3" placeholder="Indique cualquier detalle especial sobre su pedido..."></textarea>
                 </div>
-                
-                <div class="form-group">
-                    <label for="notas">Notas adicionales:</label>
-                    <textarea id="notas" name="notas" rows="3"></textarea>
+
+                <!-- BUFFET INTEGRADO EN EL FORMULARIO -->
+                <div class="buffet-section">
+                    <h3><i class="fas fa-plus-circle"></i> Añadir Productos del Buffet (Opcional)</h3>
+                    <p class="note">Seleccione la cantidad deseada de cada producto. Se sumarán al importe total de su pedido.</p>
+                    <div class="buffet-grid" id="buffetOrderGrid"></div>
                 </div>
-                
-                <button type="submit" class="btn-submit">Enviar Pedido</button>
+
+                <div class="selected-summary" id="selectedSummary">
+                    <h4><i class="fas fa-receipt"></i> Resumen del Pedido</h4>
+                    <div id="summaryContent">
+                        <p style="text-align:center; color:#aaa;">Seleccione una oferta para ver el resumen...</p>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-submit">
+                    <i class="fab fa-whatsapp"></i> Generar Vale y Enviar por WhatsApp
+                </button>
             </form>
 
-            <div class="vale-preview">
-                <h4>🧾 Vale de Venta - Vista Previa</h4>
-                <p>El vale de venta se generará automáticamente al enviar el formulario.</p>
+            <!-- VISTA PREVIA DEL VALE -->
+            <div class="voucher-preview" id="voucherPreview">
+                <h3><i class="fas fa-file-invoice"></i> Vale de Venta - Vista Previa</h3>
+                <div class="voucher-content" id="voucherContent"></div>
+                <div class="voucher-actions">
+                    <a href="#" id="whatsappLink" class="btn-whatsapp" target="_blank">
+                        <i class="fab fa-whatsapp"></i> Enviar por WhatsApp
+                    </a>
+                    <button type="button" class="btn-print" onclick="window.print()">
+                        <i class="fas fa-print"></i> Imprimir / Guardar PDF
+                    </button>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Preguntas Frecuentes -->
-    <section id="faq" class="section faq-section">
-        <div class="container">
-            <h2>❓ Preguntas Frecuentes</h2>
-            
+    <section class="section" id="faq">
+        <h2 class="section-title"><i class="fas fa-question-circle"></i> Preguntas Frecuentes</h2>
+        <div class="faq-container">
             <div class="faq-item">
-                <button class="faq-question" onclick="toggleFaq(this)">
-                    ¿De dónde son?
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span><i class="fas fa-map-marker-alt"></i> ¿De dónde son?</span>
                     <i class="fas fa-chevron-down"></i>
-                </button>
+                </div>
                 <div class="faq-answer">
                     <p>Somos de Jaruco, Mayabeque.</p>
                 </div>
             </div>
-            
             <div class="faq-item">
-                <button class="faq-question" onclick="toggleFaq(this)">
-                    ¿Hasta dónde llegan sus servicios?
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span><i class="fas fa-motorcycle"></i> ¿Hasta dónde llegan sus servicios?</span>
                     <i class="fas fa-chevron-down"></i>
-                </button>
+                </div>
                 <div class="faq-answer">
                     <p>Hasta casi todo Mayabeque, La Habana y todos sus municipios.</p>
                 </div>
             </div>
-            
             <div class="faq-item">
-                <button class="faq-question" onclick="toggleFaq(this)">
-                    ¿Con cuánta anticipación debo reservar?
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span><i class="fas fa-clock"></i> ¿Con cuánta anticipación debo reservar?</span>
                     <i class="fas fa-chevron-down"></i>
-                </button>
+                </div>
                 <div class="faq-answer">
                     <p>Mínimo un día antes, siempre antes de las 5:00 pm. Máximo a 7 días antes del día que necesita el servicio es suficiente tiempo para gestionar.</p>
                 </div>
             </div>
-            
             <div class="faq-item">
-                <button class="faq-question" onclick="toggleFaq(this)">
-                    ¿Qué métodos de pago aceptan?
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span><i class="fas fa-money-bill-wave"></i> ¿Qué métodos de pago aceptan?</span>
                     <i class="fas fa-chevron-down"></i>
-                </button>
+                </div>
                 <div class="faq-answer">
                     <p>Aceptamos pago por Zelle desde EUA, en dólares y euros en efectivo con la tasa que fija el negocio (siempre debe preguntar). También se acepta efectivo y transferencia en la moneda nacional a los precios fijados en el Menú.</p>
                 </div>
             </div>
-            
             <div class="faq-item">
-                <button class="faq-question" onclick="toggleFaq(this)">
-                    ¿El servicio de mensajería cubre toda La Habana?
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span><i class="fas fa-motorcycle"></i> ¿El servicio de mensajería cubre toda La Habana?</span>
                     <i class="fas fa-chevron-down"></i>
-                </button>
+                </div>
                 <div class="faq-answer">
                     <p>Sí, realizamos entregas en todos los municipios de La Habana. El costo de mensajería es de 5,000 CUP por pedido.</p>
                 </div>
             </div>
-            
             <div class="faq-item">
-                <button class="faq-question" onclick="toggleFaq(this)">
-                    ¿Puedo personalizar el menú?
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span><i class="fas fa-utensils"></i> ¿Puedo personalizar el menú?</span>
                     <i class="fas fa-chevron-down"></i>
-                </button>
+                </div>
                 <div class="faq-answer">
                     <p>Las cenas incluyen los acompañamientos estándar (congrí, ensalada, yuca con mojo y aliño). Puede añadir productos del buffet a su pedido. Para modificaciones especiales, indíquelas en las notas adicionales.</p>
                 </div>
             </div>
-            
             <div class="faq-item">
-                <button class="faq-question" onclick="toggleFaq(this)">
-                    ¿El buffet está incluido en la cena?
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span><i class="fas fa-cake"></i> ¿El buffet está incluido en la cena?</span>
                     <i class="fas fa-chevron-down"></i>
-                </button>
+                </div>
                 <div class="faq-answer">
                     <p>No, el buffet es opcional y se cotiza por separado. Puede añadir productos del buffet a su pedido de cena en el formulario de reserva. Se sumarán al importe total.</p>
                 </div>
@@ -393,28 +1109,392 @@
         </div>
     </section>
 
-    <!-- Contacto -->
-    <section id="contacto" class="section contacto-section">
-        <div class="container">
-            <h2>📞 Contacto</h2>
-            <p>¿Tienes dudas? ¡Escríbenos por WhatsApp!</p>
-            <a href="https://wa.link/at3sj1" class="btn-whatsapp" target="_blank">
-                <i class="fab fa-whatsapp"></i> Escríbenos por WhatsApp
-            </a>
+    <section class="section" id="contacto">
+        <h2 class="section-title"><i class="fas fa-phone"></i> Contacto</h2>
+        <div class="contact-info">
+            <div class="company-name"><i class="fas fa-building"></i> Comidas Criollas Habana</div>
+            <div class="contact-details">
+                <div class="contact-item">
+                    <i class="fas fa-motorcycle"></i>
+                    <span>Delivery: 5,000 CUP</span>
+                </div>
+                <div class="contact-item">
+                    <i class="fab fa-whatsapp"></i>
+                    <span>+53 54573045</span>
+                </div>
+            </div>
+
+            <!-- REDES SOCIALES -->
+            <div class="social-section">
+                <h3><i class="fas fa-share-alt"></i> Síguenos en Facebook</h3>
+                <div class="social-links">
+                    <a href="https://www.facebook.com/reinadocriollo/" target="_blank" class="social-link">
+                        <i class="fab fa-facebook"></i>
+                        <span>Comidas Criollas Habana</span>
+                    </a>
+                    <a href="https://www.facebook.com/profile.php?id=61584960075209" target="_blank" class="social-link">
+                        <i class="fab fa-facebook"></i>
+                        <span>Don Bello Oficial</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- VALORACIÓN POR ESTRELLAS -->
+            <div class="rating-section">
+                <h3><i class="fas fa-star"></i> Valora Nuestro Servicio</h3>
+                <p>Tu opinión nos ayuda a mejorar. Selecciona una calificación y déjanos tu comentario.</p>
+                <div class="stars" id="starContainer">
+                    <span class="star" data-value="1">★</span>
+                    <span class="star" data-value="2">★</span>
+                    <span class="star" data-value="3">★</span>
+                    <span class="star" data-value="4">★</span>
+                    <span class="star" data-value="5">★</span>
+                </div>
+                <textarea class="rating-textarea" id="ratingComment" placeholder="Cuéntanos tu experiencia (opcional)..."></textarea>
+                <br>
+                <button class="btn-rating" id="btnRating" onclick="sendRating()">
+                    <i class="fas fa-paper-plane"></i> Enviar Valoración por WhatsApp
+                </button>
+            </div>
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <p>© Comidas Criollas Habana. Todos los derechos reservados.</p>
-        </div>
+    <footer class="footer">
+        <p><i class="fas fa-heart" style="color:var(--color-red);"></i> © 2026 Comidas Criollas Habana. Todos los derechos reservados.</p>
+        <p style="margin-top:5px; font-size:0.8rem; color:#666;">Comidas Criollas Cuba - Sabor y Tradición</p>
     </footer>
 
+    <a href="https://wa.link/at3sj1" class="whatsapp-float" target="_blank" title="INFORMACIÓN">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
     <script>
-        // ========== JAVASCRIPT COMPLETO ==========
-        
-        // Tabs de Ofertas Especiales
+        const porciones = [
+            { id: 'p1', name: 'Lomo para 20-22 comensales', price: 50000, comensales: '20-22 comensales' },
+            { id: 'p2', name: 'Pierna para 20-22 comensales', price: 50000, comensales: '20-22 comensales' },
+            { id: 'p3', name: 'Masas para 25-30 comensales', price: 60000, comensales: '25-30 comensales' },
+            { id: 'p4', name: 'Lomo para 25-30 comensales', price: 60000, comensales: '25-30 comensales' },
+            { id: 'p5', name: 'Pierna para 25-30 comensales', price: 60000, comensales: '25-30 comensales' },
+            { id: 'p6', name: 'Masas fritas encebolladas para 25-30 comensales', price: 60000, comensales: '25-30 comensales' },
+        ];
+
+        const cerdos = [
+            { id: 'c1', name: 'Cerdo para 20 comensales (15-17 kg)', price: 67000, comensales: '~20 comensales' },
+            { id: 'c2', name: 'Cerdo para 30 comensales (17-19 kg)', price: 69000, comensales: '~30 comensales' },
+            { id: 'c3', name: 'Cerdo para 40 comensales (19-21 kg)', price: 73000, comensales: '~40 comensales' },
+            { id: 'c4', name: 'Cerdo para 50 comensales (21-23 kg)', price: 81000, comensales: '~50 comensales' },
+            { id: 'c5', name: 'Cerdo para 60 comensales (23-25 kg)', price: 84000, comensales: '~60 comensales' },
+            { id: 'c6', name: 'Cerdo para 70 comensales (25-27 kg)', price: 95000, comensales: '~70 comensales' },
+            { id: 'c7', name: 'Cerdo para 80 comensales (27-29 kg)', price: 113000, comensales: '~80 comensales' },
+            { id: 'c8', name: 'Cerdo para 90 comensales (29-31 kg)', price: 120000, comensales: '~90 comensales' },
+            { id: 'c9', name: 'Cerdo para 100 comensales (31-33 kg)', price: 127000, comensales: '~100 comensales' },
+            { id: 'c10', name: 'Cerdo para 110 comensales (33-35 kg)', price: 135000, comensales: '~110 comensales' },
+            { id: 'c11', name: 'Cerdo para 120 comensales (35+ kg)', price: 150000, comensales: '~120 comensales' },
+        ];
+
+        const buffetItems = [
+            { id: 'b1', name: 'Kake de Merengue Redondo', price: 3000 },
+            { id: 'b2', name: 'Kake de Nata Redondo', price: 4000 },
+            { id: 'b3', name: 'Kake Ganache Redondo', price: 5000 },
+            { id: 'b4', name: 'Kake Tamaño Bandeja', price: 8000 },
+            { id: 'b5', name: 'Dulces Variados (c/u)', price: 80 },
+            { id: 'b6', name: 'Pizzas Familiares', price: 2000 },
+            { id: 'b7', name: 'Buffet 350', price: 350 },
+            { id: 'b8', name: 'Buffet Premium', price: 400 },
+            { id: 'b9', name: 'Cubeta de Ensalada Fría', price: 4000 },
+        ];
+
+        const includes = ['Congrí', 'Ensalada de estación', 'Yuca con mojo', 'Pomo de aliño'];
+
+        let selectedOffer = null;
+        let selectedBuffet = {};
+        let deliveryCost = 0;
+        const OWNER_PHONE = '5354573045';
+
+        document.addEventListener('DOMContentLoaded', function() {
+            renderPorciones();
+            renderCerdo();
+            renderBuffetMenu();
+            renderBuffetOrder();
+            populateOfertaSelect();
+            setupEventListeners();
+            setupStarRating();
+            setMinDate();
+        });
+
+        function setMinDate() {
+            const today = new Date();
+            today.setDate(today.getDate() + 1);
+            const yyyy = today.getFullYear();
+            const mm = String(today.getMonth() + 1).padStart(2, '0');
+            const dd = String(today.getDate()).padStart(2, '0');
+            document.getElementById('fecha').min = `${yyyy}-${mm}-${dd}`;
+        }
+
+        function renderPorciones() {
+            const grid = document.getElementById('porcionesGrid');
+            grid.innerHTML = porciones.map(p => createMenuCard(p, 'porcion')).join('');
+        }
+
+        function renderCerdo() {
+            const grid = document.getElementById('cerdoGrid');
+            grid.innerHTML = cerdos.map(c => createMenuCard(c, 'cerdo')).join('');
+        }
+
+        function createMenuCard(item, type) {
+            return `
+                <div class="menu-card" data-id="${item.id}" data-type="${type}">
+                    <h3><i class="fas fa-drumstick-bite"></i> ${item.name}</h3>
+                    <div class="includes">
+                        <h4><i class="fas fa-check-circle"></i> Incluye:</h4>
+                        <ul>
+                            ${includes.map(i => `<li>${i}</li>`).join('')}
+                        </ul>
+                    </div>
+                    <div class="price">${item.price.toLocaleString()} CUP</div>
+                    <div class="comensales"><i class="fas fa-users"></i> ${item.comensales}</div>
+                    <button type="button" class="btn-select" onclick="selectOffer('${item.id}', '${type}')">
+                        <i class="fas fa-cart-plus"></i> Seleccionar
+                    </button>
+                </div>
+            `;
+        }
+
+        function renderBuffetMenu() {
+            const grid = document.getElementById('buffetMenuGrid');
+            grid.innerHTML = buffetItems.map(b => `
+                <div class="menu-card">
+                    <h3><i class="fas fa-cookie-bite"></i> ${b.name}</h3>
+                    <div class="price">${b.price.toLocaleString()} CUP</div>
+                    <p style="text-align:center; color:#aaa; font-size:0.9rem; margin-top:10px;">
+                        <i class="fas fa-info-circle"></i> Disponible como adicional en su pedido
+                    </p>
+                </div>
+            `).join('');
+        }
+
+        function renderBuffetOrder() {
+            const grid = document.getElementById('buffetOrderGrid');
+            grid.innerHTML = buffetItems.map(b => `
+                <div class="buffet-item">
+                    <label>${b.name}</label>
+                    <span class="buffet-price">${b.price.toLocaleString()} CUP</span>
+                    <input type="number" id="buffet-${b.id}" min="0" value="0" 
+                           onchange="updateBuffetQuantity('${b.id}', this.value)"
+                           placeholder="Cantidad">
+                </div>
+            `).join('');
+        }
+
+        function populateOfertaSelect() {
+            const select = document.getElementById('oferta');
+            const allItems = [
+                ...porciones.map(p => ({ ...p, type: 'porcion' })),
+                ...cerdos.map(c => ({ ...c, type: 'cerdo' }))
+            ];
+            allItems.forEach(item => {
+                const option = document.createElement('option');
+                option.value = item.id;
+                option.textContent = `${item.name} - ${item.price.toLocaleString()} CUP`;
+                option.dataset.type = item.type;
+                select.appendChild(option);
+            });
+        }
+
+        function selectOffer(id, type) {
+            const allCards = document.querySelectorAll('.menu-card');
+            allCards.forEach(card => {
+                const btn = card.querySelector('.btn-select');
+                if (btn) {
+                    btn.innerHTML = '<i class="fas fa-cart-plus"></i> Seleccionar';
+                    btn.classList.remove('selected');
+                }
+            });
+
+            const items = type === 'porcion' ? porciones : cerdos;
+            selectedOffer = items.find(i => i.id === id);
+
+            const card = document.querySelector(`[data-id="${id}"][data-type="${type}"]`);
+            const btn = card.querySelector('.btn-select');
+            btn.innerHTML = '<i class="fas fa-check"></i> Seleccionado';
+            btn.classList.add('selected');
+
+            document.getElementById('oferta').value = id;
+            updateSummary();
+            showToast('Oferta seleccionada: ' + selectedOffer.name);
+        }
+
+        function updateBuffetQuantity(id, quantity) {
+            quantity = parseInt(quantity) || 0;
+            if (quantity > 0) {
+                selectedBuffet[id] = quantity;
+            } else {
+                delete selectedBuffet[id];
+            }
+            updateSummary();
+        }
+
+        document.getElementById('oferta').addEventListener('change', function() {
+            const id = this.value;
+            if (!id) {
+                selectedOffer = null;
+                updateSummary();
+                return;
+            }
+            const type = this.options[this.selectedIndex].dataset.type;
+            selectOffer(id, type);
+        });
+
+        document.getElementById('mensajeria').addEventListener('change', function() {
+            deliveryCost = this.checked ? 5000 : 0;
+            document.getElementById('deliveryInfo').classList.toggle('visible', this.checked);
+            updateSummary();
+        });
+
+        function updateSummary() {
+            const container = document.getElementById('summaryContent');
+            let html = '';
+            let total = 0;
+
+            if (selectedOffer) {
+                html += `
+                    <div class="summary-item">
+                        <span><i class="fas fa-drumstick-bite"></i> ${selectedOffer.name}</span>
+                        <span>${selectedOffer.price.toLocaleString()} CUP</span>
+                    </div>
+                `;
+                total += selectedOffer.price;
+            }
+
+            const buffetEntries = Object.entries(selectedBuffet);
+            if (buffetEntries.length > 0) {
+                html += `<div style="margin:10px 0; padding:10px; background:rgba(0,0,0,0.2); border-radius:8px;">
+                    <strong style="color:var(--color-gold);"><i class="fas fa-cookie-bite"></i> Buffet:</strong>`;
+                buffetEntries.forEach(([id, qty]) => {
+                    const item = buffetItems.find(b => b.id === id);
+                    const subtotal = item.price * qty;
+                    total += subtotal;
+                    html += `
+                        <div class="summary-item" style="border:none; padding:4px 0;">
+                            <span style="padding-left:20px;">• ${item.name} x${qty}</span>
+                            <span>${subtotal.toLocaleString()} CUP</span>
+                        </div>
+                    `;
+                });
+                html += `</div>`;
+            }
+
+            if (deliveryCost > 0) {
+                html += `
+                    <div class="summary-item">
+                        <span><i class="fas fa-motorcycle"></i> Mensajería/Delivery</span>
+                        <span>${deliveryCost.toLocaleString()} CUP</span>
+                    </div>
+                `;
+                total += deliveryCost;
+            }
+
+            if (total > 0) {
+                html += `
+                    <div class="summary-total">
+                        <span><i class="fas fa-calculator"></i> TOTAL A PAGAR:</span>
+                        <span>${total.toLocaleString()} CUP</span>
+                    </div>
+                `;
+            } else {
+                html = '<p style="text-align:center; color:#aaa;">Seleccione una oferta para ver el resumen...</p>';
+            }
+
+            container.innerHTML = html;
+        }
+
+        document.getElementById('orderForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            if (!selectedOffer) {
+                showToast('❌ Por favor seleccione una oferta primero', 'error');
+                document.getElementById('cenas').scrollIntoView({ behavior: 'smooth' });
+                return;
+            }
+
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData);
+
+            const voucherText = buildVoucherText(data);
+
+            document.getElementById('voucherContent').textContent = voucherText;
+            document.getElementById('voucherPreview').classList.add('visible');
+
+            const encodedMessage = encodeURIComponent(voucherText);
+            const whatsappUrl = `https://wa.me/${OWNER_PHONE}?text=${encodedMessage}`;
+            document.getElementById('whatsappLink').href = whatsappUrl;
+
+            document.getElementById('voucherPreview').scrollIntoView({ behavior: 'smooth' });
+
+            showToast('✅ Vale generado. Presione "Enviar por WhatsApp" para completar el pedido.');
+        });
+
+        function buildVoucherText(data) {
+            const now = new Date();
+            const fechaActual = now.toLocaleDateString('es-CU');
+            const horaActual = now.toLocaleTimeString('es-CU');
+
+            let text = `🍖 *VALE DE VENTA - COMIDAS CRIOLLAS HABANA* 🍖\n`;
+            text += `═══════════════════════════════\n\n`;
+            text += `📅 *Fecha de emisión:* ${fechaActual} ${horaActual}\n\n`;
+            text += `👤 *Cliente:* ${data.nombre}\n`;
+            text += `📞 *Teléfono:* ${data.telefono}\n`;
+            if (data.telefonoAlt) text += `📞 *Tel. alternativo:* ${data.telefonoAlt}\n`;
+            text += `📍 *Dirección:* ${data.direccion}\n\n`;
+            text += `📦 *PEDIDO:*\n`;
+            text += `───────────────────────────────\n`;
+            text += `🍽️ ${selectedOffer.name}\n`;
+            text += `   Precio: ${selectedOffer.price.toLocaleString()} CUP\n`;
+            text += `   Comensales: ${selectedOffer.comensales}\n\n`;
+
+            let total = selectedOffer.price;
+
+            const buffetEntries = Object.entries(selectedBuffet);
+            if (buffetEntries.length > 0) {
+                text += `🍰 *BUFFET ADICIONAL:*\n`;
+                buffetEntries.forEach(([id, qty]) => {
+                    const item = buffetItems.find(b => b.id === id);
+                    const subtotal = item.price * qty;
+                    total += subtotal;
+                    text += `   • ${item.name} x${qty} = ${subtotal.toLocaleString()} CUP\n`;
+                });
+                text += `\n`;
+            }
+
+            if (data.mensajeria) {
+                text += `🛵 *Mensajería/Delivery:* 5,000 CUP\n`;
+                total += 5000;
+            }
+
+            text += `\n💰 *TOTAL A PAGAR: ${total.toLocaleString()} CUP*\n\n`;
+            text += `📅 *Fecha de entrega:* ${data.fecha}\n`;
+            text += `⏰ *Hora de entrega:* ${data.hora}\n\n`;
+
+            if (data.notas) {
+                text += `📝 *Notas:* ${data.notas}\n\n`;
+            }
+
+            text += `═══════════════════════════════\n`;
+            text += `✅ Gracias por preferir Comidas Criollas Habana\n`;
+            text += `📞 Contacto: +53 54573045\n`;
+            text += `🌐 Comidas Criollas Cuba`;
+
+            return text;
+        }
+
+        function toggleFaq(element) {
+            const answer = element.nextElementSibling;
+            const icon = element.querySelector('.fa-chevron-down');
+            answer.classList.toggle('open');
+            icon.style.transform = answer.classList.contains('open') ? 'rotate(180deg)' : 'rotate(0deg)';
+        }
+
+        // ===== TABS DE OFERTAS ESPECIALES =====
         function openTab(evt, tabName) {
             const tabContents = document.getElementsByClassName("tab-content");
             for (let i = 0; i < tabContents.length; i++) {
@@ -430,65 +1510,68 @@
             evt.currentTarget.classList.add("active");
         }
 
-        // FAQ Acordeón
-        function toggleFaq(button) {
-            const answer = button.nextElementSibling;
-            const isActive = answer.classList.contains("active");
-            
-            const allAnswers = document.querySelectorAll(".faq-answer");
-            const allButtons = document.querySelectorAll(".faq-question");
-            
-            allAnswers.forEach(ans => ans.classList.remove("active"));
-            allButtons.forEach(btn => btn.classList.remove("active"));
-            
-            if (!isActive) {
-                answer.classList.add("active");
-                button.classList.add("active");
-            }
+        let currentRating = 0;
+
+        function setupStarRating() {
+            const stars = document.querySelectorAll('.star');
+            stars.forEach(star => {
+                star.addEventListener('click', function() {
+                    currentRating = parseInt(this.dataset.value);
+                    updateStars();
+                });
+                star.addEventListener('mouseenter', function() {
+                    const val = parseInt(this.dataset.value);
+                    stars.forEach((s, i) => {
+                        s.classList.toggle('active', i < val);
+                    });
+                });
+            });
+            document.getElementById('starContainer').addEventListener('mouseleave', updateStars);
         }
 
-        // Formulario de reserva
-        document.getElementById("reservaForm").addEventListener("submit", function(e) {
-            e.preventDefault();
-            
-            const nombre = document.getElementById("nombre").value;
-            const telefono = document.getElementById("telefono").value;
-            const fecha = document.getElementById("fecha").value;
-            const direccion = document.getElementById("direccion").value;
-            const cantidad = document.getElementById("cantidad").value;
-            const notas = document.getElementById("notas").value;
-            
-            const productoSelect = document.getElementById("producto");
-            const productoNombre = productoSelect.options[productoSelect.selectedIndex].text;
-            
-            let mensaje = `*NUEVO PEDIDO - Comidas Criollas Habana*%0A%0A`;
-            mensaje += `*Nombre:* ${nombre}%0A`;
-            mensaje += `*Teléfono:* ${telefono}%0A`;
-            mensaje += `*Fecha de entrega:* ${fecha}%0A`;
-            mensaje += `*Dirección:* ${direccion}%0A`;
-            mensaje += `*Producto:* ${productoNombre}%0A`;
-            mensaje += `*Cantidad:* ${cantidad}%0A`;
-            
-            if (notas) {
-                mensaje += `*Notas adicionales:* ${notas}%0A`;
-            }
-            
-            mensaje += `%0APor favor confirmar disponibilidad. ¡Gracias!`;
-            
-            window.open(`https://wa.link/at3sj1?text=${mensaje}`, "_blank");
-        });
+        function updateStars() {
+            const stars = document.querySelectorAll('.star');
+            stars.forEach((star, i) => {
+                star.classList.toggle('active', i < currentRating);
+            });
+        }
 
-        // Fechas del formulario
-        document.addEventListener("DOMContentLoaded", function() {
-            const fechaInput = document.getElementById("fecha");
-            const hoy = new Date();
-            hoy.setDate(hoy.getDate() + 1);
-            fechaInput.setAttribute("min", hoy.toISOString().split("T")[0]);
-            
-            const maxFecha = new Date();
-            maxFecha.setDate(maxFecha.getDate() + 7);
-            fechaInput.setAttribute("max", maxFecha.toISOString().split("T")[0]);
-        });
+        function sendRating() {
+            if (currentRating === 0) {
+                showToast('❌ Por favor seleccione una calificación', 'error');
+                return;
+            }
+            const comment = document.getElementById('ratingComment').value.trim();
+            let message = `⭐ *VALORACIÓN DE SERVICIO - COMIDAS CRIOLLAS HABANA* ⭐\n\n`;
+            message += `Calificación: ${'★'.repeat(currentRating)}${'☆'.repeat(5 - currentRating)}\n`;
+            message += `Estrellas: ${currentRating}/5\n\n`;
+            if (comment) {
+                message += `💬 *Comentario:*\n${comment}\n\n`;
+            }
+            message += `Enviado desde la web de Comidas Criollas Habana`;
+
+            const encoded = encodeURIComponent(message);
+            window.open(`https://wa.me/${OWNER_PHONE}?text=${encoded}`, '_blank');
+            showToast('✅ Abriendo WhatsApp para enviar su valoración...');
+        }
+
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.style.background = type === 'error' ? '#DC3545' : '#25D366';
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 4000);
+        }
+
+        function setupEventListeners() {
+            document.querySelectorAll('.nav-menu a').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) target.scrollIntoView({ behavior: 'smooth' });
+                });
+            });
+        }
     </script>
 </body>
 </html>
