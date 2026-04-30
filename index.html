@@ -1229,7 +1229,7 @@
         }
 
     </style>
-<base target="_blank">
+<!-- base target eliminado para evitar conflictos con navegación interna -->
 <base target="_blank">
 </head>
 <body>
@@ -1248,22 +1248,22 @@
             <p>Comidas Criollas Cuba</p>
         </div>
         <div class="sidebar-nav">
-            <a href="#ofertas-especiales" onclick="closeSidebarAndScroll('#ofertas-especiales')">
+            <a href="#ofertas-especiales" onclick="closeSidebarAndScroll('#ofertas-especiales', event); return false;">
                 <i class="fas fa-star"></i> Ofertas Especiales
             </a>
-            <a href="#cenas" onclick="closeSidebarAndScroll('#cenas')">
+            <a href="#cenas" onclick="closeSidebarAndScroll('#cenas', event); return false;">
                 <i class="fas fa-drumstick-bite"></i> Cenas Criollas
             </a>
-            <a href="#buffet" onclick="closeSidebarAndScroll('#buffet')">
+            <a href="#buffet" onclick="closeSidebarAndScroll('#buffet', event); return false;">
                 <i class="fas fa-birthday-cake"></i> Buffet
             </a>
-            <a href="#reservar" onclick="closeSidebarAndScroll('#reservar')">
+            <a href="#reservar" onclick="closeSidebarAndScroll('#reservar', event); return false;">
                 <i class="fas fa-calendar-check"></i> Reservar
             </a>
-            <a href="#faq" onclick="closeSidebarAndScroll('#faq')">
+            <a href="#faq" onclick="closeSidebarAndScroll('#faq', event); return false;">
                 <i class="fas fa-question-circle"></i> FAQ
             </a>
-            <a href="#contacto" onclick="closeSidebarAndScroll('#contacto')">
+            <a href="#contacto" onclick="closeSidebarAndScroll('#contacto', event); return false;">
                 <i class="fas fa-phone"></i> Contacto
             </a>
         </div>
@@ -2298,19 +2298,24 @@
             overlay.classList.toggle('open');
             document.body.style.overflow = sidebar.classList.contains('open') ? 'hidden' : '';
         }
-        function closeSidebarAndScroll(selector) {
-            // Solo cerrar el sidebar SIN toggle (que afecta el estado de la página)
+        function closeSidebarAndScroll(selector, event) {
+            // Prevenir comportamiento por defecto del enlace (evita recarga o salto brusco)
+            if (event) event.preventDefault();
+
+            // Solo cerrar el sidebar visualmente SIN afectar el estado de la página
             const sidebar = document.getElementById('sidebar');
             const overlay = document.getElementById('sidebarOverlay');
             if (sidebar) sidebar.classList.remove('open');
             if (overlay) overlay.classList.remove('open');
             document.body.style.overflow = '';
 
-            // Hacer scroll suave después de cerrar
+            // Hacer scroll suave después de cerrar el sidebar
             setTimeout(() => {
                 const target = document.querySelector(selector);
-                if (target) target.scrollIntoView({ behavior: 'smooth' });
-            }, 300);
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }, 350);
         }
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
