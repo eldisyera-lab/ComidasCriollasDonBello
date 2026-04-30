@@ -1143,6 +1143,91 @@
             .sidebar { width: 260px; }
             .sidebar-nav a { padding: 12px 14px; font-size: 0.9rem; }
         }
+    
+
+        /* ===== MODALES LEGALES ===== */
+        .legal-modal-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            background: rgba(0,0,0,0.8);
+            z-index: 3000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.35s ease, visibility 0.35s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .legal-modal-overlay.open {
+            opacity: 1;
+            visibility: visible;
+        }
+        .legal-modal {
+            background: linear-gradient(145deg, var(--color-primary), #5D2E0C);
+            border-radius: 20px;
+            border: 2px solid var(--color-gold);
+            max-width: 800px;
+            width: 100%;
+            max-height: 85vh;
+            overflow-y: auto;
+            padding: 30px;
+            position: relative;
+            transform: scale(0.9);
+            transition: transform 0.35s ease;
+        }
+        .legal-modal-overlay.open .legal-modal {
+            transform: scale(1);
+        }
+        .legal-modal-close {
+            position: absolute;
+            top: 15px; right: 15px;
+            width: 40px; height: 40px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid var(--color-gold);
+            border-radius: 50%;
+            color: var(--color-gold);
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        .legal-modal-close:hover {
+            background: var(--color-gold);
+            color: var(--color-secondary);
+        }
+        .legal-modal h2 {
+            color: var(--color-gold);
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 1.6rem;
+        }
+        .legal-modal h3 {
+            color: var(--color-gold);
+            margin: 20px 0 10px;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .legal-modal p, .legal-modal li {
+            color: #ddd;
+            line-height: 1.7;
+            margin-bottom: 8px;
+        }
+        .legal-modal ul {
+            padding-left: 25px;
+            margin-bottom: 15px;
+        }
+        .legal-modal ul li::marker { color: var(--color-gold); }
+        @media (max-width: 768px) {
+            .legal-modal { padding: 20px; max-height: 90vh; }
+            .legal-modal h2 { font-size: 1.3rem; }
+        }
+
     </style>
 <base target="_blank">
 </head>
@@ -1215,6 +1300,9 @@
                     <label for="tamaleQty"><i class="fas fa-shopping-basket"></i> Cantidad de tamales:</label>
                     <input type="number" id="tamaleQty" min="0" value="0" onchange="updateTamaleTotal()">
                     <span class="tamale-total" id="tamaleTotal">Total: 0 CUP</span>
+                    <button type="button" class="btn-select" style="width:auto; padding:8px 15px; font-size:0.85rem; margin-left:10px;" onclick="addTamalesToOrder()">
+                        <i class="fas fa-plus"></i> Añadir
+                    </button>
                 </div>
             </div>
 
@@ -1245,10 +1333,7 @@
             <div class="offer-content" id="oferta-nochebuena">
                 <p>Próximamente estaremos publicando nuestras ofertas especiales para Nochebuena. ¡Mantente atento!</p>
             </div>
-        </div>
-    </section>
-
-    <!-- ===== CENAS CRIOLLAS ===== -->
+        </div><!-- ===== CENAS CRIOLLAS ===== -->
     <section class="section" id="cenas">
         <h2 class="section-title"><i class="fas fa-drumstick-bite"></i> Cenas Criollas</h2>
         <p style="text-align:center; color:#ccc; margin-bottom:25px;">
@@ -1388,6 +1473,9 @@
                     <a href="#" id="whatsappLink" class="btn-whatsapp" target="_blank">
                         <i class="fab fa-whatsapp"></i> Enviar por WhatsApp
                     </a>
+                    <button type="button" class="btn-print" onclick="copyVoucherToClipboard()">
+                        <i class="fas fa-copy"></i> Copiar Texto
+                    </button>
                     <button type="button" class="btn-print" onclick="window.print()">
                         <i class="fas fa-print"></i> Imprimir / Guardar PDF
                     </button>
@@ -1520,14 +1608,112 @@
         <p><i class="fas fa-heart" style="color:var(--color-red);"></i> © 2026 Don Bello. Todos los derechos reservados.</p>
         <p style="margin-top:5px; font-size:0.8rem; color:#666;">Comidas Criollas Cuba - Sabor y Tradición</p>
         <div class="footer-legal">
-            <a href="politica-seguridad.html"><i class="fas fa-shield-alt"></i> Política de Seguridad</a>
-            <a href="terminos-condiciones.html"><i class="fas fa-file-contract"></i> Términos y Condiciones</a>
+            <a href="#" onclick="openLegalModal('modalPolitica'); return false;"><i class="fas fa-shield-alt"></i> Política de Seguridad</a>
+            <a href="#" onclick="openLegalModal('modalTerminos'); return false;"><i class="fas fa-file-contract"></i> Términos y Condiciones</a>
         </div>
     </footer>
 
+    <!-- ===== MODAL POLÍTICA DE SEGURIDAD ===== -->
+    <div class="legal-modal-overlay" id="modalPolitica">
+        <div class="legal-modal">
+            <button class="legal-modal-close" onclick="closeLegalModal('modalPolitica')">
+                <i class="fas fa-times"></i>
+            </button>
+            <h2><i class="fas fa-shield-alt"></i> Política de Seguridad</h2>
+
+            <h3><i class="fas fa-user-shield"></i> 1. Información que Recopilamos</h3>
+            <p>En Don Bello recopilamos únicamente la información necesaria para procesar su pedido:</p>
+            <ul>
+                <li>Nombre y apellidos del cliente</li>
+                <li>Número de teléfono de contacto</li>
+                <li>Dirección completa de entrega (incluyendo municipio)</li>
+                <li>Fecha y hora de entrega solicitada</li>
+                <li>Detalles del pedido y notas adicionales</li>
+            </ul>
+
+            <h3><i class="fas fa-hand-holding-shield"></i> 2. Uso de la Información</h3>
+            <p>La información proporcionada se utiliza exclusivamente para:</p>
+            <ul>
+                <li>Procesar y confirmar su reserva o pedido</li>
+                <li>Coordinar la entrega del pedido en la dirección indicada</li>
+                <li>Contactar al cliente en caso de dudas sobre el pedido</li>
+                <li>Generar el vale de venta correspondiente</li>
+            </ul>
+            <p><strong style="color:var(--color-gold);">No compartimos sus datos con terceros</strong> ni los utilizamos para fines de marketing no solicitados.</p>
+
+            <h3><i class="fas fa-whatsapp"></i> 3. Comunicación por WhatsApp</h3>
+            <p>Los pedidos se procesan a través de WhatsApp. Al enviar su pedido, usted acepta que sus datos sean transmitidos vía WhatsApp al número de contacto de Don Bello (+53 54573045) con el único propósito de gestionar su reserva.</p>
+
+            <h3><i class="fas fa-trash-alt"></i> 4. Retención y Eliminación de Datos</h3>
+            <p>Los datos de los pedidos se conservan únicamente durante el tiempo necesario para cumplir con la entrega y cualquier reclamación posterior. No mantenemos registros permanentes de datos personales en servidores web.</p>
+
+            <h3><i class="fas fa-cookie-bite"></i> 5. Cookies y Tecnologías Similares</h3>
+            <p>Este sitio web no utiliza cookies de seguimiento ni tecnologías de terceros para recopilar información del usuario. La navegación es completamente anónima.</p>
+
+            <h3><i class="fas fa-phone"></i> 6. Contacto sobre Privacidad</h3>
+            <p>Si tiene alguna pregunta o inquietud sobre cómo manejamos sus datos personales, puede contactarnos directamente a través de WhatsApp al <strong style="color:var(--color-gold);">+53 54573045</strong>.</p>
+        </div>
+    </div>
+
+    <!-- ===== MODAL TÉRMINOS Y CONDICIONES ===== -->
+    <div class="legal-modal-overlay" id="modalTerminos">
+        <div class="legal-modal">
+            <button class="legal-modal-close" onclick="closeLegalModal('modalTerminos')">
+                <i class="fas fa-times"></i>
+            </button>
+            <h2><i class="fas fa-file-contract"></i> Términos y Condiciones</h2>
+
+            <h3><i class="fas fa-info-circle"></i> 1. Sobre Don Bello</h3>
+            <p>Don Bello es un emprendimiento dedicado a la preparación y venta de comidas criollas cubanas. Operamos desde <strong style="color:var(--color-gold);">Jaruco, Mayabeque</strong>, realizando entregas en La Habana y todos sus municipios, así como en Mayabeque.</p>
+
+            <h3><i class="fas fa-calendar-alt"></i> 2. Reservas y Anticipación</h3>
+            <ul>
+                <li>El pedido debe reservarse con <strong>mínimo 1 día de anticipación</strong>, siempre antes de las 5:00 pm.</li>
+                <li>La reserva máxima de anticipación es de <strong>7 días</strong>.</li>
+                <li>Los horarios de entrega son de <strong>12:00 del mediodía a 4:00 pm</strong>.</li>
+                <li>La confirmación del pedido se realiza únicamente a través de WhatsApp.</li>
+            </ul>
+
+            <h3><i class="fas fa-motorcycle"></i> 3. Servicio de Mensajería y Delivery</h3>
+            <ul>
+                <li>El costo de mensajería/delivery es de <strong style="color:var(--color-gold);">5,000 CUP</strong> por pedido.</li>
+                <li>Cubrimos todos los municipios de La Habana y Mayabeque.</li>
+                <li>El cliente también puede optar por <strong>recoger el pedido en Jaruco, Mayabeque</strong> sin costo adicional.</li>
+            </ul>
+
+            <h3><i class="fas fa-piggy-bank"></i> 4. Sobre las Cenas de Cerdo Asado</h3>
+            <ul>
+                <li>El pesaje de los cerdos es <strong>en pie</strong>, nunca en kilogramos de carne asada.</li>
+                <li>Las cenas están diseñadas por <strong>cantidad de comensales</strong>, no por peso de carne.</li>
+                <li>El cerdo puede venir entero o en piezas que completen la cantidad de comensales solicitada.</li>
+                <li>Todas las cenas incluyen: congrí, ensalada de estación, yuca con mojo y pomo de aliño.</li>
+            </ul>
+
+            <h3><i class="fas fa-money-bill-wave"></i> 5. Métodos de Pago</h3>
+            <p>Aceptamos: <strong>Zelle</strong> desde USA, <strong>Dólar y Euros</strong> en efectivo (con la tasa del negocio), <strong>Moneda Nacional (CUP)</strong> en efectivo y por transferencia.</p>
+
+            <h3><i class="fas fa-times-circle"></i> 6. Cancelaciones y Modificaciones</h3>
+            <ul>
+                <li>Para cancelar o modificar un pedido, contacte lo antes posible por WhatsApp.</li>
+                <li>Cancelaciones con menos de 24 horas de anticipación pueden estar sujetas a cargos.</li>
+                <li>Don Bello se reserva el derecho de cancelar pedidos en circunstancias excepcionales.</li>
+            </ul>
+
+            <h3><i class="fas fa-cookie-bite"></i> 7. Productos del Buffet</h3>
+            <p>Los productos del buffet son <strong>opcionales y se cotizan por separado</strong>. Pueden añadirse al pedido de cena en el momento de la reserva.</p>
+
+            <h3><i class="fas fa-exclamation-triangle"></i> 8. Limitación de Responsabilidad</h3>
+            <p>Don Bello no se hace responsable por retrasos en la entrega causados por factores externos (clima, tráfico, eventos de fuerza mayor).</p>
+
+            <h3><i class="fas fa-sync-alt"></i> 9. Modificaciones a los Términos</h3>
+            <p>Don Bello se reserva el derecho de modificar estos términos y condiciones en cualquier momento. Los cambios entrarán en vigor una vez publicados en esta página.</p>
+        </div>
+    </div>
+
+
 
     <!-- ===== BOTÓN FLOTANTE WHATSAPP PERSONALIZADO ===== -->
-    <a href="https://wa.link/dtixrn" class="whatsapp-float" target="_blank" title="Chatear por WhatsApp">
+    <a href="https://api.whatsapp.com/send?phone=5354573045" class="whatsapp-float" target="_blank" title="Chatear por WhatsApp">
         <span class="float-text">Información</span>
         <i class="fab fa-whatsapp"></i>
     </a>
@@ -1702,7 +1888,7 @@
             const items = type === 'porcion' ? porciones : cerdos;
             selectedOffer = items.find(i => i.id === id);
 
-            const card = document.querySelector(`[data-id="${item.id}"][data-type="${type}"]`);
+            const card = document.querySelector(`[data-id="${id}"][data-type="${type}"]`);
             const btn = card.querySelector('.btn-select');
             btn.innerHTML = '<i class="fas fa-check"></i> Seleccionado';
             btn.classList.add('selected');
@@ -1741,6 +1927,17 @@
             const total = qty * 150;
             document.getElementById('tamaleTotal').textContent = `Total: ${total.toLocaleString()} CUP`;
             updateSummary();
+        }
+
+        function addTamalesToOrder() {
+            const qty = parseInt(document.getElementById('tamaleQty').value) || 0;
+            if (qty > 0) {
+                tamaleQty = qty;
+                updateSummary();
+                showToast(`🌽 ${qty} tamales añadidos al pedido`);
+            } else {
+                showToast('❌ Ingrese una cantidad válida de tamales', 'error');
+            }
         }
 
         // ===== MENSAJERÍA =====
@@ -1809,9 +2006,9 @@
                 const tamaleTotal = tamaleQty * 150;
                 total += tamaleTotal;
                 html += `
-                    <div class="summary-item">
-                        <span><i class="fas fa-leaf"></i> Tamales x${tamaleQty}</span>
-                        <span>${tamaleTotal.toLocaleString()} CUP</span>
+                    <div class="summary-item" style="background:rgba(37,211,102,0.1); border-radius:8px; padding:10px;">
+                        <span><i class="fas fa-leaf"></i> 🌽 Tamales (Oferta de la Casa) x${tamaleQty}</span>
+                        <span style="color:var(--color-green); font-weight:bold;">${tamaleTotal.toLocaleString()} CUP</span>
                     </div>
                 `;
             }
@@ -1885,7 +2082,8 @@
             document.getElementById('voucherPreview').classList.add('visible');
 
             const encodedMessage = encodeURIComponent(voucherText);
-            const whatsappUrl = `https://wa.me/${OWNER_PHONE}?text=${encodedMessage}`;
+            // Usar api.whatsapp.com para mejor compatibilidad con móviles
+            const whatsappUrl = `https://api.whatsapp.com/send?phone=${OWNER_PHONE}&text=${encodedMessage}`;
             document.getElementById('whatsappLink').href = whatsappUrl;
 
             document.getElementById('voucherPreview').scrollIntoView({ behavior: 'smooth' });
@@ -1954,6 +2152,22 @@
             text += `🌐 Comidas Criollas Cuba`;
 
             return text;
+        }
+
+        function copyVoucherToClipboard() {
+            const voucherText = document.getElementById('voucherContent').textContent;
+            navigator.clipboard.writeText(voucherText).then(() => {
+                showToast('✅ Vale copiado al portapapeles. Péguelo en WhatsApp.');
+            }).catch(() => {
+                // Fallback para navegadores antiguos
+                const textarea = document.createElement('textarea');
+                textarea.value = voucherText;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                showToast('✅ Vale copiado al portapapeles. Péguelo en WhatsApp.');
+            });
         }
 
         // ===== ACORDEÓN OFERTAS =====
@@ -2073,6 +2287,37 @@
             }
         });
 
+    
+
+        // ===== MODALES LEGALES =====
+        function openLegalModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.add('open');
+                document.body.style.overflow = 'hidden';
+                console.log('Modal abierto:', modalId);
+            } else {
+                console.error('Modal no encontrado:', modalId);
+                showToast('❌ Error al abrir la ventana. Intente de nuevo.', 'error');
+            }
+        }
+        function closeLegalModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.remove('open');
+                document.body.style.overflow = '';
+            }
+        }
+        // Cerrar modal al hacer clic fuera
+        document.querySelectorAll('.legal-modal-overlay').forEach(overlay => {
+            overlay.addEventListener('click', function(e) {
+                if (e.target === this) closeLegalModal(this.id);
+            });
+        });
+
     </script>
 </body>
 </html>
+    </section>
+
+    
