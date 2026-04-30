@@ -1230,6 +1230,7 @@
 
     </style>
 <base target="_blank">
+<base target="_blank">
 </head>
 <body>
 
@@ -1333,7 +1334,10 @@
             <div class="offer-content" id="oferta-nochebuena">
                 <p>Próximamente estaremos publicando nuestras ofertas especiales para Nochebuena. ¡Mantente atento!</p>
             </div>
-        </div><!-- ===== CENAS CRIOLLAS ===== -->
+        </div>
+    </section>
+
+    <!-- ===== CENAS CRIOLLAS ===== -->
     <section class="section" id="cenas">
         <h2 class="section-title"><i class="fas fa-drumstick-bite"></i> Cenas Criollas</h2>
         <p style="text-align:center; color:#ccc; margin-bottom:25px;">
@@ -1374,6 +1378,8 @@
 
         <div class="order-form">
             <form id="orderForm">
+                <!-- Input hidden para sincronizar tamales con el formulario -->
+                <input type="hidden" id="tamaleQtyHidden" name="tamaleQty" value="0">
                 <div class="form-row">
                     <div class="form-group">
                         <label for="nombre"><i class="fas fa-user"></i> Nombre y Apellidos *</label>
@@ -1893,7 +1899,11 @@
             btn.innerHTML = '<i class="fas fa-check"></i> Seleccionado';
             btn.classList.add('selected');
 
-            document.getElementById('oferta').value = id;
+            // Actualizar el select del formulario SIN disparar el evento change
+            // para evitar bucles y desincronización
+            const select = document.getElementById('oferta');
+            select.value = id;
+
             updateSummary();
             showToast('Oferta seleccionada: ' + selectedOffer.name);
         }
@@ -1902,6 +1912,11 @@
             const id = this.value;
             if (!id) {
                 selectedOffer = null;
+                // Limpiar selección visual de todas las tarjetas
+                document.querySelectorAll('.menu-card .btn-select').forEach(btn => {
+                    btn.innerHTML = '<i class="fas fa-cart-plus"></i> Seleccionar';
+                    btn.classList.remove('selected');
+                });
                 updateSummary();
                 return;
             }
@@ -1924,6 +1939,9 @@
         function updateTamaleTotal() {
             const qty = parseInt(document.getElementById('tamaleQty').value) || 0;
             tamaleQty = qty;
+            // Sincronizar con el input hidden del formulario para que FormData lo capture
+            const hiddenInput = document.getElementById('tamaleQtyHidden');
+            if (hiddenInput) hiddenInput.value = qty;
             const total = qty * 150;
             document.getElementById('tamaleTotal').textContent = `Total: ${total.toLocaleString()} CUP`;
             updateSummary();
@@ -1933,6 +1951,9 @@
             const qty = parseInt(document.getElementById('tamaleQty').value) || 0;
             if (qty > 0) {
                 tamaleQty = qty;
+                // Sincronizar con el input hidden del formulario para que FormData lo capture
+                const hiddenInput = document.getElementById('tamaleQtyHidden');
+                if (hiddenInput) hiddenInput.value = qty;
                 updateSummary();
                 showToast(`🌽 ${qty} tamales añadidos al pedido`);
             } else {
@@ -2111,12 +2132,16 @@
 
             let total = selectedOffer.price;
 
-            // Tamales
-            if (tamaleQty > 0) {
-                const tamaleTotal = tamaleQty * 150;
+                        // Tamales - leer desde data del formulario (input hidden sincronizado)
+            const finalTamaleQty = parseInt(data.tamaleQty) || tamaleQty || 0;
+            if (finalTamaleQty > 0) {
+                const tamaleTotal = finalTamaleQty * 150;
                 total += tamaleTotal;
-                text += `🌽 *Tamales (Oferta de la Casa):*\n`;
-                text += `   Cantidad: ${tamaleQty} x 150 CUP = ${tamaleTotal.toLocaleString()} CUP\n\n`;
+                text += `🌽 *Tamales (Oferta de la Casa):*
+`;
+                text += `   Cantidad: ${finalTamaleQty} x 150 CUP = ${tamaleTotal.toLocaleString()} CUP
+
+`;
             }
 
             const buffetEntries = Object.entries(selectedBuffet);
@@ -2318,6 +2343,3 @@
     </script>
 </body>
 </html>
-    </section>
-
-    
