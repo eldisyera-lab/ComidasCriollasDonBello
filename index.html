@@ -2299,7 +2299,14 @@
             document.body.style.overflow = sidebar.classList.contains('open') ? 'hidden' : '';
         }
         function closeSidebarAndScroll(selector) {
-            toggleSidebar();
+            // Solo cerrar el sidebar SIN toggle (que afecta el estado de la página)
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            if (sidebar) sidebar.classList.remove('open');
+            if (overlay) overlay.classList.remove('open');
+            document.body.style.overflow = '';
+
+            // Hacer scroll suave después de cerrar
             setTimeout(() => {
                 const target = document.querySelector(selector);
                 if (target) target.scrollIntoView({ behavior: 'smooth' });
