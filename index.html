@@ -1316,20 +1316,22 @@
             <div class="offer-content" id="oferta-madres">
                 <p><i class="fas fa-fire" style="color:var(--color-gold);"></i> <strong>¡Oferta especial por el Día de las Madres!</strong></p>
 
-                <div style="background:rgba(0,0,0,0.3); border-radius:12px; padding:18px; margin:15px 0; border:1px solid var(--color-gold);">
-                    <p style="margin-bottom:10px;"><span style="color:var(--color-gold); font-size:1.3rem;">♨️</span> <strong style="color:var(--color-gold);">Masas para 25-30 comensales</strong></p>
-                    <p style="font-size:0.95rem; color:#ddd; margin-bottom:12px;">Incluye: congrí, ensalada de estación, yuca con mojo y un pomo de aliño</p>
-                    <p style="font-size:1.4rem; color:var(--color-green); font-weight:bold;">60,000 CUP</p>
-                    <button type="button" class="btn-select" style="margin-top:12px;" onclick="selectMadresOffer('madres_masas_25_30', 'Masas para 25-30 comensales (Día de las Madres)', 60000, '25-30 comensales')">
-                        <i class="fas fa-cart-plus"></i> Agregar al Vale
-                    </button>
-                </div>
-
+                <!-- OFERTA 1: 20-22 comensales -->
                 <div style="background:rgba(0,0,0,0.3); border-radius:12px; padding:18px; margin:15px 0; border:1px solid var(--color-gold);">
                     <p style="margin-bottom:10px;"><span style="color:var(--color-gold); font-size:1.3rem;">♨️</span> <strong style="color:var(--color-gold);">Masas para 20-22 comensales</strong></p>
                     <p style="font-size:0.95rem; color:#ddd; margin-bottom:12px;">Incluye: congrí, ensalada de estación, yuca con mojo y un pomo de aliño</p>
                     <p style="font-size:1.4rem; color:var(--color-green); font-weight:bold;">50,000 CUP</p>
                     <button type="button" class="btn-select" style="margin-top:12px;" onclick="selectMadresOffer('madres_masas_20_22', 'Masas para 20-22 comensales (Día de las Madres)', 50000, '20-22 comensales')">
+                        <i class="fas fa-cart-plus"></i> Agregar al Vale
+                    </button>
+                </div>
+
+                <!-- OFERTA 2: 25-30 comensales -->
+                <div style="background:rgba(0,0,0,0.3); border-radius:12px; padding:18px; margin:15px 0; border:1px solid var(--color-gold);">
+                    <p style="margin-bottom:10px;"><span style="color:var(--color-gold); font-size:1.3rem;">♨️</span> <strong style="color:var(--color-gold);">Masas para 25-30 comensales</strong></p>
+                    <p style="font-size:0.95rem; color:#ddd; margin-bottom:12px;">Incluye: congrí, ensalada de estación, yuca con mojo y un pomo de aliño</p>
+                    <p style="font-size:1.4rem; color:var(--color-green); font-weight:bold;">60,000 CUP</p>
+                    <button type="button" class="btn-select" style="margin-top:12px;" onclick="selectMadresOffer('madres_masas_25_30', 'Masas para 25-30 comensales (Día de las Madres)', 60000, '25-30 comensales')">
                         <i class="fas fa-cart-plus"></i> Agregar al Vale
                     </button>
                 </div>
@@ -1898,8 +1900,8 @@
             });
             // Añadir ofertas especiales del Día de las Madres
             const madresOffers = [
-                { id: 'madres_masas_25_30', name: 'Masas para 25-30 comensales (Día de las Madres)', price: 60000, type: 'oferta-especial' },
-                { id: 'madres_masas_20_22', name: 'Masas para 20-22 comensales (Día de las Madres)', price: 50000, type: 'oferta-especial' }
+                { id: 'madres_masas_20_22', name: 'Masas para 20-22 comensales (Día de las Madres)', price: 50000, type: 'oferta-especial' },
+                { id: 'madres_masas_25_30', name: 'Masas para 25-30 comensales (Día de las Madres)', price: 60000, type: 'oferta-especial' }
             ];
             madresOffers.forEach(item => {
                 const option = document.createElement('option');
@@ -1918,23 +1920,22 @@
                 btn.classList.remove('selected');
             });
 
-            // Limpiar selección de botones de ofertas especiales
+            // Limpiar TODOS los botones de ofertas especiales del Día de las Madres
             document.querySelectorAll('#oferta-madres .btn-select').forEach(btn => {
                 btn.innerHTML = '<i class="fas fa-cart-plus"></i> Agregar al Vale';
                 btn.classList.remove('selected');
             });
 
-            // Marcar el botón seleccionado
+            // Marcar SOLO el botón que se acaba de clickear
             const clickedBtn = event.currentTarget;
             clickedBtn.innerHTML = '<i class="fas fa-check"></i> Seleccionado';
             clickedBtn.classList.add('selected');
 
-            // Crear objeto de oferta
+            // Crear objeto de oferta seleccionada
             selectedOffer = { id: id, name: name, price: price, comensales: comensales };
 
-            // Actualizar el select del formulario
+            // Actualizar el select del formulario de reserva
             const select = document.getElementById('oferta');
-            // Verificar si ya existe la opción
             let option = select.querySelector(`option[value="${id}"]`);
             if (!option) {
                 option = document.createElement('option');
@@ -1946,7 +1947,7 @@
             select.value = id;
 
             updateSummary();
-            showToast('Oferta seleccionada: ' + name);
+            showToast('✅ Oferta seleccionada: ' + name);
         }
 
         // ===== SELECCIÓN DE OFERTAS =====
@@ -1998,8 +1999,8 @@
             if (type === 'oferta-especial') {
                 // Es una oferta especial del Día de las Madres
                 const madresOffers = {
-                    'madres_masas_25_30': { name: 'Masas para 25-30 comensales (Día de las Madres)', price: 60000, comensales: '25-30 comensales' },
-                    'madres_masas_20_22': { name: 'Masas para 20-22 comensales (Día de las Madres)', price: 50000, comensales: '20-22 comensales' }
+                    'madres_masas_20_22': { name: 'Masas para 20-22 comensales (Día de las Madres)', price: 50000, comensales: '20-22 comensales' },
+                    'madres_masas_25_30': { name: 'Masas para 25-30 comensales (Día de las Madres)', price: 60000, comensales: '25-30 comensales' }
                 };
                 const offer = madresOffers[id];
                 if (offer) {
