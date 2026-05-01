@@ -1314,26 +1314,28 @@
                 <i class="fas fa-chevron-down"></i>
             </button>
             <div class="offer-content" id="oferta-madres">
-                <p><i class="fas fa-fire" style="color:var(--color-gold);"></i> <strong>¡Oferta especial por el Día de las Madres!</strong></p>
+                <p style="text-align:center; margin-bottom:15px;"><i class="fas fa-fire" style="color:var(--color-gold);"></i> <strong>¡Oferta especial por el Día de las Madres!</strong></p>
 
-                <!-- OFERTA 1: 20-22 comensales -->
-                <div style="background:rgba(0,0,0,0.3); border-radius:12px; padding:18px; margin:15px 0; border:1px solid var(--color-gold);">
-                    <p style="margin-bottom:10px;"><span style="color:var(--color-gold); font-size:1.3rem;">♨️</span> <strong style="color:var(--color-gold);">Masas para 20-22 comensales</strong></p>
-                    <p style="font-size:0.95rem; color:#ddd; margin-bottom:12px;">Incluye: congrí, ensalada de estación, yuca con mojo y un pomo de aliño</p>
-                    <p style="font-size:1.4rem; color:var(--color-green); font-weight:bold;">50,000 CUP</p>
-                    <button type="button" class="btn-select" style="margin-top:12px;" onclick="selectMadresOffer('madres_masas_20_22', 'Masas para 20-22 comensales (Día de las Madres)', 50000, '20-22 comensales')">
-                        <i class="fas fa-cart-plus"></i> Agregar al Vale
-                    </button>
-                </div>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:15px;">
+                    <!-- OFERTA 1: 20-22 comensales -->
+                    <div style="background:rgba(0,0,0,0.3); border-radius:12px; padding:18px; border:1px solid var(--color-gold); display:flex; flex-direction:column;">
+                        <p style="margin-bottom:8px; text-align:center;"><span style="color:var(--color-gold); font-size:1.3rem;">♨️</span> <strong style="color:var(--color-gold);">Masas 20-22 comensales</strong></p>
+                        <p style="font-size:0.85rem; color:#ddd; margin-bottom:10px; text-align:center;">Congrí, ensalada, yuca con mojo y aliño</p>
+                        <p style="font-size:1.3rem; color:var(--color-green); font-weight:bold; text-align:center; margin-bottom:12px;">50,000 CUP</p>
+                        <button type="button" class="btn-select" style="margin-top:auto; padding:10px; font-size:0.9rem;" onclick="selectMadresOffer('madres_masas_20_22', 'Masas para 20-22 comensales (Día de las Madres)', 50000, '20-22 comensales')">
+                            <i class="fas fa-cart-plus"></i> Añadir al Vale
+                        </button>
+                    </div>
 
-                <!-- OFERTA 2: 25-30 comensales -->
-                <div style="background:rgba(0,0,0,0.3); border-radius:12px; padding:18px; margin:15px 0; border:1px solid var(--color-gold);">
-                    <p style="margin-bottom:10px;"><span style="color:var(--color-gold); font-size:1.3rem;">♨️</span> <strong style="color:var(--color-gold);">Masas para 25-30 comensales</strong></p>
-                    <p style="font-size:0.95rem; color:#ddd; margin-bottom:12px;">Incluye: congrí, ensalada de estación, yuca con mojo y un pomo de aliño</p>
-                    <p style="font-size:1.4rem; color:var(--color-green); font-weight:bold;">60,000 CUP</p>
-                    <button type="button" class="btn-select" style="margin-top:12px;" onclick="selectMadresOffer('madres_masas_25_30', 'Masas para 25-30 comensales (Día de las Madres)', 60000, '25-30 comensales')">
-                        <i class="fas fa-cart-plus"></i> Agregar al Vale
-                    </button>
+                    <!-- OFERTA 2: 25-30 comensales -->
+                    <div style="background:rgba(0,0,0,0.3); border-radius:12px; padding:18px; border:1px solid var(--color-gold); display:flex; flex-direction:column;">
+                        <p style="margin-bottom:8px; text-align:center;"><span style="color:var(--color-gold); font-size:1.3rem;">♨️</span> <strong style="color:var(--color-gold);">Masas 25-30 comensales</strong></p>
+                        <p style="font-size:0.85rem; color:#ddd; margin-bottom:10px; text-align:center;">Congrí, ensalada, yuca con mojo y aliño</p>
+                        <p style="font-size:1.3rem; color:var(--color-green); font-weight:bold; text-align:center; margin-bottom:12px;">60,000 CUP</p>
+                        <button type="button" class="btn-select" style="margin-top:auto; padding:10px; font-size:0.9rem;" onclick="selectMadresOffer('madres_masas_25_30', 'Masas para 25-30 comensales (Día de las Madres)', 60000, '25-30 comensales')">
+                            <i class="fas fa-cart-plus"></i> Añadir al Vale
+                        </button>
+                    </div>
                 </div>
             </div>
 
