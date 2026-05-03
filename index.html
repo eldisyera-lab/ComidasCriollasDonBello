@@ -29,6 +29,7 @@
             overflow-x: hidden;
         }
 
+        /* ===== SIDEBAR / MENÚ LATERAL ===== */
         .sidebar {
             position: fixed;
             top: 0;
@@ -118,6 +119,7 @@
             visibility: visible;
         }
 
+        /* ===== HEADER ===== */
         .header {
             background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
             padding: 15px 20px;
@@ -173,6 +175,7 @@
 
         .header-spacer { width: 45px; }
 
+        /* Navegación desktop */
         .nav-menu {
             display: flex;
             justify-content: center;
@@ -241,6 +244,7 @@
             font-size: 1.8rem;
         }
 
+        /* ===== OFERTAS EN GRID ===== */
         .offers-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -413,31 +417,6 @@
             color: var(--color-red);
             font-weight: bold;
             font-size: 1.1rem;
-        }
-
-        .tamale-input-group {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-top: 15px;
-            flex-wrap: wrap;
-        }
-
-        .tamale-input-group input {
-            width: 100px;
-            padding: 10px;
-            border-radius: 8px;
-            border: 1px solid var(--color-gold);
-            background: rgba(255,255,255,0.1);
-            color: white;
-            text-align: center;
-            font-size: 1rem;
-        }
-
-        .tamale-total {
-            color: var(--color-gold);
-            font-weight: bold;
-            font-size: 1.2rem;
         }
 
         .buffet-notice {
@@ -998,7 +977,7 @@
             text-decoration: none;
             border-radius: 12px;
             font-weight: 600;
-            transition: all 0.3s ease;
+            transition: all 0.3ease;
             min-width: 280px;
             justify-content: center;
         }
@@ -1076,6 +1055,7 @@
 
         .btn-rating:hover { transform: scale(1.05); }
 
+        /* ===== GALERÍA ===== */
         .gallery-section {
             background: linear-gradient(145deg, #4A2510, #2D1405);
             border-radius: 20px;
@@ -1159,7 +1139,657 @@
         .lightbox img {
             max-width: 90%;
             max-height: 85vh;
-            border-radius: 10px;: 'b1', name: 'Kake de Merengue Redondo', price: 3000 },
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 2.5rem;
+            cursor: pointer;
+            background: none;
+            border: none;
+            transition: transform 0.3s ease;
+        }
+
+        .lightbox-close:hover { transform: rotate(90deg); }
+
+        .lightbox-caption {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--color-gold);
+            font-size: 1.2rem;
+            font-weight: 600;
+            text-align: center;
+            background: rgba(0,0,0,0.7);
+            padding: 10px 25px;
+            border-radius: 25px;
+        }
+
+        /* ===== POLÍTICAS Y TÉRMINOS ===== */
+        .legal-section {
+            background: linear-gradient(145deg, #1a0a00, #2D1405);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 30px auto;
+            max-width: 1200px;
+            border: 1px solid rgba(218, 165, 32, 0.3);
+        }
+
+        .legal-section h2 {
+            color: var(--color-gold);
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 1.6rem;
+        }
+
+        .legal-item {
+            background: rgba(0,0,0,0.2);
+            border-radius: 12px;
+            margin-bottom: 15px;
+            overflow: hidden;
+        }
+
+        .legal-question {
+            padding: 18px 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            transition: background 0.3s ease;
+            color: var(--color-light);
+        }
+
+        .legal-question:hover { background: rgba(255,255,255,0.05); }
+
+        .legal-answer {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+
+        .legal-answer.open {
+            padding: 0 20px 18px;
+            max-height: 800px;
+        }
+
+        .legal-answer p, .legal-answer ul {
+            color: #bbb;
+            line-height: 1.8;
+            margin-bottom: 10px;
+        }
+
+        .legal-answer ul { padding-left: 20px; }
+        .legal-answer ul li { margin-bottom: 8px; }
+        .legal-answer strong { color: var(--color-gold); }
+
+        .footer {
+            background: #1a0a00;
+            text-align: center;
+            padding: 25px;
+            margin-top: 40px;
+            border-top: 2px solid var(--color-primary);
+        }
+
+        .footer p {
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        .footer-links {
+            margin-top: 15px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--color-gold);
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--color-light);
+            text-decoration: underline;
+        }
+
+        .whatsapp-float {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            width: 60px;
+            height: 60px;
+            background: var(--color-green);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.8rem;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 999;
+            text-decoration: none;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.7);
+        }
+
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--color-green);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            transform: translateX(400px);
+            transition: transform 0.4s ease;
+            z-index: 10000;
+            font-weight: 600;
+        }
+
+        .toast.show { transform: translateX(0); }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .header { padding: 12px 15px; }
+            .header h1 { font-size: 1.5rem; }
+            .menu-toggle { width: 40px; height: 40px; font-size: 1.1rem; }
+            .header-spacer { width: 40px; }
+            .nav-menu { display: none; }
+            .section { padding: 25px 15px; }
+            .menu-grid { grid-template-columns: 1fr; }
+            .buffet-grid { grid-template-columns: 1fr; }
+            .social-link { min-width: 100%; }
+            .offer-btn { font-size: 1rem; padding: 15px 20px; }
+            .gallery-item img { height: 200px; }
+            .sidebar { width: 280px; left: -280px; }
+            .lightbox img { max-width: 95%; }
+            .offers-grid { grid-template-columns: 1fr; }
+        }
+
+        /* En desktop: mostrar menú hamburguesa también para acceso rápido */
+        @media (min-width: 769px) {
+            .menu-toggle { display: flex; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="toast" class="toast"></div>
+
+    <!-- SIDEBAR -->
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h3><i class="fas fa-utensils"></i> Don Bello</h3>
+            <button class="sidebar-close" onclick="closeSidebar()"><i class="fas fa-times"></i></button>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="#ofertas-especiales" onclick="closeSidebar()"><i class="fas fa-star"></i> Ofertas Especiales</a>
+            <a href="#cenas" onclick="closeSidebar()"><i class="fas fa-drumstick-bite"></i> Cenas Criollas</a>
+            <a href="#buffet" onclick="closeSidebar()"><i class="fas fa-birthday-cake"></i> Buffet</a>
+            <a href="#galeria" onclick="closeSidebar()"><i class="fas fa-images"></i> Galería</a>
+            <a href="#reservar" onclick="closeSidebar()"><i class="fas fa-calendar-check"></i> Reservar</a>
+            <a href="#faq" onclick="closeSidebar()"><i class="fas fa-question-circle"></i> FAQ</a>
+            <a href="#contacto" onclick="closeSidebar()"><i class="fas fa-phone"></i> Contacto</a>
+            <a href="#legal" onclick="closeSidebar()"><i class="fas fa-shield-alt"></i> Políticas y Términos</a>
+        </nav>
+    </aside>
+
+    <!-- LIGHTBOX -->
+    <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+        <button class="lightbox-close" onclick="closeLightbox()"><i class="fas fa-times"></i></button>
+        <img src="" alt="" id="lightboxImg">
+        <div class="lightbox-caption" id="lightboxCaption"></div>
+    </div>
+
+    <header class="header">
+        <div class="header-left">
+            <button class="menu-toggle" onclick="openSidebar()" aria-label="Abrir menú">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        <div class="header-brand">
+            <h1><i class="fas fa-utensils"></i> Don Bello</h1>
+            <p>Comidas Criollas Cuba - Sabor y Tradición</p>
+        </div>
+        <div class="header-spacer"></div>
+    </header>
+
+    <nav class="nav-menu">
+        <a href="#ofertas-especiales"><i class="fas fa-star"></i> Ofertas Especiales</a>
+        <a href="#cenas"><i class="fas fa-drumstick-bite"></i> Cenas Criollas</a>
+        <a href="#buffet"><i class="fas fa-birthday-cake"></i> Buffet</a>
+        <a href="#galeria"><i class="fas fa-images"></i> Galería</a>
+        <a href="#reservar"><i class="fas fa-calendar-check"></i> Reservar</a>
+        <a href="#faq"><i class="fas fa-question-circle"></i> FAQ</a>
+        <a href="#contacto"><i class="fas fa-phone"></i> Contacto</a>
+    </nav>
+
+    <section class="special-offers-section" id="ofertas-especiales">
+        <h2><i class="fas fa-gift"></i> Ofertas Especiales</h2>
+        
+        <!-- Aviso buffet no disponible -->
+        <div class="buffet-notice">
+            <p><i class="fas fa-ban"></i> Servicio de Buffet NO disponible temporalmente</p>
+        </div>
+
+        <!-- Ofertas en grid lado a lado -->
+        <div class="offers-grid">
+            <!-- Oferta Tamales -->
+            <div class="offer-card">
+                <h3><i class="fas fa-home"></i> Oferta de la Casa</h3>
+                <p>Tenemos tamales a <strong style="color:var(--color-gold);">150 CUP c/u</strong>.</p>
+                <p>Añade la cantidad que desees y se sumará al importe total de tu pedido.</p>
+                <div class="tamale-input-group">
+                    <label for="tamaleQty">Cantidad:</label>
+                    <input type="number" id="tamaleQty" min="0" value="0" onchange="updateTamaleTotal()">
+                    <span class="tamale-total" id="tamaleTotal">Total: 0 CUP</span>
+                </div>
+                <button type="button" class="btn-add-offer" id="btnTamales" onclick="addTamaleOffer()">
+                    <i class="fas fa-cart-plus"></i> Añadir al pedido
+                </button>
+            </div>
+
+            <!-- Oferta Día de las Madres - Masas 20-22 -->
+            <div class="offer-card">
+                <h3><i class="fas fa-heart"></i> Día de las Madres</h3>
+                <p><strong>Masas 20-22 comensales</strong></p>
+                <p>Congrí, ensalada, yuca con mojo y aliño</p>
+                <div class="price-tag">50,000 CUP</div>
+                <p class="not-available-tag"><i class="fas fa-times-circle"></i> Buffet no disponible</p>
+                <button type="button" class="btn-add-offer" id="btnMasas20" onclick="addSpecialOffer('masas20', 50000, 'Masas 20-22 comensales')">
+                    <i class="fas fa-cart-plus"></i> Añadir al pedido
+                </button>
+            </div>
+
+            <!-- Oferta Día de las Madres - Masas 25-30 -->
+            <div class="offer-card">
+                <h3><i class="fas fa-heart"></i> Día de las Madres</h3>
+                <p><strong>Masas 25-30 comensales</strong></p>
+                <p>Congrí, ensalada, yuca con mojo y aliño</p>
+                <div class="price-tag">60,000 CUP</div>
+                <p class="not-available-tag"><i class="fas fa-times-circle"></i> Buffet no disponible</p>
+                <button type="button" class="btn-add-offer" id="btnMasas25" onclick="addSpecialOffer('masas25', 60000, 'Masas 25-30 comensales')">
+                    <i class="fas fa-cart-plus"></i> Añadir al pedido
+                </button>
+            </div>
+        </div>
+
+        <!-- Acordeón para ofertas futuras -->
+        <div class="offer-accordion" style="margin-top: 20px;">
+            <button class="offer-btn" onclick="toggleOffer(this, 'oferta-padres')">
+                <span><i class="fas fa-male"></i> Oferta Día de los Padres</span>
+                <i class="fas fa-chevron-down"></i>
+            </button>
+            <div class="offer-content" id="oferta-padres">
+                <p>Próximamente estaremos publicando nuestra oferta especial para el Día de los Padres. ¡Mantente atento!</p>
+            </div>
+
+            <button class="offer-btn" onclick="toggleOffer(this, 'oferta-nochebuena')">
+                <span><i class="fas fa-tree"></i> Ofertas Nochebuena</span>
+                <i class="fas fa-chevron-down"></i>
+            </button>
+            <div class="offer-content" id="oferta-nochebuena">
+                <p>Próximamente estaremos publicando nuestras ofertas especiales para Nochebuena. ¡Mantente atento!</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="cenas">
+        <h2 class="section-title"><i class="fas fa-drumstick-bite"></i> Cenas Criollas</h2>
+        <p style="text-align:center; color:#ccc; margin-bottom:25px;">
+            Deliciosas cenas de cerdo asado para tus celebraciones. <br>
+            <strong style="color:var(--color-gold);">Todas las cenas incluyen:</strong> Congrí, ensalada de estación, yuca con mojo y un pomo de aliño.
+        </p>
+        <p style="text-align:center; color:#aaa; margin-bottom:25px; font-size:0.9rem;">
+            <i class="fas fa-info-circle"></i> La cena puede venir con un cerdo entero o puede traer un cerdo menor con alguna pieza para completar la cantidad de comensales. El pesaje de los cerdos es en pie.
+        </p>
+        <p style="text-align:center; color:#ff6b6b; margin-bottom:25px; font-size:0.9rem; font-weight:bold;">
+            <i class="fas fa-exclamation-triangle"></i> RECORDARLES QUE EL PESAJE DE LOS CERDOS ES EN PIE, NUNCA VA A LLEGAR LA CANTIDAD DE CARNE ASADA QUE DICE EL CERDO DE LA OFERTA, POR ESO LAS CENAS ESTÁN DISEÑADAS PARA ESA CANTIDAD DE COMENSALES. (NO DAMOS PESAJE EN KG — PREPARAMOS LA OFERTA POR CANTIDAD DE COMENSALES)
+        </p>
+
+        <h3 style="color:var(--color-gold); margin-bottom:20px; text-align:center;"><i class="fas fa-piggy-bank"></i> Porciones</h3>
+        <div class="menu-grid" id="porcionesGrid"></div>
+
+        <h3 style="color:var(--color-gold); margin:40px 0 20px; text-align:center;"><i class="fas fa-piggy-bank"></i> Cerdo Entero</h3>
+        <div class="menu-grid" id="cerdoGrid"></div>
+    </section>
+
+    <section class="section" id="buffet">
+        <h2 class="section-title"><i class="fas fa-birthday-cake"></i> Menú Buffet</h2>
+        <div class="buffet-notice" style="max-width: 600px; margin: 0 auto 25px;">
+            <p><i class="fas fa-ban"></i> Servicio de Buffet NO disponible temporalmente</p>
+        </div>
+        <p style="text-align:center; color:#ccc; margin-bottom:25px;">
+            Dulces, pasteles y bocaditos para tus eventos. <br>
+            <strong style="color:var(--color-gold);">Puedes añadir productos del buffet a tu pedido de cena en el formulario de reserva.</strong>
+        </p>
+        <div class="menu-grid" id="buffetMenuGrid"></div>
+    </section>
+
+    <section class="gallery-section" id="galeria">
+        <h2><i class="fas fa-images"></i> Galería</h2>
+        <p class="subtitle">Conoce la calidad y presentación de nuestros cerdos asados.<br><strong style="color:var(--color-gold);">¡El sabor se ve!</strong></p>
+        <div class="gallery-grid" id="galleryGrid"></div>
+    </section>
+
+    <section class="section" id="reservar">
+        <h2 class="section-title"><i class="fas fa-calendar-check"></i> Reservar Pedido</h2>
+        <p style="text-align:center; color:#ccc; margin-bottom:25px;">
+            Completa el formulario y te enviaremos el vale de venta por WhatsApp<br>
+            <strong style="color:var(--color-gold);"><i class="fas fa-clock"></i> Horarios de entrega:</strong> De 12:00 del mediodía a 4:00 pm
+        </p>
+
+        <div class="order-form">
+            <form id="orderForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="nombre"><i class="fas fa-user"></i> Nombre y Apellidos *</label>
+                        <input type="text" id="nombre" name="nombre" required placeholder="Ej: Juan Pérez García">
+                    </div>
+                    <div class="form-group">
+                        <label for="telefono"><i class="fas fa-phone"></i> Teléfono *</label>
+                        <input type="tel" id="telefono" name="telefono" required placeholder="Ej: +53 51234567">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="direccion"><i class="fas fa-map-marker-alt"></i> Dirección completa (incluyendo municipio) *</label>
+                    <input type="text" id="direccion" name="direccion" required placeholder="Ej: Calle 23 #456 e/ A y B, Plaza">
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="telefonoAlt"><i class="fas fa-phone-alt"></i> Teléfono alternativo</label>
+                        <input type="tel" id="telefonoAlt" name="telefonoAlt" placeholder="Opcional">
+                    </div>
+                    <div class="form-group">
+                        <label for="fecha"><i class="fas fa-calendar"></i> Fecha de entrega *</label>
+                        <input type="date" id="fecha" name="fecha" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="hora"><i class="fas fa-clock"></i> Hora de entrega *</label>
+                        <input type="time" id="hora" name="hora" required min="12:00" max="16:00">
+                    </div>
+                    <div class="form-group">
+                        <label for="oferta"><i class="fas fa-tag"></i> Oferta solicitada *</label>
+                        <select id="oferta" name="oferta" required>
+                            <option value="">Seleccione una oferta...</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="checkbox-group" id="mensajeriaGroup">
+                    <input type="checkbox" id="mensajeria" name="mensajeria">
+                    <label for="mensajeria"><i class="fas fa-motorcycle"></i> ¿Necesita mensajería? (5,000 CUP)</label>
+                </div>
+                <div class="mensajeria-error" id="mensajeriaError">
+                    <i class="fas fa-exclamation-circle"></i> Debe marcar si necesita o no mensajería para continuar
+                </div>
+                <div class="delivery-info" id="deliveryInfo">
+                    <p><i class="fas fa-info-circle"></i> Se añadirá 5,000 CUP por servicio de mensajería/delivery al importe total.</p>
+                </div>
+
+                <div class="form-group" style="margin-top:20px;">
+                    <label for="notas"><i class="fas fa-sticky-note"></i> Notas adicionales</label>
+                    <textarea id="notas" name="notas" rows="3" placeholder="Indique cualquier detalle especial sobre su pedido..."></textarea>
+                </div>
+
+                <div class="buffet-section">
+                    <h3><i class="fas fa-plus-circle"></i> Añadir Productos del Buffet (Opcional)</h3>
+                    <p class="note">Seleccione la cantidad deseada de cada producto. Se sumarán al importe total de su pedido.</p>
+                    <div class="buffet-grid" id="buffetOrderGrid"></div>
+                </div>
+
+                <div class="selected-summary" id="selectedSummary">
+                    <h4><i class="fas fa-receipt"></i> Resumen del Pedido</h4>
+                    <div id="summaryContent">
+                        <p style="text-align:center; color:#aaa;">Seleccione una oferta para ver el resumen...</p>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-submit">
+                    <i class="fab fa-whatsapp"></i> Generar Vale y Enviar por WhatsApp
+                </button>
+            </form>
+
+            <div class="voucher-preview" id="voucherPreview">
+                <h3><i class="fas fa-file-invoice"></i> Vale de Venta - Vista Previa</h3>
+                <div class="voucher-content" id="voucherContent"></div>
+                <div class="voucher-actions">
+                    <a href="#" id="whatsappLink" class="btn-whatsapp" target="_blank">
+                        <i class="fab fa-whatsapp"></i> Enviar por WhatsApp
+                    </a>
+                    <button type="button" class="btn-print" onclick="window.print()">
+                        <i class="fas fa-print"></i> Imprimir / Guardar PDF
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="faq">
+        <h2 class="section-title"><i class="fas fa-question-circle"></i> Preguntas Frecuentes</h2>
+        <div class="faq-container">
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span><i class="fas fa-map-marker-alt"></i> ¿De dónde somos?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Somos de Jaruco Mayabeque y damos servicios en Ciudad Habana, Municipios y Mayabeque.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span><i class="fas fa-clock"></i> ¿Con cuánta anticipación debo reservar?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Mínimo el día antes del servicio si lo solicita no pasada las 5:00 PM, máximo a 7 días antes de la fecha en que usted desea planificar su servicio.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span><i class="fas fa-motorcycle"></i> ¿El servicio de mensajería cubre toda La Habana?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Sí, realizamos entregas en todos los municipios de La Habana. El costo de mensajería es de 5,000 CUP por pedido.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span><i class="fas fa-utensils"></i> ¿Puedo personalizar el menú?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Las cenas incluyen los acompañamientos estándar (congrí, ensalada, yuca con mojo y aliño). Puede añadir productos del buffet a su pedido. Para modificaciones especiales, indíquelas en las notas adicionales.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span><i class="fas fa-money-bill-wave"></i> ¿Qué métodos de pago aceptan?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Moneda nacional en efectivo y por transferencia bancaria, Dólares y Euros con las tarifas del negocio y también por Zelle desde EUA.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span><i class="fas fa-cake"></i> ¿El buffet está incluido en la cena?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>No, el buffet es opcional y se cotiza por separado. Puede añadir productos del buffet a su pedido de cena en el formulario de reserva. Se sumarán al importe total.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="contacto">
+        <h2 class="section-title"><i class="fas fa-phone"></i> Contacto</h2>
+        <div class="contact-info">
+            <div class="company-name"><i class="fas fa-building"></i> Empresa: Don Bello</div>
+            <div class="contact-details">
+                <div class="contact-item">
+                    <i class="fas fa-motorcycle"></i>
+                    <span>Delivery: 5,000 CUP</span>
+                </div>
+                <div class="contact-item">
+                    <i class="fab fa-whatsapp"></i>
+                    <span>+53 54573045</span>
+                </div>
+            </div>
+
+            <div class="social-section">
+                <h3><i class="fas fa-share-alt"></i> Síguenos en Facebook</h3>
+                <div class="social-links">
+                    <a href="https://www.facebook.com/reinadocriollo/" target="_blank" class="social-link">
+                        <i class="fab fa-facebook"></i>
+                        <span>Comidas Criollas Habana</span>
+                    </a>
+                    <a href="https://www.facebook.com/profile.php?id=61584960075209" target="_blank" class="social-link">
+                        <i class="fab fa-facebook"></i>
+                        <span>Don Bello Oficial</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="rating-section">
+                <h3><i class="fas fa-star"></i> Valora Nuestro Servicio</h3>
+                <p>Tu opinión nos ayuda a mejorar. Selecciona una calificación y déjanos tu comentario.</p>
+                <div class="stars" id="starContainer">
+                    <span class="star" data-value="1">★</span>
+                    <span class="star" data-value="2">★</span>
+                    <span class="star" data-value="3">★</span>
+                    <span class="star" data-value="4">★</span>
+                    <span class="star" data-value="5">★</span>
+                </div>
+                <textarea class="rating-textarea" id="ratingComment" placeholder="Cuéntanos tu experiencia (opcional)..."></textarea>
+                <br>
+                <button class="btn-rating" id="btnRating" onclick="sendRating()">
+                    <i class="fas fa-paper-plane"></i> Enviar Valoración por WhatsApp
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <section class="legal-section" id="legal">
+        <h2><i class="fas fa-shield-alt"></i> Política de Privacidad y Términos y Condiciones</h2>
+        
+        <div class="legal-item">
+            <div class="legal-question" onclick="toggleLegal(this)">
+                <span><i class="fas fa-lock"></i> Política de Privacidad</span>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="legal-answer">
+                <p><strong>1. Recopilación de Información</strong></p>
+                <p>En Don Bello recopilamos únicamente la información necesaria para procesar su pedido: nombre, teléfono, dirección de entrega y detalles del pedido. No compartimos sus datos con terceros.</p>
+                <p><strong>2. Uso de la Información</strong></p>
+                <p>Los datos proporcionados se utilizan exclusivamente para procesar y entregar su pedido, contactarle en caso de dudas sobre la entrega, y mejorar nuestros servicios.</p>
+                <p><strong>3. Protección de Datos</strong></p>
+                <p>Sus datos personales están protegidos y solo el personal autorizado de Don Bello tiene acceso a ellos. No almacenamos información de pago.</p>
+                <p><strong>4. Derechos del Usuario</strong></p>
+                <p>Usted tiene derecho a solicitar la eliminación de sus datos de nuestros registros en cualquier momento contactándonos por WhatsApp.</p>
+            </div>
+        </div>
+
+        <div class="legal-item">
+            <div class="legal-question" onclick="toggleLegal(this)">
+                <span><i class="fas fa-file-contract"></i> Términos y Condiciones</span>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="legal-answer">
+                <p><strong>1. Reservas y Cancelaciones</strong></p>
+                <ul>
+                    <li>Las reservas deben realizarse con mínimo 24 horas de anticipación (antes de las 5:00 PM).</li>
+                    <li>Puede cancelar su pedido hasta 12 horas antes de la fecha de entrega sin penalización.</li>
+                    <li>Cancelaciones con menos de 12 horas pueden estar sujetas a un cargo del 30%.</li>
+                </ul>
+                <p><strong>2. Entregas</strong></p>
+                <ul>
+                    <li>El horario de entrega es de 12:00 PM a 4:00 PM.</li>
+                    <li>El costo de mensajería es de 5,000 CUP por pedido en toda La Habana.</li>
+                    <li>Debe estar disponible en la dirección indicada durante el horario acordado.</li>
+                </ul>
+                <p><strong>3. Pagos</strong></p>
+                <ul>
+                    <li>Aceptamos: CUP en efectivo, transferencia bancaria, USD, EUR y Zelle.</li>
+                    <li>El pago se realiza al momento de la entrega o por adelantado según acuerdo.</li>
+                </ul>
+                <p><strong>4. Calidad y Presentación</strong></p>
+                <ul>
+                    <li>El pesaje de los cerdos es en pie. La cantidad de carne asada será proporcional al número de comensales indicado.</li>
+                    <li>Nos reservamos el derecho de sustituir piezas para completar la cantidad de comensales solicitada.</li>
+                    <li>Todas las cenas incluyen: congrí, ensalada de estación, yuca con mojo y pomo de aliño.</li>
+                </ul>
+                <p><strong>5. Responsabilidad</strong></p>
+                <p>Don Bello no se hace responsable por retrasos causados por condiciones climáticas, problemas de tránsito o información de contacto incorrecta proporcionada por el cliente.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <p><i class="fas fa-heart" style="color:var(--color-red);"></i> © 2026 Don Bello. Todos los derechos reservados.</p>
+        <p style="margin-top:5px; font-size:0.8rem; color:#666;">Comidas Criollas Cuba - Sabor y Tradición</p>
+        <div class="footer-links">
+            <a href="#legal" onclick="document.getElementById('legal').scrollIntoView({behavior:'smooth'})">Política de Privacidad</a>
+            <a href="#legal" onclick="document.getElementById('legal').scrollIntoView({behavior:'smooth'})">Términos y Condiciones</a>
+        </div>
+    </footer>
+
+    <a href="https://wa.me/5354573045" class="whatsapp-float" target="_blank" title="Chatear por WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <script>
+        const porciones = [
+            { id: 'p1', name: 'Lomo para 20-22 comensales', price: 50000, comensales: '20-22 comensales' },
+            { id: 'p2', name: 'Pierna para 20-22 comensales', price: 50000, comensales: '20-22 comensales' },
+            { id: 'p3', name: 'Masas para 25-30 comensales', price: 60000, comensales: '25-30 comensales' },
+            { id: 'p4', name: 'Lomo para 25-30 comensales', price: 60000, comensales: '25-30 comensales' },
+            { id: 'p5', name: 'Pierna para 25-30 comensales', price: 60000, comensales: '25-30 comensales' },
+            { id: 'p6', name: 'Masas fritas encebolladas para 25-30 comensales', price: 60000, comensales: '25-30 comensales' },
+        ];
+
+        const cerdos = [
+            { id: 'c1', name: 'Cerdo para 20 comensales', price: 67000, comensales: '~20 comensales' },
+            { id: 'c2', name: 'Cerdo para 30 comensales', price: 69000, comensales: '~30 comensales' },
+            { id: 'c3', name: 'Cerdo para 40 comensales', price: 73000, comensales: '~40 comensales' },
+            { id: 'c4', name: 'Cerdo para 50 comensales', price: 81000, comensales: '~50 comensales' },
+            { id: 'c5', name: 'Cerdo para 60 comensales', price: 84000, comensales: '~60 comensales' },
+            { id: 'c6', name: 'Cerdo para 70 comensales', price: 95000, comensales: '~70 comensales' },
+            { id: 'c7', name: 'Cerdo para 80 comensales', price: 113000, comensales: '~80 comensales' },
+            { id: 'c8', name: 'Cerdo para 90 comensales', price: 120000, comensales: '~90 comensales' },
+            { id: 'c9', name: 'Cerdo para 100 comensales', price: 127000, comensales: '~100 comensales' },
+            { id: 'c10', name: 'Cerdo para 110 comensales', price: 135000, comensales: '~110 comensales' },
+            { id: 'c11', name: 'Cerdo para 120 comensales', price: 150000, comensales: '~120 comensales' },
+        ];
+
+        const buffetItems = [
+            { id: 'b1', name: 'Kake de Merengue Redondo', price: 3000 },
             { id: 'b2', name: 'Kake de Nata Redondo', price: 4000 },
             { id: 'b3', name: 'Kake Ganache Redondo', price: 5000 },
             { id: 'b4', name: 'Kake Tamaño Bandeja', price: 8000 },
@@ -1170,19 +1800,15 @@
             { id: 'b9', name: 'Cubeta de ensalada fria 4L', price: 4000 },
         ];
 
+        // ⚠️ REEMPLAZA ESTOS NOMBRES POR LOS TUYOS REALES DE LA CARPETA imagenes/
         const galleryImages = [
-            { src: 'https://eldisyera-lab.github.io/ComidasCriollasDonBello/images/cerdo_80_comensales.png', caption: 'Cerdo 80 comensales' },
-            { src: 'https://eldisyera-lab.github.io/ComidasCriollasDonBello/images/cerdo_30_comensales.png', caption: 'Cerdo 30 comensales' },
-            { src: 'https://eldisyera-lab.github.io/ComidasCriollasDonBello/images/cerdo_40_comensales.png', caption: 'Cerdo 40 comensales' },
-            { src: 'https://eldisyera-lab.github.io/ComidasCriollasDonBello/images/cerdo_60_comensales.png', caption: 'Cerdo 60 comensales' },
-            { src: 'https://eldisyera-lab.github.io/ComidasCriollasDonBello/images/cerdo_70_comensales.png', caption: 'Cerdo 70 comensales' },
-            { src: 'https://eldisyera-lab.github.io/ComidasCriollasDonBello/images/cerdo_120_comensales.png', caption: 'Cerdo 120 comensales' },
-            { src: 'https://eldisyera-lab.github.io/ComidasCriollasDonBello/images/cerdo_pequeno_20_comensales.png', caption: 'Cerdo pequeño 20 comensales' },
-            { src: 'https://eldisyera-lab.github.io/ComidasCriollasDonBello/images/cerdos_110_120_comensales.png', caption: 'Cerdos 110-120 comensales' },
-            { src: 'https://eldisyera-lab.github.io/ComidasCriollasDonBello/images/cerdos_90_100_comensales.png', caption: 'Cerdos 90-100 comensales' },
-            { src: 'https://eldisyera-lab.github.io/ComidasCriollasDonBello/images/cerdos_grandes_disponibles.png', caption: 'Cerdos grandes disponibles' },
-            { src: 'https://eldisyera-lab.github.io/ComidasCriollasDonBello/images/pierna_20_22_comensales.png', caption: 'Pierna 20-22 comensales' },
-            { src: 'https://eldisyera-lab.github.io/ComidasCriollasDonBello/images/pierna_25_30_comensales.png', caption: 'Pierna 25-30 comensales' },
+            { src: 'imagenes/cerdo80.jpg', caption: 'Cerdo 80 comensales' },
+            { src: 'imagenes/cerdo30.jpg', caption: 'Cerdo 30 comensales' },
+            { src: 'imagenes/cerdo40.jpg', caption: 'Cerdo 40 comensales' },
+            { src: 'imagenes/cerdo60.jpg', caption: 'Cerdo 60 comensales' },
+            { src: 'imagenes/cerdo70.jpg', caption: 'Cerdo 70 comensales' },
+            { src: 'imagenes/cerdo120.jpg', caption: 'Cerdo 120 comensales' },
+            { src: 'imagenes/cerdo20pequeno.jpg', caption: 'Cerdo pequeño 20 comensales' },
         ];
 
         const includes = ['Congrí', 'Ensalada de estación', 'Yuca con mojo', 'Pomo de aliño'];
@@ -1192,7 +1818,7 @@
         let selectedBuffet = {};
         let deliveryCost = 0;
         let tamaleQty = 0;
-        let specialOffers = {};
+        let specialOffers = {}; // Para ofertas especiales (tamales, masas)
         const OWNER_PHONE = '5354573045';
 
         document.addEventListener('DOMContentLoaded', function() {
@@ -1208,6 +1834,7 @@
             setupMensajeriaValidation();
         });
 
+        // ===== SIDEBAR =====
         function openSidebar() {
             document.getElementById('sidebar').classList.add('open');
             document.getElementById('sidebarOverlay').classList.add('active');
@@ -1220,6 +1847,7 @@
             document.body.style.overflow = '';
         }
 
+        // ===== LIGHTBOX =====
         function openLightbox(src, caption) {
             document.getElementById('lightboxImg').src = src;
             document.getElementById('lightboxCaption').textContent = caption;
@@ -1314,7 +1942,8 @@
             const grid = document.getElementById('galleryGrid');
             grid.innerHTML = galleryImages.map((img) => `
                 <div class="gallery-item" onclick="openLightbox('${img.src}', '${img.caption}')">
-                    <img src="${img.src}" alt="${img.caption}" loading="lazy">
+                    <img src="${img.src}" alt="${img.caption}" loading="lazy" 
+                         onerror="this.onerror=null; this.parentElement.innerHTML='<p style=\\'padding:60px 20px; text-align:center; color:#aaa;\\'><i class=\\'fas fa-image\\'></i><br>${img.caption}</p>';">
                     <p>${img.caption}</p>
                 </div>
             `).join('');
@@ -1322,6 +1951,7 @@
 
         function populateOfertaSelect() {
             const select = document.getElementById('oferta');
+            // Limpiar opciones existentes excepto la primera
             while (select.options.length > 1) {
                 select.remove(1);
             }
@@ -1339,6 +1969,7 @@
             });
         }
 
+        // ===== OFERTAS ESPECIALES (Tamales y Masas) =====
         function updateTamaleTotal() {
             const qty = parseInt(document.getElementById('tamaleQty').value) || 0;
             tamaleQty = qty;
@@ -1446,6 +2077,7 @@
             let html = '';
             let total = 0;
 
+            // Oferta principal seleccionada
             if (selectedOffer) {
                 html += `
                     <div class="summary-item">
@@ -1456,6 +2088,7 @@
                 total += selectedOffer.price;
             }
 
+            // Ofertas especiales (tamales, masas)
             Object.entries(specialOffers).forEach(([key, offer]) => {
                 const subtotal = offer.qty * offer.price;
                 html += `
@@ -1467,6 +2100,7 @@
                 total += subtotal;
             });
 
+            // Buffet
             const buffetEntries = Object.entries(selectedBuffet);
             if (buffetEntries.length > 0) {
                 html += `<div style="margin:10px 0; padding:10px; background:rgba(0,0,0,0.2); border-radius:8px;">
@@ -1485,6 +2119,7 @@
                 html += `</div>`;
             }
 
+            // Delivery
             if (deliveryCost > 0) {
                 html += `
                     <div class="summary-item">
@@ -1509,15 +2144,10 @@
             container.innerHTML = html;
         }
 
-        // ===== CORRECCIÓN PRINCIPAL: Validación del formulario =====
         document.getElementById('orderForm').addEventListener('submit', function(e) {
             e.preventDefault();
 
-            // Validación: debe haber al menos una oferta seleccionada (principal O especial)
-            const hasMainOffer = selectedOffer !== null;
-            const hasSpecialOffers = Object.keys(specialOffers).length > 0;
-            
-            if (!hasMainOffer && !hasSpecialOffers) {
+            if (!selectedOffer && Object.keys(specialOffers).length === 0) {
                 showToast('❌ Por favor seleccione una oferta primero', 'error');
                 document.getElementById('cenas').scrollIntoView({ behavior: 'smooth' });
                 return;
@@ -1556,7 +2186,6 @@
             this.setAttribute('data-touched', 'true');
         });
 
-        // ===== CORRECCIÓN PRINCIPAL: buildVoucherText con ofertas especiales =====
         function buildVoucherText(data) {
             const now = new Date();
             const fechaActual = now.toLocaleDateString('es-CU');
@@ -1574,7 +2203,7 @@
 
             let total = 0;
 
-            // Oferta principal (del menú de cenas)
+            // Oferta principal
             if (selectedOffer) {
                 text += `🍽️ ${selectedOffer.name}\n`;
                 text += `   Precio: ${selectedOffer.price.toLocaleString()} CUP\n`;
@@ -1582,7 +2211,7 @@
                 total += selectedOffer.price;
             }
 
-            // Ofertas especiales (tamales, masas día de las madres)
+            // Ofertas especiales
             Object.entries(specialOffers).forEach(([key, offer]) => {
                 const subtotal = offer.qty * offer.price;
                 total += subtotal;
@@ -1590,7 +2219,7 @@
             });
             if (Object.keys(specialOffers).length > 0) text += `\n`;
 
-            // Buffet adicional
+            // Buffet
             const buffetEntries = Object.entries(selectedBuffet);
             if (buffetEntries.length > 0) {
                 text += `🍰 *BUFFET ADICIONAL:*\n`;
@@ -1603,7 +2232,7 @@
                 text += `\n`;
             }
 
-            // Mensajería
+            // Delivery
             if (data.mensajeria) {
                 text += `🛵 *Mensajería/Delivery:* 5,000 CUP\n`;
                 total += 5000;
@@ -1726,19 +2355,3 @@
     </script>
 </body>
 </html>
-            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
-        }
-
-        .lightbox-close {
-            position: absolute;
-            top: 20px;
-            right: 30px;
-            color: white;
-            font-size: 2.5rem;
-            cursor: pointer;
-            background: none;
-            border: none;
-            transition: transform 0.3s ease;
-        }
-
-        .lightbox-close:hover
