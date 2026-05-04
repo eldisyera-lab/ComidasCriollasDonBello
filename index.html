@@ -301,6 +301,9 @@
         }
         .btn-whatsapp { background: var(--color-green); color: white; }
         .btn-whatsapp:hover { background: var(--color-green-dark); }
+        .btn-copy { background: #007bff; color: white; }
+        .btn-copy:hover { background: #0056b3; }
+        .btn-copy.copied { background: #28a745; }
         .btn-print { background: #6c757d; color: white; }
         .faq-item { background: rgba(0,0,0,0.2); border-radius: 12px; margin-bottom: 15px; overflow: hidden; }
         .faq-question {
@@ -663,6 +666,9 @@
                     <a href="#" id="whatsappLink" class="btn-whatsapp" target="_blank">
                         <i class="fab fa-whatsapp"></i> Enviar por WhatsApp
                     </a>
+                    <button type="button" class="btn-copy" id="btnCopy" onclick="copyVoucher()">
+                        <i class="fas fa-copy"></i> Copiar Vale
+                    </button>
                     <button type="button" class="btn-print" onclick="window.print()">
                         <i class="fas fa-print"></i> Imprimir / Guardar PDF
                     </button>
@@ -883,18 +889,18 @@
         // Cuando tengas las imágenes reales en la carpeta imagenes/, 
         // reemplaza las URLs de placehold.co por las rutas locales
         const galleryImages = [
-            { src: 'imagenes/cerdo_80_comensales.png', caption: 'Cerdo 80 comensales' },
-            { src: 'imagenes/cerdo_30_comensales.png', caption: 'Cerdo 30 comensales' },
-            { src: 'imagenes/cerdo_40_comensales.png', caption: 'Cerdo 40 comensales' },
-            { src: 'imagenes/cerdo_60_comensales.png', caption: 'Cerdo 60 comensales' },
-            { src: 'imagenes/cerdo_70_comensales.png', caption: 'Cerdo 70 comensales' },
-            { src: 'imagenes/cerdo_120_comensales.png', caption: 'Cerdo 120 comensales' },
-            { src: 'imagenes/cerdo_pequeno_20_comensales.png', caption: 'Cerdo pequeño 20 comensales' },
-            { src: 'imagenes/cerdos_90_100_comensales.png', caption: 'Cerdos 90-100 comensales' },
-            { src: 'imagenes/cerdos_110_120_comensales.png', caption: 'Cerdos 110-120 comensales' },
-            { src: 'imagenes/cerdos_grandes_disponibles.png', caption: 'Cerdos grandes disponibles' },
-            { src: 'imagenes/pierna_20_22_comensales.png', caption: 'Pierna 20-22 comensales' },
-            { src: 'imagenes/pierna_25_30_comensales.png', caption: 'Pierna 25-30 comensales' },
+            { src: 'https://eldisyera-lab.github.io/ComidasCriollasDonBello/imagenes/cerdo_80_comensales.png', caption: 'Cerdo 80 comensales' },
+            { src: 'https://eldisyera-lab.github.io/ComidasCriollasDonBello/imagenes/cerdo_30_comensales.png', caption: 'Cerdo 30 comensales' },
+            { src: 'https://eldisyera-lab.github.io/ComidasCriollasDonBello/imagenes/cerdo_40_comensales.png', caption: 'Cerdo 40 comensales' },
+            { src: 'https://eldisyera-lab.github.io/ComidasCriollasDonBello/imagenes/cerdo_60_comensales.png', caption: 'Cerdo 60 comensales' },
+            { src: 'https://eldisyera-lab.github.io/ComidasCriollasDonBello/imagenes/cerdo_70_comensales.png', caption: 'Cerdo 70 comensales' },
+            { src: 'https://eldisyera-lab.github.io/ComidasCriollasDonBello/imagenes/cerdo_120_comensales.png', caption: 'Cerdo 120 comensales' },
+            { src: 'https://eldisyera-lab.github.io/ComidasCriollasDonBello/imagenes/cerdo_pequeno_20_comensales.png', caption: 'Cerdo pequeño 20 comensales' },
+            { src: 'https://eldisyera-lab.github.io/ComidasCriollasDonBello/imagenes/cerdos_90_100_comensales.png', caption: 'Cerdos 90-100 comensales' },
+            { src: 'https://eldisyera-lab.github.io/ComidasCriollasDonBello/imagenes/cerdos_110_120_comensales.png', caption: 'Cerdos 110-120 comensales' },
+            { src: 'https://eldisyera-lab.github.io/ComidasCriollasDonBello/imagenes/cerdos_grandes_disponibles.png', caption: 'Cerdos grandes disponibles' },
+            { src: 'https://eldisyera-lab.github.io/ComidasCriollasDonBello/imagenes/pierna_20_22_comensales.png', caption: 'Pierna 20-22 comensales' },
+            { src: 'https://eldisyera-lab.github.io/ComidasCriollasDonBello/imagenes/pierna_25_30_comensales.png', caption: 'Pierna 25-30 comensales' },
         ];
 
         const includes = ['Congrí', 'Ensalada de estación', 'Yuca con mojo', 'Pomo de aliño'];
@@ -1532,6 +1538,26 @@
             const stars = document.querySelectorAll('.star');
             stars.forEach((star, i) => {
                 star.classList.toggle('active', i < currentRating);
+            });
+        }
+
+        function copyVoucher() {
+            const voucherContent = document.getElementById('voucherContent');
+            const text = voucherContent.textContent;
+
+            navigator.clipboard.writeText(text).then(function() {
+                const btn = document.getElementById('btnCopy');
+                const originalHTML = btn.innerHTML;
+                btn.innerHTML = '<i class="fas fa-check"></i> ¡Copiado!';
+                btn.classList.add('copied');
+                showToast('✅ Vale copiado al portapapeles');
+
+                setTimeout(function() {
+                    btn.innerHTML = originalHTML;
+                    btn.classList.remove('copied');
+                }, 2000);
+            }).catch(function(err) {
+                showToast('❌ Error al copiar: ' + err, 'error');
             });
         }
 
