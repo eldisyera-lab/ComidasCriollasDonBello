@@ -378,54 +378,101 @@
             color: var(--color-gold); font-size: 1rem; gap: 10px;
         }
         .gallery-placeholder i { font-size: 3rem; opacity: 0.7; }
+        /* ===== LIGHTBOX REDISEÑADO ===== */
         .lightbox {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.95); z-index: 20000; display: none;
-            align-items: center; justify-content: center; padding: 20px;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: #000;
+            z-index: 20000;
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .lightbox.active {
+            display: flex;
+            opacity: 1;
             flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
-        .lightbox.active { display: flex; }
-        .lightbox-img-container {
+        .lightbox-inner {
             position: relative;
-            max-width: 90%;
-            max-height: 80vh;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 20px 80px;
+            box-sizing: border-box;
+        }
+        .lightbox-img-wrap {
+            flex: 1;
             display: flex;
             align-items: center;
             justify-content: center;
+            width: 100%;
+            max-width: 1200px;
+            position: relative;
         }
-        .lightbox img { 
-            max-width: 100%; 
-            max-height: 80vh; 
-            border-radius: 10px; 
-            box-shadow: 0 10px 40px rgba(0,0,0,0.8);
-            background: #fff;
+        .lightbox img {
+            max-width: 100%;
+            max-height: calc(100vh - 160px);
             object-fit: contain;
+            border-radius: 8px;
             display: block;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
         }
-        .lightbox-close { 
-            position: absolute; top: 20px; right: 30px; 
-            color: white; font-size: 2.5rem; cursor: pointer; 
-            background: rgba(0,0,0,0.5); border: none; 
-            transition: transform 0.3s ease;
-            width: 50px; height: 50px;
+        .lightbox-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 44px;
+            height: 44px;
+            background: rgba(255,255,255,0.15);
+            border: 2px solid rgba(255,255,255,0.3);
             border-radius: 50%;
+            color: #fff;
+            font-size: 1.4rem;
+            cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            z-index: 20001;
+            transition: all 0.2s ease;
+            z-index: 20002;
         }
-        .lightbox-close:hover { transform: rotate(90deg); background: rgba(220,53,69,0.8); }
-        .lightbox-caption { 
-            margin-top: 15px;
-            color: var(--color-gold); 
-            font-size: 1.3rem; 
-            font-weight: 600; 
-            text-align: center; 
-            background: rgba(0,0,0,0.8); 
-            padding: 12px 30px; 
+        .lightbox-close:hover {
+            background: rgba(220,53,69,0.9);
+            border-color: rgba(220,53,69,0.9);
+            transform: scale(1.1);
+        }
+        .lightbox-caption {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--color-gold);
+            font-size: 1.2rem;
+            font-weight: 600;
+            text-align: center;
+            background: rgba(0,0,0,0.85);
+            padding: 10px 25px;
             border-radius: 25px;
-            z-index: 20001;
+            white-space: nowrap;
+            z-index: 20002;
         }
+        .lightbox-loader {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: var(--color-gold);
+            font-size: 2rem;
+            z-index: 20001;
+            display: none;
+        }
+        .lightbox-loader.active { display: block; }
         .legal-section {
             background: linear-gradient(145deg, #1a0a00, #2D1405);
             border-radius: 20px; padding: 30px; margin: 30px auto;
@@ -503,12 +550,15 @@
             <a href="#legal" onclick="closeSidebar()"><i class="fas fa-shield-alt"></i> Políticas y Términos</a>
         </nav>
     </aside>
-    <div class="lightbox" id="lightbox" onclick="closeLightbox()">
-        <button class="lightbox-close" onclick="event.stopPropagation(); closeLightbox()"><i class="fas fa-times"></i></button>
-        <div class="lightbox-img-container">
-            <img src="" alt="" id="lightboxImg">
+    <div class="lightbox" id="lightbox">
+        <div class="lightbox-inner">
+            <button class="lightbox-close" onclick="closeLightbox()"><i class="fas fa-times"></i></button>
+            <div class="lightbox-loader" id="lightboxLoader"><i class="fas fa-spinner fa-spin"></i></div>
+            <div class="lightbox-img-wrap">
+                <img src="" alt="" id="lightboxImg" onload="document.getElementById('lightboxLoader').classList.remove('active')">
+            </div>
+            <div class="lightbox-caption" id="lightboxCaption"></div>
         </div>
-        <div class="lightbox-caption" id="lightboxCaption"></div>
     </div>
     <header class="header">
         <div class="header-left">
@@ -980,15 +1030,47 @@
         }
 
         function openLightbox(src, caption) {
-            document.getElementById('lightboxImg').src = src;
-            document.getElementById('lightboxCaption').textContent = caption;
-            document.getElementById('lightbox').classList.add('active');
+            const lightbox = document.getElementById('lightbox');
+            const img = document.getElementById('lightboxImg');
+            const loader = document.getElementById('lightboxLoader');
+            const captionEl = document.getElementById('lightboxCaption');
+
+            // Mostrar loader mientras carga
+            loader.classList.add('active');
+
+            // Resetear imagen anterior
+            img.style.opacity = '0';
+            img.src = src;
+            captionEl.textContent = caption;
+
+            // Mostrar lightbox
+            lightbox.classList.add('active');
             document.body.style.overflow = 'hidden';
+
+            // Cuando la imagen cargue, mostrarla suavemente
+            img.onload = function() {
+                loader.classList.remove('active');
+                img.style.opacity = '1';
+                img.style.transition = 'opacity 0.3s ease';
+            };
+
+            // Si hay error, mostrar mensaje
+            img.onerror = function() {
+                loader.classList.remove('active');
+                captionEl.textContent = caption + ' (imagen no disponible)';
+            };
         }
 
         function closeLightbox() {
-            document.getElementById('lightbox').classList.remove('active');
+            const lightbox = document.getElementById('lightbox');
+            const img = document.getElementById('lightboxImg');
+            lightbox.classList.remove('active');
             document.body.style.overflow = '';
+            // Limpiar src para liberar memoria
+            setTimeout(function() {
+                img.src = '';
+                img.style.opacity = '0';
+            }, 300);
         }
 
         function setMinDate() {
@@ -1677,6 +1759,13 @@
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
                 closeSidebar();
+                closeLightbox();
+            }
+        });
+
+        // Cerrar lightbox al hacer clic en el fondo (fuera de la imagen)
+        document.getElementById('lightbox').addEventListener('click', function(e) {
+            if (e.target === this || e.target.classList.contains('lightbox-inner')) {
                 closeLightbox();
             }
         });
