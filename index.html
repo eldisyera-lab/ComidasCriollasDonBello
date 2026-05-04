@@ -550,15 +550,16 @@
             <a href="#legal" onclick="closeSidebar()"><i class="fas fa-shield-alt"></i> Políticas y Términos</a>
         </nav>
     </aside>
-    <div class="lightbox" id="lightbox">
-        <div class="lightbox-inner">
-            <button class="lightbox-close" onclick="closeLightbox()"><i class="fas fa-times"></i></button>
-            <div class="lightbox-loader" id="lightboxLoader"><i class="fas fa-spinner fa-spin"></i></div>
-            <div class="lightbox-img-wrap">
-                <img src="" alt="" id="lightboxImg" onload="document.getElementById('lightboxLoader').classList.remove('active')">
-            </div>
-            <div class="lightbox-caption" id="lightboxCaption"></div>
+    <!-- LIGHTBOX V2 -->
+    <div class="lightbox-v2" id="lightboxV2">
+        <div class="lightbox-v2-backdrop" onclick="closeLightboxV2()"></div>
+        <button class="lightbox-v2-close" onclick="closeLightboxV2()"><i class="fas fa-times"></i></button>
+        <button class="lightbox-v2-nav lightbox-v2-prev" onclick="navigateLightbox(-1)"><i class="fas fa-chevron-left"></i></button>
+        <button class="lightbox-v2-nav lightbox-v2-next" onclick="navigateLightbox(1)"><i class="fas fa-chevron-right"></i></button>
+        <div class="lightbox-v2-content">
+            <img src="" alt="" class="lightbox-v2-img" id="lightboxV2Img">
         </div>
+        <div class="lightbox-v2-caption" id="lightboxV2Caption"></div>
     </div>
     <header class="header">
         <div class="header-left">
@@ -980,18 +981,18 @@
         // Cuando tengas las imágenes reales en la carpeta imagenes/, 
         // reemplaza las URLs de placehold.co por las rutas locales
         const galleryImages = [
-            { src: 'imagenes/cerdo_80_comensales.png', caption: 'Cerdo 80 comensales' },
-            { src: 'imagenes/cerdo_30_comensales.png', caption: 'Cerdo 30 comensales' },
-            { src: 'imagenes/cerdo_40_comensales.png', caption: 'Cerdo 40 comensales' },
-            { src: 'imagenes/cerdo_60_comensales.png', caption: 'Cerdo 60 comensales' },
-            { src: 'imagenes/cerdo_70_comensales.png', caption: 'Cerdo 70 comensales' },
-            { src: 'imagenes/cerdo_120_comensales.png', caption: 'Cerdo 120 comensales' },
-            { src: 'imagenes/cerdo_pequeno_20_comensales.png', caption: 'Cerdo pequeño 20 comensales' },
-            { src: 'imagenes/cerdos_90_100_comensales.png', caption: 'Cerdos 90-100 comensales' },
-            { src: 'imagenes/cerdos_110_120_comensales.png', caption: 'Cerdos 110-120 comensales' },
-            { src: 'imagenes/cerdos_grandes_disponibles.png', caption: 'Cerdos grandes disponibles' },
-            { src: 'imagenes/pierna_20_22_comensales.png', caption: 'Pierna 20-22 comensales' },
-            { src: 'imagenes/pierna_25_30_comensales.png', caption: 'Pierna 25-30 comensales' },
+            { src: 'imagenes/cerdo_80_comensales.png', caption: 'Cerdo 80 comensales', loaded: false },
+            { src: 'imagenes/cerdo_30_comensales.png', caption: 'Cerdo 30 comensales', loaded: false },
+            { src: 'imagenes/cerdo_40_comensales.png', caption: 'Cerdo 40 comensales', loaded: false },
+            { src: 'imagenes/cerdo_60_comensales.png', caption: 'Cerdo 60 comensales', loaded: false },
+            { src: 'imagenes/cerdo_70_comensales.png', caption: 'Cerdo 70 comensales', loaded: false },
+            { src: 'imagenes/cerdo_120_comensales.png', caption: 'Cerdo 120 comensales', loaded: false },
+            { src: 'imagenes/cerdo_pequeno_20_comensales.png', caption: 'Cerdo pequeño 20 comensales', loaded: false },
+            { src: 'imagenes/cerdos_90_100_comensales.png', caption: 'Cerdos 90-100 comensales', loaded: false },
+            { src: 'imagenes/cerdos_110_120_comensales.png', caption: 'Cerdos 110-120 comensales', loaded: false },
+            { src: 'imagenes/cerdos_grandes_disponibles.png', caption: 'Cerdos grandes disponibles', loaded: false },
+            { src: 'imagenes/pierna_20_22_comensales.png', caption: 'Pierna 20-22 comensales', loaded: false },
+            { src: 'imagenes/pierna_25_30_comensales.png', caption: 'Pierna 25-30 comensales', loaded: false },
         ];
 
         const includes = ['Congrí', 'Ensalada de estación', 'Yuca con mojo', 'Pomo de aliño'];
@@ -1029,35 +1030,41 @@
             document.body.style.overflow = '';
         }
 
-        function openLightbox(src, caption) {
+        function openLightbox(index) {
+            const imgData = galleryImages[index];
+            if (!imgData) return;
+
             const lightbox = document.getElementById('lightbox');
             const img = document.getElementById('lightboxImg');
             const loader = document.getElementById('lightboxLoader');
             const captionEl = document.getElementById('lightboxCaption');
 
-            // Mostrar loader mientras carga
+            // Mostrar loader
             loader.classList.add('active');
-
-            // Resetear imagen anterior
             img.style.opacity = '0';
-            img.src = src;
-            captionEl.textContent = caption;
+            captionEl.textContent = imgData.caption;
 
-            // Mostrar lightbox
+            // Abrir lightbox inmediatamente
             lightbox.classList.add('active');
             document.body.style.overflow = 'hidden';
 
-            // Cuando la imagen cargue, mostrarla suavemente
+            // Cargar imagen
+            img.src = imgData.src;
+
             img.onload = function() {
                 loader.classList.remove('active');
                 img.style.opacity = '1';
-                img.style.transition = 'opacity 0.3s ease';
             };
 
-            // Si hay error, mostrar mensaje
             img.onerror = function() {
-                loader.classList.remove('active');
-                captionEl.textContent = caption + ' (imagen no disponible)';
+                // Intentar sin carpeta
+                const filename = imgData.src.split('/').pop();
+                img.src = filename;
+                img.onerror = function() {
+                    loader.classList.remove('active');
+                    captionEl.textContent = imgData.caption + ' (no disponible)';
+                    img.style.display = 'none';
+                };
             };
         }
 
@@ -1151,53 +1158,79 @@
             `).join('');
         }
 
-        // ===== GALERÍA CON FALLBACK DE RUTAS =====
+        // ===== GALERÍA CON CARGA PEREZOSA Y FALLBACK =====
         function renderGallery() {
             const grid = document.getElementById('galleryGrid');
             grid.innerHTML = galleryImages.map((img, index) => `
-                <div class="gallery-item" onclick="openLightbox('${img.src}', '${img.caption}')">
-                    <img src="${img.src}" alt="${img.caption}" loading="lazy" 
-                         onerror="tryNextImageSrc(this)">
-                    <div class="gallery-placeholder" style="display:none;">
-                        <i class="fas fa-image"></i>
-                        <p>${img.caption}</p>
-                        <small style="color:#aaa; font-size:0.8rem;">Próximamente</small>
+                <div class="gallery-item" data-index="${index}" onclick="openLightbox(${index})">
+                    <div class="gallery-img-container">
+                        <img src="" alt="${img.caption}" loading="lazy" 
+                             data-src="${img.src}" data-index="${index}"
+                             onload="galleryImageLoaded(this)"
+                             onerror="galleryImageError(this)">
+                        <div class="gallery-placeholder">
+                            <i class="fas fa-image"></i>
+                            <p>${img.caption}</p>
+                            <small>Cargando...</small>
+                        </div>
                     </div>
                     <p>${img.caption}</p>
                 </div>
             `).join('');
+
+            // Iniciar carga de imágenes con delay para no saturar
+            loadGalleryImages();
         }
 
-        function tryNextImageSrc(img) {
-            const currentSrc = img.getAttribute('src') || img.src;
-            const filename = currentSrc.split('/').pop();
-            const item = img.closest('.gallery-item');
-            const placeholder = item.querySelector('.gallery-placeholder');
+        function loadGalleryImages() {
+            const images = document.querySelectorAll('#galleryGrid img[data-src]');
+            images.forEach((img, i) => {
+                setTimeout(() => {
+                    const src = img.getAttribute('data-src');
+                    if (src) img.src = src;
+                }, i * 100); // 100ms de delay entre cada imagen
+            });
+        }
 
-            // Lista de rutas a intentar
+        function galleryImageLoaded(img) {
+            img.style.opacity = '1';
+            const container = img.closest('.gallery-img-container');
+            const placeholder = container.querySelector('.gallery-placeholder');
+            if (placeholder) placeholder.style.display = 'none';
+
+            // Marcar como cargada
+            const index = parseInt(img.getAttribute('data-index'));
+            if (galleryImages[index]) galleryImages[index].loaded = true;
+        }
+
+        function galleryImageError(img) {
+            const src = img.getAttribute('data-src') || img.src;
+            const filename = src.split('/').pop();
+            const container = img.closest('.gallery-img-container');
+            const placeholder = container.querySelector('.gallery-placeholder');
+
+            // Intentar rutas alternativas
             const attempts = [
-                'imagenes/' + filename,
                 filename,
                 'images/' + filename,
-                './imagenes/' + filename,
+                './' + filename,
                 '../imagenes/' + filename
             ];
 
-            // Encontrar el índice del intento actual
-            let currentIndex = attempts.indexOf(currentSrc);
-            if (currentIndex === -1) currentIndex = 0;
-
-            // Intentar el siguiente
-            const nextIndex = currentIndex + 1;
-            if (nextIndex < attempts.length) {
-                img.src = attempts[nextIndex];
-                img.onerror = function() {
-                    tryNextImageSrc(img);
-                };
+            let currentAttempt = parseInt(img.getAttribute('data-attempt') || '0');
+            if (currentAttempt < attempts.length) {
+                img.setAttribute('data-attempt', currentAttempt + 1);
+                img.src = attempts[currentAttempt];
             } else {
-                // Agotados todos los intentos
+                // Todos los intentos fallaron
                 img.style.display = 'none';
-                if (placeholder) placeholder.style.display = 'flex';
+                if (placeholder) {
+                    placeholder.innerHTML = `
+                        <i class="fas fa-image" style="opacity:0.5;"></i>
+                        <p style="font-size:0.85rem;">${img.alt}</p>
+                        <small style="color:#888;">Foto no disponible</small>
+                    `;
+                }
             }
         }
 
@@ -1759,14 +1792,15 @@
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
                 closeSidebar();
-                closeLightbox();
+                closeLightboxV2();
             }
-        });
-
-        // Cerrar lightbox al hacer clic en el fondo (fuera de la imagen)
-        document.getElementById('lightbox').addEventListener('click', function(e) {
-            if (e.target === this || e.target.classList.contains('lightbox-inner')) {
-                closeLightbox();
+            if (e.key === 'ArrowLeft') {
+                const lb = document.getElementById('lightboxV2');
+                if (lb.classList.contains('active')) navigateLightbox(-1);
+            }
+            if (e.key === 'ArrowRight') {
+                const lb = document.getElementById('lightboxV2');
+                if (lb.classList.contains('active')) navigateLightbox(1);
             }
         });
     </script>
