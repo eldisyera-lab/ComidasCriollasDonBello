@@ -580,6 +580,7 @@
     <section class="gallery-section" id="galeria">
         <h2><i class="fas fa-images"></i> Galería</h2>
         <p class="subtitle">Conoce la calidad y presentación de nuestros cerdos asados.<br><strong style="color:var(--color-gold);">¡El sabor se ve!</strong></p>
+        <p style="text-align:center; color:#aaa; font-size:0.85rem; margin-bottom:15px;"><i class="fas fa-info-circle"></i> Si no ves las imágenes, verifica que estén en la carpeta <code style="background:rgba(0,0,0,0.3); padding:2px 6px; border-radius:4px;">imagenes/</code></p>
         <div class="gallery-grid" id="galleryGrid"></div>
     </section>
 
@@ -889,18 +890,18 @@
         // Cuando tengas las imágenes reales en la carpeta imagenes/, 
         // reemplaza las URLs de placehold.co por las rutas locales
         const galleryImages = [
-            { src: 'https://eldisyera-lab.github.io/ComidasCriollasDonBello/imagenes/cerdo_80_comensales.png', caption: 'Cerdo 80 comensales' },
-            { src: 'https://eldisyera-lab.github.io/ComidasCriollasDonBello/imagenes/cerdo_30_comensales.png', caption: 'Cerdo 30 comensales' },
-            { src: 'https://eldisyera-lab.github.io/ComidasCriollasDonBello/imagenes/cerdo_40_comensales.png', caption: 'Cerdo 40 comensales' },
-            { src: 'https://eldisyera-lab.github.io/ComidasCriollasDonBello/imagenes/cerdo_60_comensales.png', caption: 'Cerdo 60 comensales' },
-            { src: 'https://eldisyera-lab.github.io/ComidasCriollasDonBello/imagenes/cerdo_70_comensales.png', caption: 'Cerdo 70 comensales' },
-            { src: 'https://eldisyera-lab.github.io/ComidasCriollasDonBello/imagenes/cerdo_120_comensales.png', caption: 'Cerdo 120 comensales' },
-            { src: 'https://eldisyera-lab.github.io/ComidasCriollasDonBello/imagenes/cerdo_pequeno_20_comensales.png', caption: 'Cerdo pequeño 20 comensales' },
-            { src: 'https://eldisyera-lab.github.io/ComidasCriollasDonBello/imagenes/cerdos_90_100_comensales.png', caption: 'Cerdos 90-100 comensales' },
-            { src: 'https://eldisyera-lab.github.io/ComidasCriollasDonBello/imagenes/cerdos_110_120_comensales.png', caption: 'Cerdos 110-120 comensales' },
-            { src: 'https://eldisyera-lab.github.io/ComidasCriollasDonBello/imagenes/cerdos_grandes_disponibles.png', caption: 'Cerdos grandes disponibles' },
-            { src: 'https://eldisyera-lab.github.io/ComidasCriollasDonBello/imagenes/pierna_20_22_comensales.png', caption: 'Pierna 20-22 comensales' },
-            { src: 'https://eldisyera-lab.github.io/ComidasCriollasDonBello/imagenes/pierna_25_30_comensales.png', caption: 'Pierna 25-30 comensales' },
+            { src: 'imagenes/cerdo_80_comensales.png', caption: 'Cerdo 80 comensales' },
+            { src: 'imagenes/cerdo_30_comensales.png', caption: 'Cerdo 30 comensales' },
+            { src: 'imagenes/cerdo_40_comensales.png', caption: 'Cerdo 40 comensales' },
+            { src: 'imagenes/cerdo_60_comensales.png', caption: 'Cerdo 60 comensales' },
+            { src: 'imagenes/cerdo_70_comensales.png', caption: 'Cerdo 70 comensales' },
+            { src: 'imagenes/cerdo_120_comensales.png', caption: 'Cerdo 120 comensales' },
+            { src: 'imagenes/cerdo_pequeno_20_comensales.png', caption: 'Cerdo pequeño 20 comensales' },
+            { src: 'imagenes/cerdos_90_100_comensales.png', caption: 'Cerdos 90-100 comensales' },
+            { src: 'imagenes/cerdos_110_120_comensales.png', caption: 'Cerdos 110-120 comensales' },
+            { src: 'imagenes/cerdos_grandes_disponibles.png', caption: 'Cerdos grandes disponibles' },
+            { src: 'imagenes/pierna_20_22_comensales.png', caption: 'Pierna 20-22 comensales' },
+            { src: 'imagenes/pierna_25_30_comensales.png', caption: 'Pierna 25-30 comensales' },
         ];
 
         const includes = ['Congrí', 'Ensalada de estación', 'Yuca con mojo', 'Pomo de aliño'];
@@ -1028,13 +1029,13 @@
             `).join('');
         }
 
-        // ===== GALERÍA CON PLACEHOLDERS Y FALLBACK =====
+        // ===== GALERÍA CON FALLBACK DE RUTAS =====
         function renderGallery() {
             const grid = document.getElementById('galleryGrid');
             grid.innerHTML = galleryImages.map((img, index) => `
                 <div class="gallery-item" onclick="openLightbox('${img.src}', '${img.caption}')">
                     <img src="${img.src}" alt="${img.caption}" loading="lazy" 
-                         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                         onerror="tryNextImageSrc(this)">
                     <div class="gallery-placeholder" style="display:none;">
                         <i class="fas fa-image"></i>
                         <p>${img.caption}</p>
@@ -1043,6 +1044,40 @@
                     <p>${img.caption}</p>
                 </div>
             `).join('');
+        }
+
+        function tryNextImageSrc(img) {
+            const currentSrc = img.getAttribute('src') || img.src;
+            const filename = currentSrc.split('/').pop();
+            const item = img.closest('.gallery-item');
+            const placeholder = item.querySelector('.gallery-placeholder');
+
+            // Si ya intentamos con imagenes/, intentar sin carpeta
+            if (currentSrc.includes('imagenes/')) {
+                img.src = filename;
+                img.onerror = function() {
+                    // Último intento: carpeta images/
+                    img.src = 'images/' + filename;
+                    img.onerror = function() {
+                        img.style.display = 'none';
+                        if (placeholder) placeholder.style.display = 'flex';
+                    };
+                };
+            } else if (!currentSrc.includes('/')) {
+                // Sin carpeta, intentar con imagenes/
+                img.src = 'imagenes/' + filename;
+                img.onerror = function() {
+                    // Último intento: carpeta images/
+                    img.src = 'images/' + filename;
+                    img.onerror = function() {
+                        img.style.display = 'none';
+                        if (placeholder) placeholder.style.display = 'flex';
+                    };
+                };
+            } else {
+                img.style.display = 'none';
+                if (placeholder) placeholder.style.display = 'flex';
+            }
         }
 
         function populateOfertaSelect() {
