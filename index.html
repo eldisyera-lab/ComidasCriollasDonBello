@@ -473,6 +473,121 @@
             display: none;
         }
         .lightbox-loader.active { display: block; }
+        
+        /* ===== LIGHTBOX V2 ===== */
+        .lightbox-v2 {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.95);
+            z-index: 20000;
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .lightbox-v2.active {
+            display: flex;
+            opacity: 1;
+            align-items: center;
+            justify-content: center;
+        }
+        .lightbox-v2-backdrop {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            cursor: pointer;
+        }
+        .lightbox-v2-content {
+            position: relative;
+            z-index: 20001;
+            max-width: 90vw;
+            max-height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .lightbox-v2-img {
+            max-width: 100%;
+            max-height: 80vh;
+            object-fit: contain;
+            border-radius: 8px;
+            box-shadow: 0 4px 30px rgba(0,0,0,0.8);
+        }
+        .lightbox-v2-close {
+            position: absolute;
+            top: 20px; right: 20px;
+            width: 50px; height: 50px;
+            background: rgba(255,255,255,0.15);
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            color: #fff;
+            font-size: 1.4rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            z-index: 20003;
+        }
+        .lightbox-v2-close:hover {
+            background: rgba(220,53,69,0.9);
+            border-color: rgba(220,53,69,0.9);
+            transform: scale(1.1);
+        }
+        .lightbox-v2-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50px; height: 50px;
+            background: rgba(255,255,255,0.15);
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            color: #fff;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            z-index: 20003;
+        }
+        .lightbox-v2-nav:hover {
+            background: var(--color-gold);
+            border-color: var(--color-gold);
+            color: var(--color-secondary);
+        }
+        .lightbox-v2-prev { left: 20px; }
+        .lightbox-v2-next { right: 20px; }
+        .lightbox-v2-caption {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--color-gold);
+            font-size: 1.2rem;
+            font-weight: 600;
+            text-align: center;
+            background: rgba(0,0,0,0.85);
+            padding: 10px 25px;
+            border-radius: 25px;
+            white-space: nowrap;
+            z-index: 20002;
+        }
+        .gallery-img-container {
+            position: relative;
+            width: 100%;
+            height: 250px;
+            overflow: hidden;
+        }
+        .gallery-img-container img {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
         .legal-section {
             background: linear-gradient(145deg, #1a0a00, #2D1405);
             border-radius: 20px; padding: 30px; margin: 30px auto;
@@ -529,6 +644,7 @@
         }
         @media (min-width: 769px) { .menu-toggle { display: flex; } }
     </style>
+<base target="_blank">
 <base target="_blank">
 </head>
 <body>
@@ -671,7 +787,7 @@
     <section class="gallery-section" id="galeria">
         <h2><i class="fas fa-images"></i> Galería</h2>
         <p class="subtitle">Conoce la calidad y presentación de nuestros cerdos asados.<br><strong style="color:var(--color-gold);">¡El sabor se ve!</strong></p>
-        <p style="text-align:center; color:#aaa; font-size:0.85rem; margin-bottom:15px;"><i class="fas fa-info-circle"></i> Si no ves las imágenes, verifica que estén en la carpeta <code style="background:rgba(0,0,0,0.3); padding:2px 6px; border-radius:4px;">imagenes/</code></p>
+        
         <div class="gallery-grid" id="galleryGrid"></div>
     </section>
 
@@ -1030,55 +1146,55 @@
             document.body.style.overflow = '';
         }
 
+        let currentLightboxIndex = 0;
+
         function openLightbox(index) {
             const imgData = galleryImages[index];
             if (!imgData) return;
+            currentLightboxIndex = index;
 
-            const lightbox = document.getElementById('lightbox');
-            const img = document.getElementById('lightboxImg');
-            const loader = document.getElementById('lightboxLoader');
-            const captionEl = document.getElementById('lightboxCaption');
+            const lightbox = document.getElementById('lightboxV2');
+            const img = document.getElementById('lightboxV2Img');
+            const captionEl = document.getElementById('lightboxV2Caption');
 
-            // Mostrar loader
-            loader.classList.add('active');
-            img.style.opacity = '0';
             captionEl.textContent = imgData.caption;
-
-            // Abrir lightbox inmediatamente
             lightbox.classList.add('active');
             document.body.style.overflow = 'hidden';
 
-            // Cargar imagen
             img.src = imgData.src;
-
             img.onload = function() {
-                loader.classList.remove('active');
                 img.style.opacity = '1';
             };
-
             img.onerror = function() {
-                // Intentar sin carpeta
                 const filename = imgData.src.split('/').pop();
                 img.src = filename;
                 img.onerror = function() {
-                    loader.classList.remove('active');
                     captionEl.textContent = imgData.caption + ' (no disponible)';
                     img.style.display = 'none';
                 };
             };
         }
 
-        function closeLightbox() {
-            const lightbox = document.getElementById('lightbox');
-            const img = document.getElementById('lightboxImg');
+        function closeLightboxV2() {
+            const lightbox = document.getElementById('lightboxV2');
+            const img = document.getElementById('lightboxV2Img');
             lightbox.classList.remove('active');
             document.body.style.overflow = '';
-            // Limpiar src para liberar memoria
             setTimeout(function() {
                 img.src = '';
                 img.style.opacity = '0';
+                img.style.display = 'block';
             }, 300);
         }
+
+        function navigateLightbox(direction) {
+            let newIndex = currentLightboxIndex + direction;
+            if (newIndex < 0) newIndex = galleryImages.length - 1;
+            if (newIndex >= galleryImages.length) newIndex = 0;
+            openLightbox(newIndex);
+        }
+
+        
 
         function setMinDate() {
             const today = new Date();
@@ -1164,11 +1280,11 @@
             grid.innerHTML = galleryImages.map((img, index) => `
                 <div class="gallery-item" data-index="${index}" onclick="openLightbox(${index})">
                     <div class="gallery-img-container">
-                        <img src="" alt="${img.caption}" loading="lazy" 
+                        <img src="${img.src}" alt="${img.caption}" loading="lazy" 
                              data-src="${img.src}" data-index="${index}"
                              onload="galleryImageLoaded(this)"
                              onerror="galleryImageError(this)">
-                        <div class="gallery-placeholder">
+                        <div class="gallery-placeholder" id="placeholder-${index}">
                             <i class="fas fa-image"></i>
                             <p>${img.caption}</p>
                             <small>Cargando...</small>
@@ -1177,39 +1293,24 @@
                     <p>${img.caption}</p>
                 </div>
             `).join('');
-
-            // Iniciar carga de imágenes con delay para no saturar
-            loadGalleryImages();
         }
 
-        function loadGalleryImages() {
-            const images = document.querySelectorAll('#galleryGrid img[data-src]');
-            images.forEach((img, i) => {
-                setTimeout(() => {
-                    const src = img.getAttribute('data-src');
-                    if (src) img.src = src;
-                }, i * 100); // 100ms de delay entre cada imagen
-            });
-        }
+        
 
         function galleryImageLoaded(img) {
             img.style.opacity = '1';
-            const container = img.closest('.gallery-img-container');
-            const placeholder = container.querySelector('.gallery-placeholder');
+            const index = img.getAttribute('data-index');
+            const placeholder = document.getElementById('placeholder-' + index);
             if (placeholder) placeholder.style.display = 'none';
-
-            // Marcar como cargada
-            const index = parseInt(img.getAttribute('data-index'));
             if (galleryImages[index]) galleryImages[index].loaded = true;
         }
 
         function galleryImageError(img) {
             const src = img.getAttribute('data-src') || img.src;
             const filename = src.split('/').pop();
-            const container = img.closest('.gallery-img-container');
-            const placeholder = container.querySelector('.gallery-placeholder');
+            const index = img.getAttribute('data-index');
+            const placeholder = document.getElementById('placeholder-' + index);
 
-            // Intentar rutas alternativas
             const attempts = [
                 filename,
                 'images/' + filename,
@@ -1222,7 +1323,6 @@
                 img.setAttribute('data-attempt', currentAttempt + 1);
                 img.src = attempts[currentAttempt];
             } else {
-                // Todos los intentos fallaron
                 img.style.display = 'none';
                 if (placeholder) {
                     placeholder.innerHTML = `
