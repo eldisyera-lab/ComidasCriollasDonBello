@@ -313,7 +313,7 @@
         }
         .faq-question:hover { background: rgba(255,255,255,0.05); }
         .faq-answer { padding: 0 20px; max-height: 0; overflow: hidden; transition: max-height 0.3s ease, padding 0.3s ease; }
-        .faq-answer.open { padding: 0 20px 18px; max-height: 500px; }
+        .faq-answer.open { padding: 0 20px 18px; max-height: 1500px; }
         .faq-answer p { color: #ccc; line-height: 1.7; }
         .contact-info { text-align: center; padding: 30px; }
         .contact-info .company-name { font-size: 1.8rem; color: var(--color-gold); margin-bottom: 20px; }
@@ -380,14 +380,52 @@
         .gallery-placeholder i { font-size: 3rem; opacity: 0.7; }
         .lightbox {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.9); z-index: 20000; display: none;
+            background: rgba(0,0,0,0.95); z-index: 20000; display: none;
             align-items: center; justify-content: center; padding: 20px;
+            flex-direction: column;
         }
         .lightbox.active { display: flex; }
-        .lightbox img { max-width: 90%; max-height: 85vh; border-radius: 10px; box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
-        .lightbox-close { position: absolute; top: 20px; right: 30px; color: white; font-size: 2.5rem; cursor: pointer; background: none; border: none; transition: transform 0.3s ease; }
-        .lightbox-close:hover { transform: rotate(90deg); }
-        .lightbox-caption { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); color: var(--color-gold); font-size: 1.2rem; font-weight: 600; text-align: center; background: rgba(0,0,0,0.7); padding: 10px 25px; border-radius: 25px; }
+        .lightbox-img-container {
+            position: relative;
+            max-width: 90%;
+            max-height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .lightbox img { 
+            max-width: 100%; 
+            max-height: 80vh; 
+            border-radius: 10px; 
+            box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+            background: #fff;
+            object-fit: contain;
+            display: block;
+        }
+        .lightbox-close { 
+            position: absolute; top: 20px; right: 30px; 
+            color: white; font-size: 2.5rem; cursor: pointer; 
+            background: rgba(0,0,0,0.5); border: none; 
+            transition: transform 0.3s ease;
+            width: 50px; height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 20001;
+        }
+        .lightbox-close:hover { transform: rotate(90deg); background: rgba(220,53,69,0.8); }
+        .lightbox-caption { 
+            margin-top: 15px;
+            color: var(--color-gold); 
+            font-size: 1.3rem; 
+            font-weight: 600; 
+            text-align: center; 
+            background: rgba(0,0,0,0.8); 
+            padding: 12px 30px; 
+            border-radius: 25px;
+            z-index: 20001;
+        }
         .legal-section {
             background: linear-gradient(145deg, #1a0a00, #2D1405);
             border-radius: 20px; padding: 30px; margin: 30px auto;
@@ -398,7 +436,7 @@
         .legal-question { padding: 18px 20px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: 600; transition: background 0.3s ease; color: var(--color-light); }
         .legal-question:hover { background: rgba(255,255,255,0.05); }
         .legal-answer { padding: 0 20px; max-height: 0; overflow: hidden; transition: max-height 0.3s ease, padding 0.3s ease; }
-        .legal-answer.open { padding: 0 20px 18px; max-height: 800px; }
+        .legal-answer.open { padding: 0 20px 18px; max-height: 2000px; }
         .legal-answer p, .legal-answer ul { color: #bbb; line-height: 1.8; margin-bottom: 10px; }
         .legal-answer ul { padding-left: 20px; }
         .legal-answer ul li { margin-bottom: 8px; }
@@ -466,8 +504,10 @@
         </nav>
     </aside>
     <div class="lightbox" id="lightbox" onclick="closeLightbox()">
-        <button class="lightbox-close" onclick="closeLightbox()"><i class="fas fa-times"></i></button>
-        <img src="" alt="" id="lightboxImg">
+        <button class="lightbox-close" onclick="event.stopPropagation(); closeLightbox()"><i class="fas fa-times"></i></button>
+        <div class="lightbox-img-container">
+            <img src="" alt="" id="lightboxImg">
+        </div>
         <div class="lightbox-caption" id="lightboxCaption"></div>
     </div>
     <header class="header">
@@ -1052,29 +1092,28 @@
             const item = img.closest('.gallery-item');
             const placeholder = item.querySelector('.gallery-placeholder');
 
-            // Si ya intentamos con imagenes/, intentar sin carpeta
-            if (currentSrc.includes('imagenes/')) {
-                img.src = filename;
+            // Lista de rutas a intentar
+            const attempts = [
+                'imagenes/' + filename,
+                filename,
+                'images/' + filename,
+                './imagenes/' + filename,
+                '../imagenes/' + filename
+            ];
+
+            // Encontrar el índice del intento actual
+            let currentIndex = attempts.indexOf(currentSrc);
+            if (currentIndex === -1) currentIndex = 0;
+
+            // Intentar el siguiente
+            const nextIndex = currentIndex + 1;
+            if (nextIndex < attempts.length) {
+                img.src = attempts[nextIndex];
                 img.onerror = function() {
-                    // Último intento: carpeta images/
-                    img.src = 'images/' + filename;
-                    img.onerror = function() {
-                        img.style.display = 'none';
-                        if (placeholder) placeholder.style.display = 'flex';
-                    };
-                };
-            } else if (!currentSrc.includes('/')) {
-                // Sin carpeta, intentar con imagenes/
-                img.src = 'imagenes/' + filename;
-                img.onerror = function() {
-                    // Último intento: carpeta images/
-                    img.src = 'images/' + filename;
-                    img.onerror = function() {
-                        img.style.display = 'none';
-                        if (placeholder) placeholder.style.display = 'flex';
-                    };
+                    tryNextImageSrc(img);
                 };
             } else {
+                // Agotados todos los intentos
                 img.style.display = 'none';
                 if (placeholder) placeholder.style.display = 'flex';
             }
