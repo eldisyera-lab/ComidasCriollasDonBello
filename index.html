@@ -1532,10 +1532,13 @@
                         <input type="time" id="hora" name="hora" required min="12:00" max="16:00">
                     </div>
                     <div class="form-group">
-                        <label for="oferta"><i class="fas fa-tag"></i> Oferta solicitada *</label>
-                        <select id="oferta" name="oferta" required>
-                            <option value="">Seleccione una oferta...</option>
+                        <label for="oferta"><i class="fas fa-tag"></i> Oferta solicitada</label>
+                        <select id="oferta" name="oferta">
+                            <option value="">Seleccione una oferta (opcional si ya eligió ofertas especiales)...</option>
                         </select>
+                        <small style="color:#aaa; display:block; margin-top:5px;">
+                            <i class="fas fa-info-circle"></i> Puede dejar vacío si solo desea ofertas especiales (tamales/masas)
+                        </small>
                     </div>
                 </div>
 
@@ -1764,8 +1767,7 @@
         <i class="fab fa-whatsapp"></i>
     </a>
 
-    <script>
-        const porciones = [
+    <script>        const porciones = [
             { id: 'p1', name: 'Lomo para 20-22 comensales', price: 50000, comensales: '20-22 comensales' },
             { id: 'p2', name: 'Pierna para 20-22 comensales', price: 50000, comensales: '20-22 comensales' },
             { id: 'p3', name: 'Masas para 25-30 comensales', price: 60000, comensales: '25-30 comensales' },
@@ -1956,6 +1958,35 @@
                 select.remove(1);
             }
             
+            // Agregar sección de Ofertas Especiales al select
+            const specialGroup = document.createElement('optgroup');
+            specialGroup.label = '⭐ Ofertas Especiales';
+            const tamalesOption = document.createElement('option');
+            tamalesOption.value = 'tamales';
+            tamalesOption.textContent = `Tamales - 150 CUP c/u (especifique cantidad arriba)`;
+            tamalesOption.dataset.type = 'especial';
+            specialGroup.appendChild(tamalesOption);
+            
+            const masas20Option = document.createElement('option');
+            masas20Option.value = 'masas20';
+            masas20Option.textContent = `Masas 20-22 comensales - 50,000 CUP`;
+            masas20Option.dataset.type = 'especial';
+            specialGroup.appendChild(masas20Option);
+            
+            const masas25Option = document.createElement('option');
+            masas25Option.value = 'masas25';
+            masas25Option.textContent = `Masas 25-30 comensales - 60,000 CUP`;
+            masas25Option.dataset.type = 'especial';
+            specialGroup.appendChild(masas25Option);
+            
+            select.appendChild(specialGroup);
+            
+            // Separador
+            const separator = document.createElement('option');
+            separator.disabled = true;
+            separator.textContent = '──────────────';
+            select.appendChild(separator);
+            
             const allItems = [
                 ...porciones.map(p => ({ ...p, type: 'porcion' })),
                 ...cerdos.map(c => ({ ...c, type: 'cerdo' }))
@@ -1990,6 +2021,9 @@
             btn.innerHTML = '<i class="fas fa-check"></i> Añadido al pedido';
             btn.classList.add('added');
             
+            // Sincronizar con el select
+            document.getElementById('oferta').value = 'tamales';
+            
             updateSummary();
             showToast(`✅ ${qty} tamales añadidos al pedido`);
         }
@@ -2002,8 +2036,31 @@
             btn.innerHTML = '<i class="fas fa-check"></i> Añadido al pedido';
             btn.classList.add('added');
             
+            // Sincronizar con el select
+            document.getElementById('oferta').value = id;
+            
             updateSummary();
             showToast(`✅ ${name} añadido al pedido`);
+        }
+
+        function removeSpecialOffer(id) {
+            delete specialOffers[id];
+            if (id === 'tamales') {
+                document.getElementById('tamaleQty').value = 0;
+                updateTamaleTotal();
+                const btn = document.getElementById('btnTamales');
+                btn.innerHTML = '<i class="fas fa-cart-plus"></i> Añadir al pedido';
+                btn.classList.remove('added');
+            } else if (id === 'masas20') {
+                const btn = document.getElementById('btnMasas20');
+                btn.innerHTML = '<i class="fas fa-cart-plus"></i> Añadir al pedido';
+                btn.classList.remove('added');
+            } else if (id === 'masas25') {
+                const btn = document.getElementById('btnMasas25');
+                btn.innerHTML = '<i class="fas fa-cart-plus"></i> Añadir al pedido';
+                btn.classList.remove('added');
+            }
+            updateSummary();
         }
 
         function selectOffer(id, type) {
@@ -2043,11 +2100,47 @@
             const id = this.value;
             if (!id) {
                 selectedOffer = null;
+                // Limpiar selección de cards
+                document.querySelectorAll('.btn-select').forEach(btn => {
+                    btn.innerHTML = '<i class="fas fa-cart-plus"></i> Seleccionar';
+                    btn.classList.remove('selected');
+                });
                 updateSummary();
                 return;
             }
+            
             const type = this.options[this.selectedIndex].dataset.type;
-            selectOffer(id, type);
+            
+            if (type === 'especial') {
+                // Es una oferta especial
+                selectedOffer = null;
+                // Limpiar selección de cards de cenas
+                document.querySelectorAll('.btn-select').forEach(btn => {
+                    btn.innerHTML = '<i class="fas fa-cart-plus"></i> Seleccionar';
+                    btn.classList.remove('selected');
+                });
+                
+                if (id === 'tamales') {
+                    // Si no está añadido aún, mostrar toast para que use el botón
+                    if (!specialOffers['tamales']) {
+                        showToast('⚠️ Use el botón "Añadir al pedido" en la tarjeta de tamales para especificar cantidad', 'error');
+                        this.value = '';
+                        return;
+                    }
+                } else if (id === 'masas20') {
+                    if (!specialOffers['masas20']) {
+                        addSpecialOffer('masas20', 50000, 'Masas 20-22 comensales');
+                    }
+                } else if (id === 'masas25') {
+                    if (!specialOffers['masas25']) {
+                        addSpecialOffer('masas25', 60000, 'Masas 25-30 comensales');
+                    }
+                }
+                updateSummary();
+            } else {
+                // Es porción o cerdo
+                selectOffer(id, type);
+            }
         });
 
         function setupMensajeriaValidation() {
@@ -2076,8 +2169,9 @@
             const container = document.getElementById('summaryContent');
             let html = '';
             let total = 0;
+            let hasItems = false;
 
-            // Oferta principal seleccionada
+            // Oferta principal seleccionada (cenas)
             if (selectedOffer) {
                 html += `
                     <div class="summary-item">
@@ -2086,6 +2180,7 @@
                     </div>
                 `;
                 total += selectedOffer.price;
+                hasItems = true;
             }
 
             // Ofertas especiales (tamales, masas)
@@ -2098,6 +2193,7 @@
                     </div>
                 `;
                 total += subtotal;
+                hasItems = true;
             });
 
             // Buffet
@@ -2109,6 +2205,7 @@
                     const item = buffetItems.find(b => b.id === id);
                     const subtotal = item.price * qty;
                     total += subtotal;
+                    hasItems = true;
                     html += `
                         <div class="summary-item" style="border:none; padding:4px 0;">
                             <span style="padding-left:20px;">• ${item.name} x${qty}</span>
@@ -2130,7 +2227,7 @@
                 total += deliveryCost;
             }
 
-            if (total > 0) {
+            if (hasItems) {
                 html += `
                     <div class="summary-total">
                         <span><i class="fas fa-calculator"></i> TOTAL A PAGAR:</span>
@@ -2147,9 +2244,14 @@
         document.getElementById('orderForm').addEventListener('submit', function(e) {
             e.preventDefault();
 
-            if (!selectedOffer && Object.keys(specialOffers).length === 0) {
-                showToast('❌ Por favor seleccione una oferta primero', 'error');
-                document.getElementById('cenas').scrollIntoView({ behavior: 'smooth' });
+            // Validación: debe haber al menos una oferta (principal o especial) o buffet
+            const hasOffer = selectedOffer !== null;
+            const hasSpecialOffers = Object.keys(specialOffers).length > 0;
+            const hasBuffet = Object.keys(selectedBuffet).length > 0;
+            
+            if (!hasOffer && !hasSpecialOffers && !hasBuffet) {
+                showToast('❌ Por favor seleccione al menos una oferta o producto', 'error');
+                document.getElementById('ofertas-especiales').scrollIntoView({ behavior: 'smooth' });
                 return;
             }
 
@@ -2203,7 +2305,7 @@
 
             let total = 0;
 
-            // Oferta principal
+            // Oferta principal (cenas)
             if (selectedOffer) {
                 text += `🍽️ ${selectedOffer.name}\n`;
                 text += `   Precio: ${selectedOffer.price.toLocaleString()} CUP\n`;
