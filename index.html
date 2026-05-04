@@ -1157,22 +1157,39 @@
             const img = document.getElementById('lightboxV2Img');
             const captionEl = document.getElementById('lightboxV2Caption');
 
-            captionEl.textContent = imgData.caption;
+            // Reset state
+            img.style.display = 'block';
+            img.style.opacity = '0';
+            captionEl.textContent = imgData.caption + ' — Cargando...';
             lightbox.classList.add('active');
             document.body.style.overflow = 'hidden';
 
-            img.src = imgData.src;
-            img.onload = function() {
-                img.style.opacity = '1';
-            };
-            img.onerror = function() {
-                const filename = imgData.src.split('/').pop();
-                img.src = filename;
+            // Try to load image
+            const tryLoadImage = (src, attempt) => {
+                img.src = src;
+                img.onload = function() {
+                    img.style.opacity = '1';
+                    captionEl.textContent = imgData.caption;
+                };
                 img.onerror = function() {
-                    captionEl.textContent = imgData.caption + ' (no disponible)';
-                    img.style.display = 'none';
+                    const attempts = [
+                        imgData.src,
+                        imgData.src.split('/').pop(),
+                        'images/' + imgData.src.split('/').pop(),
+                        './' + imgData.src.split('/').pop(),
+                        '../imagenes/' + imgData.src.split('/').pop()
+                    ];
+                    if (attempt < attempts.length - 1) {
+                        tryLoadImage(attempts[attempt + 1], attempt + 1);
+                    } else {
+                        // All attempts failed - show placeholder in lightbox
+                        img.style.display = 'none';
+                        captionEl.textContent = imgData.caption + ' — Foto no disponible';
+                    }
                 };
             };
+
+            tryLoadImage(imgData.src, 0);
         }
 
         function closeLightboxV2() {
@@ -1180,6 +1197,9 @@
             const img = document.getElementById('lightboxV2Img');
             lightbox.classList.remove('active');
             document.body.style.overflow = '';
+            // Stop any ongoing image loading
+            img.onload = null;
+            img.onerror = null;
             setTimeout(function() {
                 img.src = '';
                 img.style.opacity = '0';
