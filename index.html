@@ -644,43 +644,54 @@
         }
         @media (min-width: 769px) { .menu-toggle { display: flex; } }
 
-        /* NUEVO: Estilos para el botón intermitente del Día de los Padres */
+        /* NUEVO: Botón rojo pulsante para WhatsApp Día de los Padres */
         .anuncio-padres {
-            margin: 20px 0;
+            margin: 15px 0;
             text-align: center;
         }
 
-        .btn-reserva-padres {
-            display: inline-block;
-            background-color: var(--color-gold);
-            color: var(--color-secondary);
-            padding: 15px 25px;
-            border-radius: 10px;
+        .btn-whatsapp-padres {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(135deg, #ff4444, #cc0000);
+            color: #fff;
+            padding: 15px 35px;
+            border-radius: 50px;
             text-decoration: none;
             font-weight: bold;
-            font-size: 1rem;
-            animation: parpadeo 1.5s infinite;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-            transition: transform 0.2s;
+            font-size: 1.1rem;
+            animation: pulso-rojo 1.2s infinite;
+            box-shadow: 0 4px 15px rgba(255, 68, 68, 0.5);
+            transition: all 0.3s ease;
             text-align: center;
-            line-height: 1.4;
         }
 
-        .btn-reserva-padres:hover {
-            transform: scale(1.05);
-            background-color: #b8860b;
-            color: #fff;
+        .btn-whatsapp-padres:hover {
+            transform: scale(1.08);
+            background: linear-gradient(135deg, #ff6666, #e60000);
+            box-shadow: 0 6px 25px rgba(255, 68, 68, 0.7);
         }
 
-        @keyframes parpadeo {
+        @keyframes pulso-rojo {
             0%, 100% { 
-                opacity: 1; 
-                box-shadow: 0 0 10px rgba(218, 165, 32, 0.8); 
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(255, 68, 68, 0.7); 
             }
             50% { 
-                opacity: 0.6; 
-                box-shadow: 0 0 25px rgba(218, 165, 32, 1); 
+                transform: scale(1.05);
+                box-shadow: 0 0 20px 10px rgba(255, 68, 68, 0); 
             }
+        }
+
+        /* Estilos para acordeón de tamales */
+        .offer-accordion-item {
+            margin-bottom: 15px;
+        }
+
+        #oferta-tamales .offer-card {
+            border-top: none;
+            border-radius: 0 0 15px 15px;
         }
     </style>
 <base target="_blank">
@@ -738,22 +749,27 @@
     </nav>
     <section class="special-offers-section" id="ofertas-especiales">
         <h2><i class="fas fa-gift"></i> Ofertas Especiales</h2>
-        <div class="buffet-notice">
-            <p><i class="fas fa-ban"></i> Servicio de Buffet NO disponible temporalmente</p>
-        </div>
+
         <div class="offers-grid">
-            <div class="offer-card">
-                <h3><i class="fas fa-home"></i> Oferta de la Casa</h3>
-                <p>Tenemos tamales a <strong style="color:var(--color-gold);">150 CUP c/u</strong>.</p>
-                <p>Añade la cantidad que desees y se sumará al importe total de tu pedido.</p>
-                <div class="tamale-input-group">
-                    <label for="tamaleQty">Cantidad:</label>
-                    <input type="number" id="tamaleQty" min="0" value="0" onchange="updateTamaleTotal()">
-                    <span class="tamale-total" id="tamaleTotal">Total: 0 CUP</span>
-                </div>
-                <button type="button" class="btn-add-offer" id="btnTamales" onclick="addTamaleOffer()">
-                    <i class="fas fa-cart-plus"></i> Añadir al pedido
+            <div class="offer-accordion-item">
+                <button class="offer-btn" onclick="toggleOffer(this, 'oferta-tamales')">
+                    <span><i class="fas fa-home"></i> Oferta de la Casa - Tamales</span>
+                    <i class="fas fa-chevron-down"></i>
                 </button>
+                <div class="offer-content" id="oferta-tamales">
+                    <div class="offer-card" style="margin-top:0; border-radius: 0 0 15px 15px;">
+                        <p>Tenemos tamales a <strong style="color:var(--color-gold);">150 CUP c/u</strong>.</p>
+                        <p>Añade la cantidad que desees y se sumará al importe total de tu pedido.</p>
+                        <div class="tamale-input-group">
+                            <label for="tamaleQty">Cantidad:</label>
+                            <input type="number" id="tamaleQty" min="0" value="0" onchange="updateTamaleTotal()">
+                            <span class="tamale-total" id="tamaleTotal">Total: 0 CUP</span>
+                        </div>
+                        <button type="button" class="btn-add-offer" id="btnTamales" onclick="addTamaleOffer()">
+                            <i class="fas fa-cart-plus"></i> Añadir al pedido
+                        </button>
+                    </div>
+                </div>
             </div>
             
         </div>
@@ -763,10 +779,13 @@
                 <i class="fas fa-chevron-down"></i>
             </button>
             <div class="offer-content" id="oferta-padres">
+                <p style="color:#ddd; margin-bottom:15px; text-align:center;">
+                    <i class="fas fa-info-circle" style="color:var(--color-gold);"></i> 
+                    Muy pronto comenzarán las reservaciones para las cenas del Día de los Padres.
+                </p>
                 <div class="anuncio-padres">
-                    <a href="https://chat.whatsapp.com/BcjHAaSLoNv2U6iMWR3DEj" target="_blank" class="btn-reserva-padres">
-                        Muy pronto comenzarán las reservaciones para las cenas del Día de los Padres.<br>
-                        Únete a nuestro grupo para asegurar tu servicio
+                    <a href="https://chat.whatsapp.com/BcjHAaSLoNv2U6iMWR3DEj" target="_blank" class="btn-whatsapp-padres">
+                        <i class="fab fa-whatsapp"></i> Únete aquí
                     </a>
                 </div>
             </div>
