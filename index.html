@@ -643,7 +643,47 @@
             .offers-grid { grid-template-columns: 1fr; }
         }
         @media (min-width: 769px) { .menu-toggle { display: flex; } }
+
+        /* NUEVO: Estilos para el botón intermitente del Día de los Padres */
+        .anuncio-padres {
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .btn-reserva-padres {
+            display: inline-block;
+            background-color: var(--color-gold);
+            color: var(--color-secondary);
+            padding: 15px 25px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1rem;
+            animation: parpadeo 1.5s infinite;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            transition: transform 0.2s;
+            text-align: center;
+            line-height: 1.4;
+        }
+
+        .btn-reserva-padres:hover {
+            transform: scale(1.05);
+            background-color: #b8860b;
+            color: #fff;
+        }
+
+        @keyframes parpadeo {
+            0%, 100% { 
+                opacity: 1; 
+                box-shadow: 0 0 10px rgba(218, 165, 32, 0.8); 
+            }
+            50% { 
+                opacity: 0.6; 
+                box-shadow: 0 0 25px rgba(218, 165, 32, 1); 
+            }
+        }
     </style>
+<base target="_blank">
 <base target="_blank">
 <base target="_blank">
 </head>
@@ -715,26 +755,7 @@
                     <i class="fas fa-cart-plus"></i> Añadir al pedido
                 </button>
             </div>
-            <div class="offer-card">
-                <h3><i class="fas fa-heart"></i> Día de las Madres</h3>
-                <p><strong>Masas 20-22 comensales</strong></p>
-                <p>Congrí, ensalada, yuca con mojo y aliño</p>
-                <div class="price-tag">50,000 CUP</div>
-                <p class="not-available-tag"><i class="fas fa-times-circle"></i> Buffet no disponible</p>
-                <button type="button" class="btn-add-offer" id="btnMasas20" onclick="addSpecialOffer('masas20', 50000, 'Masas 20-22 comensales')">
-                    <i class="fas fa-cart-plus"></i> Añadir al pedido
-                </button>
-            </div>
-            <div class="offer-card">
-                <h3><i class="fas fa-heart"></i> Día de las Madres</h3>
-                <p><strong>Masas 25-30 comensales</strong></p>
-                <p>Congrí, ensalada, yuca con mojo y aliño</p>
-                <div class="price-tag">60,000 CUP</div>
-                <p class="not-available-tag"><i class="fas fa-times-circle"></i> Buffet no disponible</p>
-                <button type="button" class="btn-add-offer" id="btnMasas25" onclick="addSpecialOffer('masas25', 60000, 'Masas 25-30 comensales')">
-                    <i class="fas fa-cart-plus"></i> Añadir al pedido
-                </button>
-            </div>
+            
         </div>
         <div class="offer-accordion" style="margin-top: 20px;">
             <button class="offer-btn" onclick="toggleOffer(this, 'oferta-padres')">
@@ -742,7 +763,12 @@
                 <i class="fas fa-chevron-down"></i>
             </button>
             <div class="offer-content" id="oferta-padres">
-                <p>Próximamente estaremos publicando nuestra oferta especial para el Día de los Padres. ¡Mantente atento!</p>
+                <div class="anuncio-padres">
+                    <a href="https://chat.whatsapp.com/BcjHAaSLoNv2U6iMWR3DEj" target="_blank" class="btn-reserva-padres">
+                        Muy pronto comenzarán las reservaciones para las cenas del Día de los Padres.<br>
+                        Únete a nuestro grupo para asegurar tu servicio
+                    </a>
+                </div>
             </div>
             <button class="offer-btn" onclick="toggleOffer(this, 'oferta-nochebuena')">
                 <span><i class="fas fa-tree"></i> Ofertas Nochebuena</span>
