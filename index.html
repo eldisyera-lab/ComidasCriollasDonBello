@@ -1145,13 +1145,19 @@
                 </button>
             </form>
             <div class="voucher-calc-section" id="voucherCalcSection" style="display:none;">
-                <h4><i class="fas fa-calculator"></i> Pago de Anticipo (30%)</h4>
+                <h4><i class="fas fa-calculator"></i> Desglose de Pago</h4>
                 <div class="voucher-calc-result">
-                    <div class="label">Debe pagar de anticipo:</div>
-                    <div class="value" id="voucherCalcValue">0 CUP</div>
+                    <div style="margin-bottom:12px; padding-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.1);">
+                        <div class="label">Anticipo a pagar (30%):</div>
+                        <div class="value" id="voucherCalcValue" style="font-size:1.3rem;">0 CUP</div>
+                    </div>
+                    <div>
+                        <div class="label">Diferencia a pagar en entrega (70%):</div>
+                        <div class="value" id="voucherCalcDiferencia" style="color:var(--color-green);">0 CUP</div>
+                    </div>
                 </div>
                 <p style="text-align:center; color:#aaa; font-size:0.85rem; margin-top:10px;">
-                    <i class="fas fa-info-circle"></i> Puede pagar por transferencia a la cuenta <strong style="color:var(--color-gold);">9238-1299-7102-5269</strong> o presencialmente en Calle 196, #6108, La Lisa.
+                    <i class="fas fa-info-circle"></i> Pague el anticipo por transferencia a <strong style="color:var(--color-gold);">9238-1299-7102-5269</strong> o presencial en Calle 196, #6108, La Lisa. El resto se paga el día de la entrega.
                 </p>
             </div>
             <div class="voucher-preview" id="voucherPreview">
@@ -2070,9 +2076,11 @@
             }
 
             const anticipo = Math.round(total * 0.30);
+            const diferencia = total - anticipo;
             text += `\n💰 *TOTAL A PAGAR: ${total.toLocaleString()} CUP*\n`;
-            text += `💳 *ANTICIPO A PAGAR (30%): ${anticipo.toLocaleString()} CUP*\n\n`;
-            text += `🏦 *Datos para pago:*\n`;
+            text += `💳 *ANTICIPO A PAGAR (30%): ${anticipo.toLocaleString()} CUP*\n`;
+            text += `🚚 *DIFERENCIA A PAGAR EN ENTREGA (70%): ${diferencia.toLocaleString()} CUP*\n\n`;
+            text += `🏦 *Datos para pago del anticipo:*\n`;
             text += `   Cuenta: 9238-1299-7102-5269\n`;
             text += `   Verificar al: +53 50476702\n`;
             text += `   O presencial: Calle 196 #6108, E/: 61 y 59, La Lisa (9am-5pm)\n\n`;
@@ -2209,13 +2217,16 @@ function updateVoucherCalc() {
     const container = document.getElementById('summaryContent');
     const calcSection = document.getElementById('voucherCalcSection');
     const calcValue = document.getElementById('voucherCalcValue');
+    const calcDiferencia = document.getElementById('voucherCalcDiferencia');
 
     // Buscar el total en el resumen
     const totalMatch = container.textContent.match(/TOTAL A PAGAR:\s*([\d,]+)/);
     if (totalMatch) {
         const total = parseInt(totalMatch[1].replace(/,/g, ''));
         const thirtyPercent = Math.round(total * 0.30);
+        const diferencia = total - thirtyPercent;
         calcValue.textContent = thirtyPercent.toLocaleString() + ' CUP';
+        calcDiferencia.textContent = diferencia.toLocaleString() + ' CUP';
         calcSection.style.display = 'block';
     } else {
         calcSection.style.display = 'none';
